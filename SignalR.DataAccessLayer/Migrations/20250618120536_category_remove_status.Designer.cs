@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SignalR.DataAccessLayer.Concrete;
 
@@ -11,9 +12,10 @@ using SignalR.DataAccessLayer.Concrete;
 namespace SignalR.DataAccessLayer.Migrations
 {
     [DbContext(typeof(SignalRContext))]
-    partial class SignalRContextModelSnapshot : ModelSnapshot
+    [Migration("20250618120536_category_remove_status")]
+    partial class category_remove_status
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -230,6 +232,9 @@ namespace SignalR.DataAccessLayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("ProductStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Status")
                         .HasColumnType("bit");
 
                     b.HasKey("ProductID");

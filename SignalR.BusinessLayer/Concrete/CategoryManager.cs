@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace SignalR.BusinessLayer.Concrete
 {
-    public class CategorManager : ICategoryService
+    public class CategoryManager : ICategoryService
     {
         private readonly ICategoryDal _categoryDal;
 
-        public CategorManager(ICategoryDal categoryDal)
+        public CategoryManager(ICategoryDal categoryDal)
         {
             _categoryDal = categoryDal;
         }
