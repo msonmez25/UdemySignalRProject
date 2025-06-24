@@ -41,7 +41,7 @@ namespace SignalRApi.Controllers
             return Ok("Çalışma saat bilgisi eklendi");
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteOpenInfo(int id)
         {
             var value = _openInfoService.TGetByID(id);
@@ -49,7 +49,7 @@ namespace SignalRApi.Controllers
             return Ok("Çalışma saat bilgisi silindi");
         }
 
-        [HttpGet("GetOpenInfo")]
+        [HttpGet("{id}")]
         public IActionResult GetOpenInfo(int id)
         {
             var value = _openInfoService.TGetByID(id);
