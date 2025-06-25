@@ -73,7 +73,7 @@ namespace SignalRApi.Controllers
                 Description2 = updateFeatureDto.Description2,
                 Title3 = updateFeatureDto.Title3,
                 Description3 = updateFeatureDto.Description3,
-                Status = updateFeatureDto.Status,
+                Status = true,
             });
             return Ok("Öne çıkan bilgisi güncellendi.");
         }

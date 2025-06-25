@@ -1,0 +1,64 @@
+﻿@model CreateFeatureDto
+@{
+    ViewData["Title"] = "CreateFeature";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                <form method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Öne Çıkan Alan Ekleme İşlemleri</div>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <label>Başlık 1</label>
+                                <input type="text" class="form-control" asp-for="Title1">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Açıklama 1</label>
+                                <input type="text" class="form-control" asp-for="Description1">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Başlık 2</label>
+                                <input type="text" class="form-control" asp-for="Title2">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Açıklama 2</label>
+                                <input type="text" class="form-control" asp-for="Description2">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Başlık 3</label>
+                                <input type="text" class="form-control" asp-for="Title3">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Açıklama 3</label>
+                                <input type="text" class="form-control" asp-for="Description3">
+                            </div>
+
+                        </div>
+                        <div class="card-action">
+                            <button class="btn btn-success">Öne Çıkan Alan Ekle</button>
+                            <a href="/Feature/Index" class="btn btn-danger">İptal Et</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+

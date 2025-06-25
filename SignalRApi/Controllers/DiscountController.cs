@@ -63,6 +63,7 @@ namespace SignalRApi.Controllers
         {
             _discountService.TUpdate(new Discount()
             {
+                DiscountID = updateDiscountDto.DiscountID,
                 Title = updateDiscountDto.Title,
                 Amount = updateDiscountDto.Amount,
                 Description = updateDiscountDto.Description,
