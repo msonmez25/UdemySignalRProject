@@ -5,6 +5,7 @@ using SignalR.EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -47,6 +48,11 @@ namespace SignalR.BusinessLayer.Concrete
         public decimal TLastOrderPrice()
         {
             return _orderDal.LastOrderPrice();
+        }
+
+        public decimal TTodayTotalPrice()
+        {
+            return _orderDal.TodayTotalPrice();
         }
 
         public int TTotalOrderCount()
