@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SignalRWebUI.Dtos.ContactDtos;
+using SignalRWebUI.Dtos.SocialMediaDtos;
 
 namespace SignalRWebUI.ViewComponents.UILayoutComponents
 {
-    public class _UILayoutFooterComponentPartial : ViewComponent
+    public class _UILayoutFooterSocialMediaComponentPartial : ViewComponent
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public _UILayoutFooterComponentPartial(IHttpClientFactory httpClientFactory)
+        public _UILayoutFooterSocialMediaComponentPartial(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
@@ -18,13 +18,11 @@ namespace SignalRWebUI.ViewComponents.UILayoutComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7195/api/Contact");
+            var responseMessage = await client.GetAsync("https://localhost:7195/api/SocialMedia");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultContactDto>>(jsonData); 
-                var deger = values.Select(x=>x.FooterDescription).FirstOrDefault();
-                ViewBag.FooterDescription = deger;
+                var values = JsonConvert.DeserializeObject<List<ResultSocialMediaDto>>(jsonData);              
                 return View(values);
             }
             return View();
