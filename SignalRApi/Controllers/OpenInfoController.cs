@@ -34,8 +34,7 @@ namespace SignalRApi.Controllers
             _openInfoService.TAdd(new OpenInfo()
             {
                Title= createOpenInfoDto.Title,
-               DateFirst= createOpenInfoDto.DateFirst,
-               DateEnd= createOpenInfoDto.DateEnd,
+               Description= createOpenInfoDto.Description,
 
             });
             return Ok("Çalışma saat bilgisi eklendi");
@@ -63,8 +62,7 @@ namespace SignalRApi.Controllers
             {
                 OpenInfoID = updateOpenInfoDto.OpenInfoID,
                 Title = updateOpenInfoDto.Title,
-                DateFirst = updateOpenInfoDto.DateFirst,
-                DateEnd = updateOpenInfoDto.DateEnd,
+                Description = updateOpenInfoDto.Description,
             });
             return Ok("Çalışma saat bilgisi güncellendi.");
         }

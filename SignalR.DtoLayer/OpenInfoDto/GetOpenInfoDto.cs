@@ -10,7 +10,7 @@ namespace SignalR.DtoLayer.OpenInfoDto
     {
         public int OpenInfoID { get; set; }
         public string Title { get; set; }
-        public DateTime DateFirst { get; set; }
-        public DateTime DateEnd { get; set; }
+        public string Description { get; set; }
+        
     }
 }
