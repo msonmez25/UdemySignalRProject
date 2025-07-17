@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace SignalR.BusinessLayer.Concrete
 {
-    public class ISliderManager : ISliderService
+    public class SliderManager : ISliderService
     {
         private readonly ISliderDal _sliderDal;
 
-        public ISliderManager(ISliderDal sliderDal)
+        public SliderManager(ISliderDal sliderDal)
         {
             _sliderDal = sliderDal;
         }
