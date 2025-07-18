@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using SignalR.BusinessLayer.Abstract;
 using SignalR.DataAccessLayer.Concrete;
 using SignalR.DtoLayer.BasketDto;
+using SignalR.EntityLayer.Entities;
 
 namespace SignalRApi.Controllers
 {
@@ -22,7 +23,7 @@ namespace SignalRApi.Controllers
         }
 
 
-        [HttpGet("{id}")]
+        [HttpGet]
         public IActionResult GetBasketByMenuTableID(int id)
         {
             var values = _basketService.TGetBasketByRestaurantTableNumber(id);
@@ -45,5 +46,30 @@ namespace SignalRApi.Controllers
             }).ToList();
             return Ok(values);
         }
+
+        [HttpPost]
+        public IActionResult CreateBasket(CreateBasketDto createBasketDto)
+        {
+            var context = new SignalRContext();
+            _basketService.TAdd(new Basket()
+            {
+                ProductID = createBasketDto.ProductID,
+                Count = 1,
+                RestaurantTableID = 4,
+                Price = context.Products.Where(x => x.ProductID == createBasketDto.ProductID).Select(y => y.Price).FirstOrDefault(),
+                TotalPrice = 0
+            });
+            return Ok(); 
+        }
+
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteBasket(int id)
+        {
+            var value = _basketService.TGetByID(id);
+            _basketService.TDelete(value);
+            return Ok("Sepette seçilen ürün silindi.");
+        }
+
     }
 }
