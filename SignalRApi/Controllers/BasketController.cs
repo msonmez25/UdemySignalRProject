@@ -36,7 +36,7 @@ namespace SignalRApi.Controllers
             var context = new SignalRContext();
             var values = context.Baskets.Include(x=>x.Product).Where(y=>y.RestaurantTableID==id).Select(z=> new ResultBasketListWithProductName
             {
-                BasketID = z.ProductID,
+                BasketID = z.BasketID,
                 RestaurantTableID = z.ProductID,
                 Price=z.Price,
                 Count=z.Count,

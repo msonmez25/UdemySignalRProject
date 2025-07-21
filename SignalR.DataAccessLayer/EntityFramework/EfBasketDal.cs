@@ -20,7 +20,7 @@ namespace SignalR.DataAccessLayer.EntityFramework
         public List<Basket> GetBasketByRestaurantTableNumber(int id)
         {
             var context = new SignalRContext();
-            var values = context.Baskets.Where(x=>x.RestaurantTableID== id).Include(y=>y.Product).ToList();
+            var values = context.Baskets.Where(x=>x.RestaurantTableID==id).ToList();
             return values;
         }
     }
