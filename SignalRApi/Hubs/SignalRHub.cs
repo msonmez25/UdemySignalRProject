@@ -11,14 +11,16 @@ namespace SignalRApi.Hubs
         private readonly IOrderService _orderService;
         private readonly IMoneyCaseService _moneyCaseService;
         private readonly IRestaurantTableService _restaurantTableService;
+        private readonly IBookingService _bookingService;
 
-        public SignalRHub(ICategoryService categoryService, IProductService productService, IOrderService orderService, IMoneyCaseService moneyCaseService, IRestaurantTableService restaurantTableService)
+        public SignalRHub(ICategoryService categoryService, IProductService productService, IOrderService orderService, IMoneyCaseService moneyCaseService, IRestaurantTableService restaurantTableService, IBookingService bookingService)
         {
             _categoryService = categoryService;
             _productService = productService;
             _orderService = orderService;
             _moneyCaseService = moneyCaseService;
             _restaurantTableService = restaurantTableService;
+            _bookingService = bookingService;
         }
 
         public async Task SendStatistic()
@@ -116,6 +118,13 @@ namespace SignalRApi.Hubs
             //Toplam Masa Sayısı
             var value3 = _restaurantTableService.TCountTable();
             await Clients.All.SendAsync("ReceiveCountTable", value3);
+        }
+
+
+        public async Task GetBookingList()
+        {
+            var values = _bookingService.TGetListAll();
+            await Clients.All.SendAsync("ReceiveBookingList", values);
         }
     }
 }
