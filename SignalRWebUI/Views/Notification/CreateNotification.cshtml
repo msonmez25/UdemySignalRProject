@@ -1,0 +1,52 @@
+﻿@model CreateNotificationDto
+@{
+    ViewData["Title"] = "CreateNotification";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                <form method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Bildirim Ekleme İşlemleri</div>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <label>Bildirim Türü</label>
+                                <input type="text" class="form-control" asp-for="Type">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Bildirim İkonu</label>
+                                <input type="text" class="form-control" asp-for="Icon">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Bildirim Başlığı</label>
+                                <input type="text" class="form-control" asp-for="Description">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Link</label>
+                                <input type="text" class="form-control" asp-for="Link">
+                            </div>
+
+                        </div>
+                        <div class="card-action">
+                            <button class="btn btn-success">Bildirim Ekle</button>
+                            <a href="/Notification/Index" class="btn btn-danger">İptal Et</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
