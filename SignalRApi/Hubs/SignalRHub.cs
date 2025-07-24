@@ -142,8 +142,14 @@ namespace SignalRApi.Hubs
 
         public async Task GetRestaurantTableStatus()
         {
+            //Masaların Dolu - Boş Durumlarını Göstermek
             var value = _restaurantTableService.TGetListAll();
             await Clients.All.SendAsync("ReceiveGetRestaurantTableStatus",value);
+        }
+
+        public async Task SendMessage(string user,string message)
+        {
+            await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
     }
 }
