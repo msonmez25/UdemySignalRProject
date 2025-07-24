@@ -1,0 +1,35 @@
+﻿@model CreateRestaurantTableDto
+@{
+    ViewData["Title"] = "CreateRestaurantTable";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+                <form method="post">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Masa Ekleme İşlemleri</div>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="form-group">
+                                <label>Masa Adı</label>
+                                <input type="text" class="form-control" asp-for="Name">
+                            </div>
+
+                        </div>
+                        <div class="card-action">
+                            <button class="btn btn-success">Masayı Ekle</button>
+                            <a href="/RestaurantTable/Index" class="btn btn-danger">İptal Et</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

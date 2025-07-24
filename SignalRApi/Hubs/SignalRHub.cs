@@ -106,7 +106,6 @@ namespace SignalRApi.Hubs
             await Clients.All.SendAsync("ReceiveCountTable", value16);
         }
 
-
         public async Task SendProgress()
         {
             //Kasadaki Toplam Tutar
@@ -121,7 +120,6 @@ namespace SignalRApi.Hubs
             var value3 = _restaurantTableService.TCountTable();
             await Clients.All.SendAsync("ReceiveCountTable", value3);
         }
-
 
         public async Task GetBookingList()
         {
@@ -140,6 +138,12 @@ namespace SignalRApi.Hubs
             var values = _notificationService.TGetAllNotificationByFalseList();
             await Clients.All.SendAsync("ReceiveGetAllNotificationByFalseList", values);
 
+        }
+
+        public async Task GetRestaurantTableStatus()
+        {
+            var value = _restaurantTableService.TGetListAll();
+            await Clients.All.SendAsync("ReceiveGetRestaurantTableStatus",value);
         }
     }
 }
