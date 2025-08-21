@@ -38,6 +38,21 @@ namespace SignalR.BusinessLayer.Concrete
             return _socialMediaDal.GetListAll();
         }
 
+        public List<SocialMedia> TGetSocialMediaListByStatusTrue()
+        {
+            return _socialMediaDal.GetSocialMediaListByStatusTrue();
+        }
+
+        public void TSocialMediaStatusChangeFalse(int id)
+        {
+            _socialMediaDal.SocialMediaStatusChangeFalse(id);
+        }
+
+        public void TSocialMediaStatusChangeTrue(int id)
+        {
+            _socialMediaDal.SocialMediaStatusChangeTrue(id);
+        }
+
         public void TUpdate(SocialMedia entity)
         {
             _socialMediaDal.Update(entity);

@@ -89,5 +89,19 @@ namespace SignalRWebUI.Controllers
             }
             return View();
         }
+
+        public async Task<IActionResult> SocialMediaStatusChangeTrue(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync($"https://localhost:7195/api/SocialMedia/SocialMediaStatusChangeTrue/{id}");
+            return RedirectToAction("Index", "SocialMedia");
+        }
+
+        public async Task<IActionResult> SocialMediaStatusChangeFalse(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync($"https://localhost:7195/api/SocialMedia/SocialMediaStatusChangeFalse/{id}");
+            return RedirectToAction("Index", "SocialMedia");
+        }
     }
 }

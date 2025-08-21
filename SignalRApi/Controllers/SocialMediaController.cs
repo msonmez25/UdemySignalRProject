@@ -72,5 +72,26 @@ namespace SignalRApi.Controllers
             return Ok("Sosyal Medya bilgisi güncellendi.");
         }
 
+
+        [HttpGet("SocialMediaStatusChangeTrue/{id}")]
+        public IActionResult SocialMediaStatusChangeTrue(int id)
+        {
+            _socialMediaService.TSocialMediaStatusChangeTrue(id);
+            return Ok("Sosyal Medya Aktif Olarak Düzenlendi");
+        }
+
+        [HttpGet("SocialMediaStatusChangeFalse/{id}")]
+        public IActionResult SocialMediaStatusChangeFalse(int id)
+        {
+            _socialMediaService.TSocialMediaStatusChangeFalse(id);
+            return Ok("Sosyal Medya Pasif Olarak Düzenlendi");
+        }
+
+        [HttpGet("GetSocialMediaListByStatusTrue")]
+        public IActionResult GetSocialMediaListByStatusTrue()
+        {
+            var value = _mapper.Map<List<ResultSocialMediaDto>>(_socialMediaService.TGetSocialMediaListByStatusTrue());
+            return Ok(value);
+        }
     }
 }

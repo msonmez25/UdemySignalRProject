@@ -37,6 +37,7 @@ namespace SignalRApi.Controllers
                 Location = createContactDto.Location,
                 Phone = createContactDto.Phone,
                 Mail = createContactDto.FooterDescription,
+                FooterDescription = createContactDto.FooterDescription,
                 Status = true,
                 
             });
@@ -66,8 +67,9 @@ namespace SignalRApi.Controllers
                 ContactID= updateContactDto.ContactID,
                 Location = updateContactDto.Location,
                 Phone = updateContactDto.Phone,
-                Mail = updateContactDto.FooterDescription,
-                Status = updateContactDto.Status,
+                Mail = updateContactDto.Mail,
+                FooterDescription = updateContactDto.FooterDescription,
+                Status = true,
             });
             return Ok("İletişim bilgisi güncellendi.");
         }

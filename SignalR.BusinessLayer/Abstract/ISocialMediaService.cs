@@ -9,5 +9,8 @@ namespace SignalR.BusinessLayer.Abstract
 {
     public interface ISocialMediaService:IGenericService<SocialMedia>
     {
+        void TSocialMediaStatusChangeTrue(int id);
+        void TSocialMediaStatusChangeFalse(int id);
+        List<SocialMedia> TGetSocialMediaListByStatusTrue();
     }
 }

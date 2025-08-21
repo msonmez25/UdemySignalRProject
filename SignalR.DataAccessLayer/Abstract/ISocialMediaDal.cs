@@ -9,5 +9,8 @@ namespace SignalR.DataAccessLayer.Abstract
 {
     public interface ISocialMediaDal : IGenericDal<SocialMedia>
     {
+        void SocialMediaStatusChangeTrue(int id);
+        void SocialMediaStatusChangeFalse(int id);
+        List<SocialMedia> GetSocialMediaListByStatusTrue();
     }
 }
