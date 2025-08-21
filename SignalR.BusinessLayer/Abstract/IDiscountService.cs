@@ -9,5 +9,8 @@ namespace SignalR.BusinessLayer.Abstract
 {
     public interface IDiscountService:IGenericService<Discount>
     {
+        void TDisCountStatusChangeTrue(int id);
+        void TDisCountStatusChangeFalse(int id);
+        List<Discount> TGetDiscountListByStatusTrue();
     }
 }
