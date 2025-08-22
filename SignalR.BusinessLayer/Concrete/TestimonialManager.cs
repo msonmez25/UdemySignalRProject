@@ -38,6 +38,21 @@ namespace SignalR.BusinessLayer.Concrete
             return _testimonialDal.GetListAll();
         }
 
+        public List<Testimonial> TGetTestimonialListByStatusTrue()
+        {
+            return _testimonialDal.GetTestimonialListByStatusTrue();
+        }
+
+        public void TTestimonialStatusChangeFalse(int id)
+        {
+            _testimonialDal.TestimonialStatusChangeFalse(id);
+        }
+
+        public void TTestimonialStatusChangeTrue(int id)
+        {
+            _testimonialDal.TestimonialStatusChangeTrue(id);
+        }
+
         public void TUpdate(Testimonial entity)
         {
             _testimonialDal.Update(entity);

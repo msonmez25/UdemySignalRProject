@@ -74,5 +74,26 @@ namespace SignalRApi.Controllers
             return Ok("Müşteri yorum bilgisi güncellendi.");
         }
 
+
+        [HttpGet("TestimonialStatusChangeTrue/{id}")]
+        public IActionResult TestimonialStatusChangeTrue(int id)
+        {
+            _testimonialService.TTestimonialStatusChangeTrue(id);
+            return Ok("Müşteri yorum bilgisi Aktif Olarak Düzenlendi");
+        }
+
+        [HttpGet("TestimonialStatusChangeFalse/{id}")]
+        public IActionResult TestimonialaStatusChangeFalse(int id)
+        {
+            _testimonialService.TTestimonialStatusChangeFalse(id);
+            return Ok("Müşteri yorum bilgisi Pasif Olarak Düzenlendi");
+        }
+
+        [HttpGet("GetTestimonialListByStatusTrue")]
+        public IActionResult GetTestimonialListByStatusTrue()
+        {
+            var value = _mapper.Map<List<ResultTestimonialDto>>(_testimonialService.TGetTestimonialListByStatusTrue());
+            return Ok(value);
+        }
     }
 }

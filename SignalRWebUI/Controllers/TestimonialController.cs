@@ -90,5 +90,19 @@ namespace SignalRWebUI.Controllers
             }
             return View();
         }
+
+        public async Task<IActionResult> TestimonialStatusChangeTrue(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync($"https://localhost:7195/api/Testimonial/TestimonialStatusChangeTrue/{id}");
+            return RedirectToAction("Index", "Testimonial");
+        }
+
+        public async Task<IActionResult> TestimonialStatusChangeFalse(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync($"https://localhost:7195/api/Testimonial/TestimonialStatusChangeFalse/{id}");
+            return RedirectToAction("Index", "Testimonial");
+        }
     }
 }
