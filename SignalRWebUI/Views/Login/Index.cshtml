@@ -62,15 +62,16 @@
             <h3 class="text-center text-white font-weight-light mb-4">Giriş Sayfası</h3>
             <form method="post">
                 <div class="form-group">
-                    <input type="text" placeholder="Kullanıcı Adı" class="form-control" asp-for="UserName">
+                    <input type="text" placeholder="Kullanıcı Adı" class="form-control" asp-for="UserName" required>
                     
                 </div>
                 <div class="form-group">
-                    <input type="password" placeholder="Şifreniz" class="form-control" asp-for="Password">
+                    <input type="password" placeholder="Şifreniz" class="form-control" asp-for="Password" required>
                 
                 </div>
 
-                <input type="submit" value="Giriş Yap" class="btn btn-danger btn-block mb-3">
+                @* <input type="submit" value="Giriş Yap" class="btn btn-danger btn-block mb-3"> *@
+                <button class="btn btn-danger btn-block mb-3">Giriş Yap</button>
                 <br />
                 <a href="/Register/Index" class="btn btn-success btn-block mb-3">Kayıt Ol</a>
             </form>
