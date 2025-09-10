@@ -121,6 +121,27 @@ namespace SignalRApi.Hubs
             //Toplam Masa Sayısı
             var value3 = _restaurantTableService.TCountTable();
             await Clients.All.SendAsync("ReceiveCountTable", value3);
+
+            //Ortalama Ürün Fiyatı
+            var value4 = _productService.TProductPriceAvg();
+            await Clients.All.SendAsync("ReceiveProductPriceAvg", value4);
+
+            //Ortalama Hamburger Fiyatı
+            var value5 = _productService.TProductAvgPriceByHamburger();
+            await Clients.All.SendAsync("ReceiveProductAvgPriceByHamburger", value5);
+
+            //Toplam İçecek Sayısı
+            var value6 = _productService.TProductCountByCategoryNameDrink();
+            await Clients.All.SendAsync("ReceiveProductCountByCategoryNameDrink", value6);
+
+            //Toplam Sipariş Sayısı
+            var value7 = _orderService.TTotalOrderCount();
+            await Clients.All.SendAsync("ReceiveTotalOrderCount", value7);
+
+            //Aktif Sipariş Sayısı
+            var value8 = _orderService.TActiveOrderCount();
+            await Clients.All.SendAsync("ReceiveActiveOrderCount", value8);
+
         }
 
         public async Task GetBookingList()

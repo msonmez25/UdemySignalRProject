@@ -631,7 +631,7 @@
 
   <ItemGroup>
     <Reference Include="QRCoder">
-      <HintPath>..\..\..\..\Desktop\QRCoder.dll</HintPath>
+      <HintPath>..\..\..\..\Desktop\UdemyCarBookLast-master\QRCoder.dll</HintPath>
     </Reference>
   </ItemGroup>
 

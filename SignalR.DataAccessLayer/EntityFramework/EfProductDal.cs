@@ -57,7 +57,8 @@ namespace SignalR.DataAccessLayer.EntityFramework
         public decimal ProductPriceAvg()
         {
             using var context = new SignalRContext();
-            return context.Products.Average(x => x.Price);
+            var avg = context.Products.Average(x => x.Price);
+            return Math.Round(avg, 2);
         }
 
         public decimal ProductAvgPriceByHamburger()
@@ -70,7 +71,8 @@ namespace SignalR.DataAccessLayer.EntityFramework
         {
             using var context = new SignalRContext();
             return context.Products.Max(x => x.Price);
-        }
+             
+        } 
 
         public decimal ProductPriceMin()
         {
