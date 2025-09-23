@@ -86,5 +86,29 @@ namespace SignalRApi.Controllers
             _bookingService.TBookingStatusCanceled(id);
             return Ok("Rezervasyon İptal Edildi Olarak Değiştirildi");
         }
+
+        [HttpGet("IptalEdilmisBookingCount")]
+        public IActionResult IptalEdilmisBookingCount()
+        {
+            return Ok(_bookingService.TIptalEdilmisBookingCount());
+        }
+
+        [HttpGet("OnaylanmamisBookingCount")]
+        public IActionResult OnaylanmamisBookingCount()
+        {
+            return Ok(_bookingService.TOnaylanmamisBookingCount());
+        }
+
+        [HttpGet("OnaylanmisBookingCount")]
+        public IActionResult OnaylanmisBookingCount()
+        {
+            return Ok(_bookingService.TOnaylanmisBookingCount());
+        }
+
+        [HttpGet("TotalBookingCount")]
+        public IActionResult TotalBookingCount()
+        {
+            return Ok(_bookingService.TTotalBookingCount());
+        }
     }
 }

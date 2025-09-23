@@ -4,6 +4,7 @@ using SignalR.DataAccessLayer.Repositories;
 using SignalR.EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +33,34 @@ namespace SignalR.DataAccessLayer.EntityFramework
             value.Description = "Rezervason İptal Edildi";
             value.Status = false;
             context.SaveChanges();
+        }
+
+        public int OnaylanmamisBookingCount()
+        {
+            var context= new SignalRContext();
+            var value = context.Bookings.Where(x => x.Description == "Rezervasyon Alındı").Count();
+            return value;
+        }
+
+        public int OnaylanmisBookingCount()
+        {
+            var context = new SignalRContext();
+            var value = context.Bookings.Where(x => x.Description == "Rezervason Onaylandı").Count();
+            return value;
+        }
+
+        public int TotalBookingCount()
+        {
+            var context = new SignalRContext();
+            var value = context.Bookings.Count();
+            return value;
+        }
+
+        public int IptalEdilmisBookingCount()
+        {
+            var context = new SignalRContext();
+            var value = context.Bookings.Where(x => x.Description == "Rezervason İptal Edildi").Count();
+            return value;
         }
     }
 }
