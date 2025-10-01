@@ -9,5 +9,7 @@ namespace SignalR.DataAccessLayer.Abstract
 {
     public interface IMessageDal : IGenericDal<Message>
     {
+        void MessageStatusChangeToTrue(int id);
+        void MessageStatusChangeToFalse(int id);
     }
 }

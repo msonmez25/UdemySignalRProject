@@ -38,6 +38,16 @@ namespace SignalR.BusinessLayer.Concrete
             return _messageDal.GetListAll();
         }
 
+        public void TMessageStatusChangeToFalse(int id)
+        {
+            _messageDal.MessageStatusChangeToFalse(id);
+        }
+
+        public void TMessageStatusChangeToTrue(int id)
+        {
+            _messageDal.MessageStatusChangeToTrue(id);
+        }
+
         public void TUpdate(Message entity)
         {
             _messageDal.Update(entity);

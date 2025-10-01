@@ -1,0 +1,80 @@
+﻿@model List<ResultMessageDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Gelen Mailler Listesi</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-sub">
+                           Bize ulaşın menüsü üzerinden atılan maillerin listelendiği sayfadır.
+                        </div>
+                        <table class="table mt-3">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Ad Soyad</th>
+                                    <th scope="col">Konu</th>
+                                    <th scope="col">Tarih</th>
+                                    <th scope="col">Durum</th>
+                                    <th scope="col">Değiştir</th>
+                                    <th scope="col">Detay</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.NameSurname</td>
+                                        <td>@item.Subject</td>
+                                        <td>@item.Date</td>
+                                        @if (@item.Status == true)
+                                        {
+                                            <td>
+                                                Okundu
+
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-warning" href="/BizeUlasin/MessageStatusChangeToFalse/@item.MessageId">
+                                                    Okunmadı Yap
+                                                </a>
+                                            </td>
+
+                                        }
+                                        @if (@item.Status == false)
+                                        {
+                                            <td>
+                                                Okunmadı
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-info" href="/BizeUlasin/MessageStatusChangeToTrue/@item.MessageId">
+                                                    Okundu Yap
+                                                </a>
+                                            </td>
+
+                                        }
+                                        <td><a href="/BizeUlasin/UpdateBizeUlasin/@item.MessageId" class="btn btn-success">Detay Gör</a></td>
+
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

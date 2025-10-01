@@ -40,7 +40,7 @@ namespace SignalRApi.Controllers
                 Date= DateTime.Now,
                 Status = false
             });
-            return Ok("Mesaj bir şekilde eklendi.");
+            return Ok("Mesaj şekilde eklendi.");
         }
 
         [HttpDelete("{id}")]
@@ -73,6 +73,22 @@ namespace SignalRApi.Controllers
                 Status = false
             });
             return Ok("Mesaj şekilde güncellendi.");
+        }
+
+
+        [HttpGet("MessageStatusChangeToFalse/{id}")]
+        public IActionResult MessageStatusChangeToFalse(int id)
+        {
+            _messageService.TMessageStatusChangeToFalse(id);
+            return Ok("Güncelleme Yapıldı");
+        }
+
+
+        [HttpGet("MessageStatusChangeToTrue/{id}")]
+        public IActionResult MessageStatusChangeToTrue(int id)
+        {
+            _messageService.TMessageStatusChangeToTrue(id);
+            return Ok("Güncelleme Yapıldı");
         }
 
     }

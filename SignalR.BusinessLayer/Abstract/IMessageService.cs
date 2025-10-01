@@ -9,5 +9,7 @@ namespace SignalR.BusinessLayer.Abstract
 {
     public interface IMessageService : IGenericService<Message>
     {
+        void TMessageStatusChangeToTrue(int id);
+        void TMessageStatusChangeToFalse(int id);
     }
 }
