@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SignalR.BusinessLayer.Abstract;
+using SignalR.DtoLayer.CategoryDto;
 using SignalR.DtoLayer.NotificationDto;
 using SignalR.EntityLayer.Entities;
 
@@ -32,22 +33,16 @@ namespace SignalRApi.Controllers
         public IActionResult GetNotification(int id)
         {
             var value = _notificationService.TGetByID(id);
-            return Ok(value);
+            return Ok(_mapper.Map<GetNotificationDto>(value));
         }
 
         [HttpPost]
         public IActionResult CreateNotification(CreateNotificationDto createNotificationDto)
         {
-            _notificationService.TAdd(new Notification()
-            {
-                Type = createNotificationDto.Type,
-                Icon = createNotificationDto.Icon,
-                Link = createNotificationDto.Link,
-                Description = createNotificationDto.Description,
-                Date = DateTime.Now,
-                Status = false,
-
-            });
+            createNotificationDto.Date = DateTime.Now;
+            createNotificationDto.Status = false;
+            var value = _mapper.Map<Notification>(createNotificationDto);
+            _notificationService.TAdd(value);           
             return Ok("Bildirim eklendi");
         }
 
@@ -63,16 +58,10 @@ namespace SignalRApi.Controllers
         [HttpPut]
         public IActionResult UpdateNotification(UpdateNotificationDto updateNotificationDto)
         {
-            _notificationService.TUpdate(new Notification()
-            {
-                NotificationID = updateNotificationDto.NotificationID,
-                Type = updateNotificationDto.Type,
-                Icon = updateNotificationDto.Icon,
-                Link = updateNotificationDto.Link,
-                Description = updateNotificationDto.Description,
-                Date = DateTime.Now,
-                Status = true
-            });
+            updateNotificationDto.Date = DateTime.Now;
+            updateNotificationDto.Status = true;
+            var value = _mapper.Map<Notification>(updateNotificationDto);
+            _notificationService.TUpdate(value);
             return Ok("Bildirim güncellendi.");
         }
 

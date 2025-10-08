@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SignalR.BusinessLayer.Abstract;
 using SignalR.DataAccessLayer.Concrete;
+using SignalR.DtoLayer.CategoryDto;
 using SignalR.DtoLayer.ProductDto;
 using SignalR.EntityLayer.Entities;
 
@@ -108,16 +109,8 @@ namespace SignalRApi.Controllers
         [HttpPost]
         public IActionResult CreateProduct(CreateProductDto createProductDto)
         {
-            _productService.TAdd(new Product()
-            {
-                ProductName = createProductDto.ProductName,
-                Description = createProductDto.Description,
-                Price = createProductDto.Price,
-                ImageUrl = createProductDto.ImageUrl,
-                ProductStatus = true,
-                CategoryID = createProductDto.CategoryID,
-
-            }); 
+            var value = _mapper.Map<Product>(createProductDto);
+            _productService.TAdd(value);
             return Ok("Ürün bilgisi eklendi");
         }
 
@@ -133,22 +126,14 @@ namespace SignalRApi.Controllers
         public IActionResult GetProduct(int id)
         {
             var value = _productService.TGetByID(id);
-            return Ok(value);
+            return Ok(_mapper.Map<GetProductDto>(value));
         }
 
         [HttpPut]
         public IActionResult UpdateProduct(UpdateProductDto updateProductDto)
         {
-            _productService.TUpdate(new Product()
-            {
-                ProductID = updateProductDto.ProductID,
-                ProductName = updateProductDto.ProductName,
-                Description = updateProductDto.Description,
-                Price = updateProductDto.Price,
-                ImageUrl = updateProductDto.ImageUrl,
-                ProductStatus = updateProductDto.ProductStatus,
-                CategoryID = updateProductDto.CategoryID,
-            });
+            var value = _mapper.Map<Product>(updateProductDto);
+            _productService.TUpdate(value);
             return Ok("Ürün bilgisi güncellendi.");
         }
 

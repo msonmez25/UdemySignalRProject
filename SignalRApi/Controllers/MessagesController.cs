@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SignalR.BusinessLayer.Abstract;
+using SignalR.DtoLayer.CategoryDto;
 using SignalR.DtoLayer.MessageDto;
 using SignalR.EntityLayer.Entities;
 
@@ -30,16 +31,10 @@ namespace SignalRApi.Controllers
         [HttpPost]
         public IActionResult CreateMessage(CreateMessageDto createMessageDto)
         {
-            _messageService.TAdd(new Message
-            {
-                NameSurname = createMessageDto.NameSurname,
-                Mail=createMessageDto.Mail,
-                Phone = createMessageDto.Phone,
-                Subject = createMessageDto.Subject,
-                MessageContent = createMessageDto.MessageContent,
-                Date= DateTime.Now,
-                Status = false
-            });
+            createMessageDto.Date = DateTime.Now;
+            createMessageDto.Status = false;
+            var value = _mapper.Map<Message>(createMessageDto);
+            _messageService.TAdd(value);
             return Ok("Mesaj şekilde eklendi.");
         }
 
@@ -55,23 +50,15 @@ namespace SignalRApi.Controllers
         public IActionResult GetMessage(int id)
         {
             var value = _messageService.TGetByID(id);
-            return Ok(value);
+            return Ok(_mapper.Map<GetMessageDto>(value));
         }
 
         [HttpPut]
         public IActionResult UpdateMessage(UpdateMessageDto updateMessageDto)
         {
-            _messageService.TUpdate(new Message
-            {
-                MessageId= updateMessageDto.MessageId,
-                NameSurname = updateMessageDto.NameSurname,
-                Mail = updateMessageDto.Mail,
-                Phone = updateMessageDto.Phone,
-                Subject = updateMessageDto.Subject,
-                MessageContent = updateMessageDto.MessageContent,
-                Date = updateMessageDto.Date,
-                Status = false
-            });
+            updateMessageDto.Status = false;
+            var value = _mapper.Map<Message>(updateMessageDto);
+            _messageService.TUpdate(value);
             return Ok("Mesaj şekilde güncellendi.");
         }
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SignalR.BusinessLayer.Abstract;
+using SignalR.DtoLayer.CategoryDto;
 using SignalR.DtoLayer.OpenInfoDto;
 using SignalR.EntityLayer.Entities;
 
@@ -31,12 +32,8 @@ namespace SignalRApi.Controllers
         [HttpPost]
         public IActionResult CreateOpenInfo(CreateOpenInfoDto createOpenInfoDto)
         {
-            _openInfoService.TAdd(new OpenInfo()
-            {
-               Title= createOpenInfoDto.Title,
-               Description= createOpenInfoDto.Description,
-
-            });
+            var value = _mapper.Map<OpenInfo>(createOpenInfoDto);
+            _openInfoService.TAdd(value);
             return Ok("Çalışma saat bilgisi eklendi");
         }
 
@@ -52,18 +49,14 @@ namespace SignalRApi.Controllers
         public IActionResult GetOpenInfo(int id)
         {
             var value = _openInfoService.TGetByID(id);
-            return Ok(value);
+            return Ok(_mapper.Map<GetOpenInfoDto>(value));
         }
 
         [HttpPut]
         public IActionResult UpdateOpenInfo(UpdateOpenInfoDto updateOpenInfoDto)
         {
-            _openInfoService.TUpdate(new OpenInfo()
-            {
-                OpenInfoID = updateOpenInfoDto.OpenInfoID,
-                Title = updateOpenInfoDto.Title,
-                Description = updateOpenInfoDto.Description,
-            });
+            var value = _mapper.Map<OpenInfo>(updateOpenInfoDto);
+            _openInfoService.TUpdate(value);
             return Ok("Çalışma saat bilgisi güncellendi.");
         }
     }

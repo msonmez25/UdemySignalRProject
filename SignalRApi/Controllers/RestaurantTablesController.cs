@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SignalR.BusinessLayer.Abstract;
+using SignalR.DtoLayer.CategoryDto;
 using SignalR.DtoLayer.RestaurantTableDto;
 using SignalR.EntityLayer.Entities;
 
@@ -39,12 +40,9 @@ namespace SignalRApi.Controllers
         [HttpPost]
         public IActionResult CreateRestaurantTable(CreateRestaurantTableDto createRestaurantTableDto)
         {
-            _restaurantTableService.TAdd(new RestaurantTable()
-            {
-                Name = createRestaurantTableDto.Name,
-                Status = false,
-
-            });
+            createRestaurantTableDto.Status = true;
+            var value = _mapper.Map<RestaurantTable>(createRestaurantTableDto);
+            _restaurantTableService.TAdd(value);
             return Ok("Masa eklendi");
         }
 
@@ -60,19 +58,14 @@ namespace SignalRApi.Controllers
         public IActionResult GetRestaurantTable(int id)
         {
             var value = _restaurantTableService.TGetByID(id);
-            return Ok(value);
+            return Ok(_mapper.Map<GetRestaurantTableDto>(value));
         }
 
         [HttpPut]
         public IActionResult UpdateRestaurantTable(UpdateRestaurantTableDto updateRestaurantTableDto)
         {
-            _restaurantTableService.TUpdate(new RestaurantTable()
-            {
-                RestaurantTableID= updateRestaurantTableDto.RestaurantTableID,
-                Name= updateRestaurantTableDto.Name,
-                Status = updateRestaurantTableDto.Status
-                
-            });
+            var value = _mapper.Map<RestaurantTable>(updateRestaurantTableDto);
+            _restaurantTableService.TUpdate(value);
             return Ok("Masa güncellendi.");
         }
     }
