@@ -22,11 +22,11 @@ namespace SignalRWebUI.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7195/api/Product");
+            var responseMessage = await client.GetAsync("https://localhost:7195/api/Product/ProductsListWithCategoryName");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultProductDto>>(jsonData);
+                var values = JsonConvert.DeserializeObject<List<ResultProductWithCategoryNameDto>>(jsonData);
                 return View(values);
             }
             return View();
