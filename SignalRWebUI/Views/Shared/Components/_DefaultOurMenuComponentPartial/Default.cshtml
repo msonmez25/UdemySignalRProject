@@ -1,4 +1,5 @@
-﻿@model List<ResultProductWithCategoryNameDto>
+﻿@* @model List<ResultProductWithCategoryNameDto> *@
+@model List<ResultLast12ProductWithCategoryNameDto>
 
 <section class="food_section layout_padding-bottom">
     <div class="container">
@@ -10,19 +11,19 @@
 
         <ul class="filters_menu">
             <li class="active" data-filter="*">Tümü</li>
-            <li data-filter="*.Hamburger">Hamburger</li>
-            <li data-filter="*.Makarna">Makarna</li>
-            <li data-filter="*.Salata">Salata</li>
-            <li data-filter="*.Tatlı">Tatlı</li>
-            <li data-filter="*.Kızartma">Kızartma</li>
-            <li data-filter="*.İçecek">İçecek</li>
+            <li data-filter="*.1">Hamburger</li>
+            <li data-filter="*.2">Makarna</li>
+            <li data-filter="*.3">Salata</li>
+            <li data-filter="*.4">Tatlı</li>
+            <li data-filter="*.7">Kızartma</li>
+            <li data-filter="*.5">İçecek</li>
         </ul>
 
         <div class="filters-content">
             <div class="row grid">
                 @foreach(var item in Model)
                 {
-                    <div class="col-sm-6 col-lg-4 all @item.CategoryName">
+                    <div class="col-sm-6 col-lg-4 all @item.CategoryID">
                         <div class="box">
                             <div>
                                 <div class="img-box">
@@ -32,9 +33,20 @@
                                     <h5>
                                         @item.ProductName
                                     </h5>
-                                    <p>
-                                        @item.Description
-                                    </p>
+
+                                    @if (!string.IsNullOrEmpty(item.Description))
+                                    {
+                                        <p>@item.Description</p>
+                                    }
+                                    else
+                                    {
+                                        <p>
+                                            <br />
+                                            <br />
+                                            <br />
+                                        </p>
+                                    }
+                                    
                                     <div class="options">
                                         <h6>
                                             @item.Price ₺

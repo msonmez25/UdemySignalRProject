@@ -24,6 +24,19 @@ namespace SignalR.DataAccessLayer.EntityFramework
             return values;
         }
 
+        public List<Product> GetLast12ProductsCategoryGroup()
+        {
+            var context = new SignalRContext();            
+            var values = context.Products
+    .AsEnumerable() // bundan sonrası bellekte çalışır
+    .GroupBy(p => p.CategoryID)
+    .SelectMany(g => g
+        .OrderByDescending(p => p.Price)
+        .Take(2))
+    .ToList();
+            return values;
+        }
+
         public int ProductCount()
         {
             using var context = new SignalRContext();
@@ -79,5 +92,7 @@ namespace SignalR.DataAccessLayer.EntityFramework
             using var context = new SignalRContext();
             return context.Products.Min(x => x.Price);
         }
+
+        
     }
 }

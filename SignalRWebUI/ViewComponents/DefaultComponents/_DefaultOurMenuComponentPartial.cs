@@ -18,11 +18,11 @@ namespace SignalRWebUI.ViewComponents.DefaultComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7195/api/Product/ProductsListWithCategoryName");
+            var responseMessage = await client.GetAsync("https://localhost:7195/api/Product/GetLast12ProductsCategoryGroup");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
-                var values = JsonConvert.DeserializeObject<List<ResultProductWithCategoryNameDto>>(jsonData);
+                var values = JsonConvert.DeserializeObject<List<ResultLast12ProductWithCategoryNameDto>>(jsonData);
                 return View(values);
             }
             return View();

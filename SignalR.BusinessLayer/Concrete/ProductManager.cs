@@ -43,6 +43,11 @@ namespace SignalR.BusinessLayer.Concrete
             return _productDal.GetProductsWithCategoryName();
         }
 
+        public List<Product> TGetLast12ProductsCategoryGroup()
+        {
+            return _productDal.GetLast12ProductsCategoryGroup();
+        }
+
         public int TProductCount()
         {
             return _productDal.ProductCount();
@@ -92,5 +97,7 @@ namespace SignalR.BusinessLayer.Concrete
         {
            _productDal.Update(entity);
         }
+
+        
     }
 }

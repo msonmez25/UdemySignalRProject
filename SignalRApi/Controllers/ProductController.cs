@@ -105,6 +105,13 @@ namespace SignalRApi.Controllers
             return Ok(values);
         }
 
+        [HttpGet("GetLast12ProductsCategoryGroup")]
+        public IActionResult GetLast12ProductsCategoryGroup()
+        {
+            var value=_productService.TGetLast12ProductsCategoryGroup();   
+            return Ok(value);
+        }
+
 
         [HttpPost]
         public IActionResult CreateProduct(CreateProductDto createProductDto)
