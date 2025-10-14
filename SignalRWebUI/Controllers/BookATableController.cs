@@ -33,7 +33,13 @@ namespace SignalRWebUI.Controllers
             {
                 return RedirectToAction("Index", "Default");
             }
-            return View();
+            else
+            {
+                var errorContent = await responseMessage.Content.ReadAsStringAsync();
+                ModelState.AddModelError(string.Empty, errorContent);
+                return View();
+            }
+            
         }
     }
 }
