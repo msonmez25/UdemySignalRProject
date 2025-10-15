@@ -29,15 +29,15 @@ builder.Services.ConfigureApplicationCookie(opts =>
 });
 
 
-
+//404 sayfa yönlendirmesi
 var app = builder.Build();
 
-//404 sayfa yönlendirmesi
-app.UseStatusCodePages(async code =>
+app.UseStatusCodePages(async x =>
 {
-    if (code.HttpContext.Response.StatusCode == 404)
+    if (x.HttpContext.Response.StatusCode == 404)
     {
-        code.HttpContext.Response.Redirect("/Error/NotFound404Page/");
+        await Task.Run(() => x.HttpContext.Response.Redirect("/Error/NotFound404Page/"));
+        //x.HttpContext.Response.Redirect("/Error/NotFound404Page/");
     }
 });
 
