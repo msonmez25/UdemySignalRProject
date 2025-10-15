@@ -68,5 +68,19 @@ namespace SignalRApi.Controllers
             _restaurantTableService.TUpdate(value);
             return Ok("Masa güncellendi.");
         }
+
+        [HttpGet("ChangeRestaurantTableStatusToTrue")]
+        public IActionResult ChangeRestaurantTableStatusToTrue(int id)
+        {
+            _restaurantTableService.TChangeRestaurantTableStatusToTrue(id);
+            return Ok("Masa durum True yapıldı.");
+        }
+
+        [HttpGet("ChangeRestaurantTableStatusToFalse")]
+        public IActionResult ChangeRestaurantTableStatusToFalse(int id)
+        {
+            _restaurantTableService.TChangeRestaurantTableStatusToFalse(id);
+            return Ok("Masa durum False yapıldı.");
+        }
     }
 }

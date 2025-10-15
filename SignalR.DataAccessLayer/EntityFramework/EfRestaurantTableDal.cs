@@ -16,6 +16,22 @@ namespace SignalR.DataAccessLayer.EntityFramework
         {
         }
 
+        public void ChangeRestaurantTableStatusToFalse(int id)
+        {
+            var context = new SignalRContext();
+            var value = context.RestaurantTables.Where(x => x.RestaurantTableID == id).FirstOrDefault();
+            value.Status = false;
+            context.SaveChanges();
+        }
+
+        public void ChangeRestaurantTableStatusToTrue(int id)
+        {
+            var context = new SignalRContext();
+            var value = context.RestaurantTables.Where(x => x.RestaurantTableID == id).FirstOrDefault();
+            value.Status = true;
+            context.SaveChanges();
+        }
+
         public int CountTable()
         {
             var context = new SignalRContext();

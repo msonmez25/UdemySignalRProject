@@ -23,6 +23,16 @@ namespace SignalR.BusinessLayer.Concrete
             _restaurantTableDal.Add(entity);
         }
 
+        public void TChangeRestaurantTableStatusToFalse(int id)
+        {
+            _restaurantTableDal.ChangeRestaurantTableStatusToFalse(id);
+        }
+
+        public void TChangeRestaurantTableStatusToTrue(int id)
+        {
+            _restaurantTableDal.ChangeRestaurantTableStatusToTrue(id);
+        }
+
         public int TCountTable()
         {
             return _restaurantTableDal.CountTable();

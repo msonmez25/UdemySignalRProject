@@ -10,5 +10,7 @@ namespace SignalR.DataAccessLayer.Abstract
     public interface IRestaurantTableDal : IGenericDal<RestaurantTable>
     {
         public int CountTable();
+        public void ChangeRestaurantTableStatusToTrue(int id);
+        public void ChangeRestaurantTableStatusToFalse(int id);
     }
 }
