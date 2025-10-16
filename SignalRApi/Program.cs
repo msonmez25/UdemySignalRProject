@@ -2,7 +2,7 @@ using FluentValidation;
 using SignalR.BusinessLayer.Abstract;
 using SignalR.BusinessLayer.Concrete;
 using SignalR.BusinessLayer.Container;
-using SignalR.BusinessLayer.ValidationRules.BookingValidations;
+//using SignalR.BusinessLayer.ValidationRules.BookingValidations;
 using SignalR.DataAccessLayer.Abstract;
 using SignalR.DataAccessLayer.Concrete;
 using SignalR.DataAccessLayer.EntityFramework;
@@ -34,7 +34,7 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 //Buradan Dependencies leri alýk
 builder.Services.ContainerDependencies();
 
-builder.Services.AddValidatorsFromAssemblyContaining<CreateBookingValidation>();
+//builder.Services.AddValidatorsFromAssemblyContaining<CreateBookingValidation>();
 
 
 builder.Services.AddControllersWithViews()

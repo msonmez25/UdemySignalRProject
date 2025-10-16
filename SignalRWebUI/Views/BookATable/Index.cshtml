@@ -27,22 +27,21 @@
                     <div class="form_container">
                         <form method="post">
 
-                            <div asp-validation-summary="All" class="text-danger"></div>
 
                             <div>
-                                <input type="text" class="form-control" placeholder="Adınız Soyadınız"  asp-for="Name" />
-                                <span asp-validation-for="Name" class="text-danger"></span>
+                                <input type="text" class="form-control" placeholder="Adınız Soyadınız" id="nameInput" asp-for="Name"  />
+                                @* <span asp-validation-for="Name" class="text-danger"></span> *@
                             </div>
                             <div>
-                                <input type="text" class="form-control" placeholder="Telefon Numaranız" asp-for="Phone"  />
-                                <span asp-validation-for="Phone" class="text-danger"></span>
+                                <input type="text" class="form-control" placeholder="Telefon Numaranız" id="phoneInput" asp-for="Phone"  />
+                                @* <span asp-validation-for="Phone" class="text-danger"></span> *@
                             </div>
                             <div>
-                                <input type="email" class="form-control" placeholder="Mail Adresiniz" asp-for="Mail" />
-                                <span asp-validation-for="Mail" class="text-danger"></span>
+                                <input type="email" class="form-control" placeholder="Mail Adresiniz" id="mailInput" asp-for="Mail"  />
+                                @* <span asp-validation-for="Mail" class="text-danger"></span> *@
                             </div>
                             <div>
-                                <select class="form-control nice-select wide" asp-for="PersonCount" >
+                                @* <select class="form-control nice-select wide" asp-for="PersonCount" required >
                                     <option value="" disabled selected>
                                         Kaç Kişiniz?
                                     </option>
@@ -64,12 +63,24 @@
                                     <option value="6">
                                         6 ++
                                     </option>
+                                </select> *@
+                                @* <span asp-validation-for="PersonCount" class="text-danger"></span> *@
+
+                                <select id="personSelect" class="form-control nice-select wide" asp-for="PersonCount" >
+                                    <option value="" disabled selected hidden>Kaç Kişiniz?</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6 ++</option>
                                 </select>
-                                <span asp-validation-for="PersonCount" class="text-danger"></span>
+
                             </div>
                             <div>
-                                <input type="date" class="form-control" asp-for="Date">
-                                <span asp-validation-for="Date" class="text-danger"></span>
+                                @* <input type="date" class="form-control" asp-for="Date" required> *@
+                                @* <span asp-validation-for="Date" class="text-danger"></span> *@
+                                <input type="date" id="dateInput" class="form-control" asp-for="Date" >
                             </div>
                             <div class="btn_box">
                                 <button id="btnbooking">
@@ -94,19 +105,80 @@
 
     @await Component.InvokeAsync("_UILayoutScriptComponentPartial")
 
-@*     <script type="text/javascript">
+    <!-- SweetAlert2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script type="text/javascript">
         $("#btnbooking").click(function () {
+            const name = $("#nameInput").val();
+            const phone = $("#phoneInput").val();
+            const mail = $("#mailInput").val();
+            const select = $("#personSelect").val();
+            const date = $("#dateInput").val();
+           
+
+            if (!name) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Eksik Bilgi!",
+                    text: "Lütfen Ad Soyad giriniz.",
+                    confirmButtonText: "Tamam"
+                });
+                return;
+            }
+
+            if (!phone) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Eksik Bilgi!",
+                    text: "Lütfen telefon giriniz.",
+                    confirmButtonText: "Tamam"
+                });
+                return;
+            }
+
+            if (!mail) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Eksik Bilgi!",
+                    text: "Lütfen mail giriniz.",
+                    confirmButtonText: "Tamam"
+                });
+                return;
+            }
+
+            if (!select) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Eksik Bilgi!",
+                    text: "Lütfen kişi sayısını seçiniz.",
+                    confirmButtonText: "Tamam"
+                });
+                return;
+            }
+
+            if (!date) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Eksik Bilgi!",
+                    text: "Lütfen tarih seçiniz.",
+                    confirmButtonText: "Tamam"
+                });
+                return;
+            }
+
+            // Başarılı popup
             Swal.fire({
-                title: '<strong>Tebrikler!</strong>',
+                title: "<strong>Tebrikler!</strong>",
                 text: "Rezervasyon Kaydedildi!",
-                icon: 'success',
-                showConfirmButton: false,
-                allowOutsideClick: false,
-                footer: `<a class="btn btn-theme" href="/Default/Index/">Anasayfaya Dön!</a>`
+                icon: "success",
+                timer: 2500,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.href = "/Default/Index/";
             });
         });
     </script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> *@
 
 
 </body>

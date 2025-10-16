@@ -14,13 +14,12 @@ namespace SignalRApi.Controllers
     {
         private readonly IBookingService _bookingService;
         private readonly IMapper _mapper;
-        private readonly IValidator<CreateBookingDto> _validator;
+        //private readonly IValidator<CreateBookingDto> _validator;
 
-        public BookingController(IBookingService bookingService, IMapper mapper, IValidator<CreateBookingDto> validator)
+        public BookingController(IBookingService bookingService, IMapper mapper)
         {
             _bookingService = bookingService;
             _mapper = mapper;
-            _validator = validator;
         }
 
         [HttpGet]
@@ -33,11 +32,11 @@ namespace SignalRApi.Controllers
         [HttpPost]
         public IActionResult CreateBooking(CreateBookingDto createBookingDto)
         {
-            var validationResult = _validator.Validate(createBookingDto);
-            if (!validationResult.IsValid)
-            {
-                return BadRequest(validationResult.Errors);
-            }
+            //var validationResult = _validator.Validate(createBookingDto);
+            //if (!validationResult.IsValid)
+            //{
+            //    return BadRequest(validationResult.Errors);
+            //}
             createBookingDto.Description = "Rezervasyon Alındı";
             var value = _mapper.Map<Booking>(createBookingDto);
             _bookingService.TAdd(value);
