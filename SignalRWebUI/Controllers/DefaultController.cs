@@ -33,15 +33,30 @@ namespace SignalRWebUI.Controllers
         public async Task<IActionResult> SendMessage(CreateMessageDto createMessageDto)
         {
 
+            //var client = _httpClientFactory.CreateClient();
+            //var jsonData = JsonConvert.SerializeObject(createMessageDto);
+            //StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            //var responseMessage = await client.PostAsync("https://localhost:7195/api/Messages", stringContent);
+            //if (responseMessage.IsSuccessStatusCode)
+            //{
+            //    return RedirectToAction("Index", "Default");
+            //}
+            //return View();
+
+
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(createMessageDto);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
             var responseMessage = await client.PostAsync("https://localhost:7195/api/Messages", stringContent);
+
             if (responseMessage.IsSuccessStatusCode)
             {
-                return RedirectToAction("Index", "Default");
+                // JSON formatında cevap dönüyoruz
+                return Json(new { success = true, message = "Mesajınız başarıyla gönderildi!" });
             }
-            return View();
+
+            return Json(new { success = false, message = "Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyiniz." });
+
         }
     }
 }
