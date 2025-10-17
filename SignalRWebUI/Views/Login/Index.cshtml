@@ -1,54 +1,63 @@
-﻿@model LoginDto
+﻿@model SignalRWebUI.Dtos.IdentityDtos.LoginDto
 @{
     Layout = null;
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="shortcut icon" href="~/miri-ui/docs/assets/images/icohamburger.ico" type="image/x-icon">
     <title>SignalR Restaurant Giriş Ekranı</title>
 
-    <!-- Vendor css -->
     <link rel="stylesheet" href="~/miri-ui/src/vendors/mdi/font/css/materialdesignicons.min.css">
-
-    <!-- Base css with customised bootstrap included -->
     <link rel="stylesheet" href="~/miri-ui/src/css/miri-ui-kit-free.css">
-
-    <!-- Stylesheet for demo page specific css -->
     <link rel="stylesheet" href="~/miri-ui/docs/assets/css/demo.css">
-    <style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
+    <style>
         .btn-danger {
             color: #ffffff;
-            background-color: #E69C00; 
-            border-color: #E69C00;
+            background-color: #eb8821;
+            border-color: #eb8821;
         }
+
+            .btn-danger:hover {
+                background-color: #E69C00;
+                border-color: #E69C00;
+            }
+
+        /* Şifre alanı ikonu hizalama */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+            font-size: 18px;
+        }
+
+            .toggle-password:hover {
+                color: #eb8821;
+            }
     </style>
 </head>
-
 
 <body class="login-page">
     <header class="miri-ui-kit-header header-no-bg-img header-navbar-only">
         <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
             <div class="container">
-
                 <a class="navbar-brand" href="/Default/Index" style="font-size:30px">
-                    <img src="~/errorpages/documentation/assets/images/rest.png" alt="Your logo" title="Your logo" style="height:120px;" />
-
+                    <img src="~/errorpages/documentation/assets/images/rest.png" alt="Your logo" style="height:120px;" />
                     SignalR Restaurant
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#miriUiKitNavbar"
-                        aria-controls="navbarSupportedContent2" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="mdi mdi-menu"></span>
-                </button>
-
                 <div class="collapse navbar-collapse" id="miriUiKitNavbar">
                     <div class="navbar-nav ml-auto">
-
                         <form action="/Default/Index/" class="form-inline ml-lg-3">
                             <button class="btn btn-danger">Siteye Git</button>
                         </form>
@@ -57,27 +66,35 @@
             </div>
         </nav>
     </header>
+
     <div class="card login-card">
         <div class="card-body">
-            <h3 class="text-center text-white font-weight-light mb-4">Giriş Sayfası</h3>
+            <h3 class="text-center text-white font-weight-light mb-4">Kullanıcı Girişi</h3>
+
             <form method="post">
                 <div class="form-group">
-                    <input type="text" placeholder="Kullanıcı Adı" class="form-control" asp-for="UserName" required>
-                    
-                </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Şifreniz" class="form-control" asp-for="Password" required>
-                
+                    <input type="text" placeholder="Kullanıcı Adı" class="form-control" asp-for="UserName" required />
                 </div>
 
-                @* <input type="submit" value="Giriş Yap" class="btn btn-danger btn-block mb-3"> *@
-                <button class="btn btn-danger btn-block mb-3">Giriş Yap</button>
-                <br />
+                <div class="form-group password-wrapper">
+                    <input type="password" placeholder="Şifreniz" class="form-control" asp-for="Password" id="passwordInput" required />
+                    <i class="fa-solid fa-eye toggle-password" id="togglePassword" title="Şifreyi Göster/Gizle"></i>
+                </div>
+
+
+                @if (ViewBag.LoginError != null)
+                {
+                    <div id="loginError" class="alert alert-danger text-center" role="alert">
+                        @ViewBag.LoginError
+                    </div>
+                }
+
+                <button type="submit" class="btn btn-danger btn-block mb-3">Giriş Yap</button>
                 <a href="/Register/Index" class="btn btn-success btn-block mb-3">Kayıt Ol</a>
             </form>
-
         </div>
     </div>
+
     <footer>
         <div class="container">
             <nav class="navbar navbar-dark bg-transparent navbar-expand footer-navbar d-block d-sm-flex text-center">
@@ -88,9 +105,27 @@
             </nav>
         </div>
     </footer>
+
     <script src="~/miri-ui/src/vendors/jquery/dist/jquery.min.js"></script>
     <script src="~/miri-ui/src/vendors/popper.js/dist/umd/popper.min.js"></script>
     <script src="~/miri-ui/src/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- 🔹 Uyarıyı input değiştiğinde gizleyen script -->
+    <script>
+        $(document).ready(function () {
+            // Şifre göster/gizle
+            $('#togglePassword').on('click', function () {
+                const passwordInput = $('#passwordInput');
+                const isPassword = passwordInput.attr('type') === 'password';
+                passwordInput.attr('type', isPassword ? 'text' : 'password');
+                $(this).toggleClass('fa-eye fa-eye-slash'); // 👁️ değişimi
+            });
+
+            // Kullanıcı yazınca hata mesajı gizle
+            $('input').on('input', function () {
+                $('#loginError').fadeOut(200);
+            });
+        });
+    </script>
 </body>
 </html>
-

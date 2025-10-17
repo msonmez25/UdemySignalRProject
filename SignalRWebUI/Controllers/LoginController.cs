@@ -9,7 +9,6 @@ namespace SignalRWebUI.Controllers
     [AllowAnonymous]
     public class LoginController : Controller
     {
-
         private readonly SignInManager<AppUser> _signInManager;
 
         public LoginController(SignInManager<AppUser> signInManager)
@@ -23,22 +22,34 @@ namespace SignalRWebUI.Controllers
             return View();
         }
 
-
         [HttpPost]
         public async Task<IActionResult> Index(LoginDto loginDto)
         {
-            var result = await _signInManager.PasswordSignInAsync(loginDto.UserName, loginDto.Password, false, false);
+            if (!ModelState.IsValid)
+                return View(loginDto);
+
+            var result = await _signInManager.PasswordSignInAsync(
+                loginDto.UserName,
+                loginDto.Password,
+                isPersistent: false,
+                lockoutOnFailure: false
+            );
+
             if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Category");
             }
-            return View();
+
+            // 🔴 Giriş başarısızsa kullanıcıya mesaj göster
+            ViewBag.LoginError = "Kullanıcı adı veya şifre hatalı! Lütfen tekrar deneyin.";
+
+            return View(loginDto);
         }
 
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index","Login");
+            return RedirectToAction("Index", "Login");
         }
     }
 }
