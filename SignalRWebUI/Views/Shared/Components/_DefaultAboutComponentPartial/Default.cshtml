@@ -6,11 +6,20 @@
     <section class="about_section layout_padding">
         <div class="container  ">
             <div class="row">
-                <div class="col-md-6 ">
+                @* <div class="col-md-6 ">
                     <div class="img-box">
                         <img src="@item.ImageUrl" alt="">
                     </div>
+                </div> *@
+
+
+                <!-- Görsel -->
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <div class="img-box shadow rounded-3 overflow-hidden">
+                        <img src="@item.ImageUrl" alt="@item.Title" class="img-fluid">
+                    </div>
                 </div>
+
                 <div class="col-md-6">
                     <div class="detail-box">
                         <div class="heading_container">
@@ -18,8 +27,14 @@
                                 @item.Title
                             </h2>
                         </div>
-                        <p>
-                            @(item.Description?.Length > 100 ? item.Description.Substring(0, 235) + "..." : item.Description)
+                        <p style="text-align: justify; line-height: 1.7; font-size: 1.05rem;">
+                           @*  @(item.Description?.Length > 100 ? item.Description.Substring(0, 235) + "..." : item.Description) *@
+                            @Html.Raw(
+                                     (item.Description?.Length > 235
+                                     ? item.Description.Substring(0, 235) + "..."
+                                     : item.Description)?
+                                     .Replace("\n", "<br />")
+                                     )
                         </p>
                         <a href="/AboutHome/Index/">
                             Daha Fazlasını Gör

@@ -17,25 +17,28 @@
     @foreach (var item in Model)
     {
         <section class="about_section layout_padding">
-            <div class="container  ">
-                <div class="row">
-                    <div class="col-md-6 ">
-                        <div class="img-box">
-                            <img src="@item.ImageUrl" alt="">
+            <div class="container">
+                <div class="row align-items-center">
+                    <!-- Görsel -->
+                    <div class="col-md-6 mb-4 mb-md-0">
+                        <div class="img-box shadow rounded-3 overflow-hidden">
+                            <img src="@item.ImageUrl" alt="@item.Title" class="img-fluid">
                         </div>
                     </div>
+
+                    <!-- Açıklama -->
                     <div class="col-md-6">
                         <div class="detail-box">
-                            <div class="heading_container">
-                                <h2>
-                                    @item.Title
-                                </h2>
-                            </div>
-                            <p>
-                                @item.Description
+                            <div class="heading_container"> <h2> @item.Title </h2> </div>
+
+                            <!-- Açıklama Metni -->
+                            <p style="text-align: justify; line-height: 1.7; font-size: 1.05rem;">
+                                @Html.Raw(item.Description.Replace("\n", "<br />"))
                             </p>
-                            <a href="/FoodRapidApi/Index/">
-                                Dünya Mutafığını Gör
+
+                            <!-- Buton -->
+                            <a href="/FoodRapidApi/Index/" class="btn btn-warning mt-3 px-4 py-2 rounded-pill text-white fw-bold">
+                                Dünya Mutfağını Gör
                             </a>
                         </div>
                     </div>
@@ -45,14 +48,8 @@
     }
 
     <!-- About Inside End -->
-
     @await Component.InvokeAsync("_UILayoutFooterComponentPartial")
-
     @await Component.InvokeAsync("_UILayoutScriptComponentPartial")
 
-   
-
-
 </body>
-
 </html>
