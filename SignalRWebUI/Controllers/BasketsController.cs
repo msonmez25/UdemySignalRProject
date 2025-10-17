@@ -25,6 +25,7 @@ namespace SignalRWebUI.Controllers
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<List<ResultBasketDto>>(jsonData);
+                TempData.Keep("id");
                 return View(values);
             }
             return View();
@@ -32,17 +33,43 @@ namespace SignalRWebUI.Controllers
 
         public async Task<IActionResult> DeleteBasket(int id)
         {
+            //var client = _httpClientFactory.CreateClient();
+            //var responseMessage = await client.DeleteAsync($"https://localhost:7195/api/Basket/{id}");
+            //if (responseMessage.IsSuccessStatusCode)
+            //{
+            //    return RedirectToAction("Index", new { id = TempData["id"] });
+            //}
+            //else
+            //{
+            //    return NoContent();
+            //}
+
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.DeleteAsync($"https://localhost:7195/api/Basket/{id}");
+
             if (responseMessage.IsSuccessStatusCode)
             {
-                return RedirectToAction("Index", new { id = TempData["id"] });
+                int tableId = Convert.ToInt32(TempData["id"]);
+
+                // Bu masaya ait kalan ürünleri kontrol et
+                var basketResponse = await client.GetAsync($"https://localhost:7195/api/Basket/BasketByRestaurantTableWithProductName?id={tableId}");
+                if (basketResponse.IsSuccessStatusCode)
+                {
+                    var jsonData = await basketResponse.Content.ReadAsStringAsync();
+                    var values = JsonConvert.DeserializeObject<List<ResultBasketDto>>(jsonData);
+
+                    // Eğer sepette ürün kalmadıysa masayı boş (false) yap
+                    if (values == null || !values.Any())
+                    {
+                        await client.GetAsync($"https://localhost:7195/api/RestaurantTables/ChangeRestaurantTableStatusToFalse?id={tableId}");
+                    }
+                }
+
+                return RedirectToAction("Index", new { id = tableId });
             }
-            else
-            {
-                return NoContent();
-            }
-            
+
+            return NoContent();
+
         }
 
     }
