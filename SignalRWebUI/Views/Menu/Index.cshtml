@@ -120,8 +120,8 @@
                 </div>
             </div>
             <div class="btn-box">
-                <a href="/Baskets/Index/@ViewBag.v">
-                    Sepete Git 
+                <a id="basketLink" href="/Baskets/Index/@ViewBag.v">
+                    Sepete Git
                 </a>
             </div>
         </div>
@@ -132,17 +132,26 @@
 
     @await Component.InvokeAsync("_UILayoutScriptComponentPartial")
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
-        function showproductid(productId, restaurantTableId) {           
+        // Masa ID Razor'dan geliyor
+        var restaurantTableId = '@ViewBag.v';
+
+        function showproductid(productId, tableId) {
+            if (!restaurantTableId || restaurantTableId === '0') {
+                swal("Masa Seçilmedi!", "Lütfen önce masa seçimi yapınız.", "warning");
+                return;
+            }
+
             $.ajax({
                 type: 'POST',
-                url:"/Menu/AddBasket",
+                url: "/Menu/AddBasket",
                 data: {
                     id: productId,
                     restaurantTableId: restaurantTableId
                 },
                 success: function () {
-                    swal("Seçilen ürün ID: " + productId, "Seçilen Ürün Sepete Eklendi!", "success");
+                    swal("Ürün Sepete Eklendi!", "Seçilen ürün başarıyla sepete eklendi.", "success");
                 },
                 error: function (xhr, status, error) {
                     console.error("Hata:", error);
@@ -150,8 +159,20 @@
                 }
             });
         }
+
+        // Sepete git butonunu kontrol et
+        document.addEventListener("DOMContentLoaded", function () {
+            var basketBtn = document.getElementById("basketLink");
+
+            if (!restaurantTableId || restaurantTableId === '0') {
+                basketBtn.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    swal("Masa Seçilmedi!", "Sepete gitmek için önce masa seçmelisiniz.", "warning");
+                });
+            }
+        });
     </script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 </body>
 
