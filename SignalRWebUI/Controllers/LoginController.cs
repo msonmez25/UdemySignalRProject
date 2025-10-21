@@ -37,7 +37,7 @@ namespace SignalRWebUI.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Category");
+                return RedirectToAction("Index", "Statistic");
             }
 
             // 🔴 Giriş başarısızsa kullanıcıya mesaj göster

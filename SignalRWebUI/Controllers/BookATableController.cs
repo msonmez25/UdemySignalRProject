@@ -41,5 +41,5 @@ namespace SignalRWebUI.Controllers
             }
             
         }
-    }
+    }  
 }

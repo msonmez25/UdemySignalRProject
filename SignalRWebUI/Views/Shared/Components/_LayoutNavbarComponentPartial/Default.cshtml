@@ -1,8 +1,19 @@
-﻿<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+﻿@model SignalR.EntityLayer.Entities.AppUser
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 
+<style>
+    .dropdown-menu.show {
+        display: block;
+    }
+
+    .navbar-expand-lg .navbar-nav .dropdown-menu {
+         left: 0;
+        right: 0;
+    }
+</style>
 
 <div class="main-header">
 
@@ -52,7 +63,7 @@
     <!-- SignalR ile verinin çekilmesi end  -->
 
     <div class="logo-header">
-        <a href="index.html" class="logo">
+        <a href="/Statistic/Index/" class="logo">
             SignalR Admin
         </a>
         <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
@@ -106,26 +117,23 @@
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="~/Ready-Bootstrap-Dashboard-master/assets/img/profile.jpg" alt="user-img" width="36" class="img-circle"><span>Admin</span></span> </a>
+                    @* <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="~/Ready-Bootstrap-Dashboard-master/assets/img/profile.jpg" alt="user-img" width="36" class="img-circle"><span>Admin</span></span> </a> *@
+                    <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <img src="~/Ready-Bootstrap-Dashboard-master/assets/img/profile.jpg" alt="user-img" width="36" class="img-circle">
+                        <span>@Model.Name @Model.Surname</span>
+                    </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li>
-                            <div class="user-box">
-                                <div class="u-img"><img src="~/Ready-Bootstrap-Dashboard-master/assets/img/profile.jpg" alt="user"></div>
-                                <div class="u-text">
-                                    <h4>Admin</h4>
-                                    <p class="text-muted">signalR@gmail.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">Menüyü Gör</a>
-                                </div>
+                            <div class="user-box" style="flex-direction: column">
+                                <a href="/Setting/Index" class="dropdown-item">Profilim</a>
+                                <a class="dropdown-item" href="/Booking/Index">Rezervasyonlar</a>
+                                <a class="dropdown-item" href="/BizeUlasin/Index">Mesajlar</a>
+                                    <a class="dropdown-item" href="/Setting/Index">Ayarlar</a>                                   
+                                    <a class="dropdown-item" href="/Login/LogOut">Çıkış</a>
+                               
                             </div>
                         </li>
-                        <div class="dropdown-divider">
-                            <a class="dropdown-item" href="#">Menü</a>
-                            <a class="dropdown-item" href="#"></i> Rezervasyonlar</a>
-                            <a class="dropdown-item" href="#"><i class="ti-email"></i> Mesajlar</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><i class="ti-settings"></i> Ayarlar</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> Çıkış</a>
-                        </div>
+                       
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>

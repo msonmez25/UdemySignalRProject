@@ -54,7 +54,7 @@
                                 <input type="date" id="dateInput" class="form-control" asp-for="Date" >
                             </div>
                             <div class="btn_box">
-                                <button type="button" id="btnbooking">
+                                <button  id="btnbooking">
                                     Rezervasyonu Tamamla
                                 </button>
                             </div>
@@ -80,13 +80,14 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script type="text/javascript">
-        $("#btnbooking").click(function () {
+        $("#btnbooking").click(function (event) {
+            event.preventDefault(); // Formun otomatik gönderilmesini durduruyoruz
+
             const name = $("#nameInput").val();
             const phone = $("#phoneInput").val();
             const mail = $("#mailInput").val();
             const select = $("#personSelect").val();
             const date = $("#dateInput").val();
-           
 
             if (!name) {
                 Swal.fire({
@@ -138,18 +139,19 @@
                 return;
             }
 
-            // Başarılı popup
+            // SweetAlert doğrulama sonrası onayla -> form gönder
             Swal.fire({
                 title: "<strong>Tebrikler!</strong>",
-                text: "Rezervasyon Kaydedildi!",
+                text: "Rezervasyon Kaydediliyor...",
                 icon: "success",
-                timer: 2500,
+                timer: 2000,
                 showConfirmButton: false
             }).then(() => {
-                window.location.href = "/Default/Index/";
+                $("form").submit(); // Artık formu gerçekten gönderiyoruz
             });
         });
     </script>
+
 
 
 </body>

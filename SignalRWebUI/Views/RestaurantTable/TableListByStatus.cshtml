@@ -39,13 +39,13 @@
                     var masaDurum = "";
                     let tablehtml = `<div class="row">`;
                     $.each(value, (index, item) => {
-                        if (item.status == true) {
+                        if (item.status == false) {
                             color = "card card-stats card-success";
-                            masadurum = "Masa Dolu";
+                            masadurum = "Masa Boş";
                         }
                         else {
                             color = "card card-stats card-danger";
-                            masadurum = "Masa Boş";
+                            masadurum = "Masa Dolu";
                         }
                         tablehtml += `<div class="col-md-3">
                                                                     <div class="${color}">
