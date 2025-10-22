@@ -19,6 +19,8 @@ namespace SignalRWebUI.Controllers
         public async Task<IActionResult> Index(int id)
         {
             TempData["id"] = id;
+            TempData.Keep("id");
+            HttpContext.Session.SetInt32("TableId", id);
             var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.GetAsync("https://localhost:7195/api/Basket/BasketByRestaurantTableWithProductName?id="+id);
             if (responseMessage.IsSuccessStatusCode)
@@ -70,6 +72,30 @@ namespace SignalRWebUI.Controllers
 
             return NoContent();
 
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> CompleteOrder()
+        {
+            int? tableId = TempData["id"] != null
+        ? Convert.ToInt32(TempData["id"])
+        : HttpContext.Session.GetInt32("TableId");
+
+            if (tableId == null)
+                return BadRequest("Masa seçilmemiş.");
+
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.PostAsync(
+                $"https://localhost:7195/api/Orders/CreateOrderFromBasket?tableId={tableId}", null);
+
+            if (response.IsSuccessStatusCode)
+            {
+                TempData.Keep("id");
+                return Json(new { success = true, message = "Sipariş başarıyla oluşturuldu!" });
+            }
+
+            return Json(new { success = false, message = "Sipariş oluşturulamadı." });
         }
 
     }

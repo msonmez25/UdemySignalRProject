@@ -114,6 +114,38 @@
     @await Component.InvokeAsync("_UILayoutScriptComponentPartial")
 
    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        $("#btnchecked").click(function (e) {
+            e.preventDefault();
+
+            swal({
+                title: "Siparişi tamamlamak istiyor musunuz?",
+                text: "Bu işlem sonrasında sepetiniz sıfırlanacaktır.",
+                icon: "warning",
+                buttons: ["İptal", "Evet, tamamla"],
+                dangerMode: true,
+            }).then((willOrder) => {
+                if (willOrder) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Baskets/CompleteOrder",
+                        success: function (response) {
+                            if (response.success) {
+                                swal("Başarılı!", response.message, "success")
+                                    .then(() => window.location.href = "/Default/Index");
+                            } else {
+                                swal("Hata!", response.message, "error");
+                            }
+                        },
+                        error: function () {
+                            swal("Hata!", "Sipariş gönderilirken bir hata oluştu.", "error");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 
 </body>
 
