@@ -5,7 +5,6 @@
     int count = 0;
 }
 
-
 <div class="content">
     <div class="container-fluid">
         <div class="row">
@@ -16,19 +15,21 @@
                         <div class="card-title">Günün İndirimli Ürünleri Listesi</div>
                     </div>
                     <div class="card-body">
-                        <div class="card-sub">
-                            Günün İndirimli ürünleri ile ilgili işlemleri aşağıdan gerçekleştirebilirsiniz.Tema bütünlüğü için sadece <strong>2 ve 2'in katı ÜrÜn Aktif </strong> olmalıdır.
+                        <div class="card-sub mb-3">
+                            Günün indirimli ürünleri ile ilgili işlemleri aşağıdan gerçekleştirebilirsiniz.
+                            Tema bütünlüğü için sadece <strong>2 ve 2'nin katı ürün aktif</strong> olmalıdır.
                         </div>
-                        <table class="table mt-3">
-                            <thead>
+
+                        <table id="discountTable" class="table table-hover table-bordered mt-3">
+                           <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Ürün</th>
-                                    <th scope="col">İndirim Oranı</th>
-                                    <th scope="col">Durumu</th>
-                                    <th scope="col">Durum Değiştir</th>
-                                    <th scope="col">Sil</th>
-                                    <th scope="col">Güncelle</th>
+                                    <th>#</th>
+                                    <th>Ürün</th>
+                                    <th>İndirim Oranı</th>
+                                    <th>Durumu</th>
+                                    <th>Durum Değiştir</th>
+                                    <th>Sil</th>
+                                    <th>Güncelle</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,39 +37,37 @@
                                 {
                                     count++;
                                     <tr>
-                                        <th>@count</th>
+                                        <td>@count</td>
                                         <td>@item.Title</td>
-                                        <td>@item.Amount</td>
-                                        @if (@item.Status == true)
-                                        {
-                                            <td>Ürün Aktif</td>
-                                        }
-                                        else
-                                        {
-                                            <td>Ürün Kapalı</td>
-                                        }
-                                        @if (@item.Status == true)
-                                        {
-                                            <td><a href="/Discount/DisCountStatusChangeFalse/@item.DiscountID" class="btn btn-dark">Pasif Yap</a></td>
-                                        }
-                                        else
-                                        {
-                                            <td><a href="/Discount/DisCountStatusChangeTrue/@item.DiscountID" class="btn btn-warning">Aktif Yap</a></td>
-                                        }
-
-                                        
-                                        <td><a href="/Discount/DeleteDiscount/@item.DiscountID" class="btn btn-danger">Sil</a></td>
-                                        <td><a href="/Discount/UpdateDiscount/@item.DiscountID" class="btn btn-success">Güncelle</a></td>
-
+                                        <td>%@item.Amount</td>
+                                        <td>
+                                            @(item.Status ? "Ürün Aktif" : "Ürün Kapalı")
+                                        </td>
+                                        <td>
+                                            @if (item.Status)
+                                            {
+                                                <a href="/Discount/DisCountStatusChangeFalse/@item.DiscountID" class="btn btn-dark btn-sm">Pasif Yap</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/Discount/DisCountStatusChangeTrue/@item.DiscountID" class="btn btn-warning btn-sm">Aktif Yap</a>
+                                            }
+                                        </td>
+                                        <td>
+                                            <a href="/Discount/DeleteDiscount/@item.DiscountID" class="btn btn-danger btn-sm"
+                                               onclick="return confirm('Bu ürünü silmek istediğinize emin misiniz?');">
+                                                Sil
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="/Discount/UpdateDiscount/@item.DiscountID" class="btn btn-success btn-sm">Güncelle</a>
+                                        </td>
                                     </tr>
                                 }
-
-
                             </tbody>
                         </table>
-
-                        <a href="/Discount/CreateDiscount" class="btn btn-primary">Yeni İndirimli Ürün Ekle</a>
-
+                        <br />
+                        <a href="/Discount/CreateDiscount" class="btn btn-primary mt-3">Yeni İndirimli Ürün Ekle</a>
                     </div>
                 </div>
 
@@ -76,3 +75,30 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+
+    <!-- DataTables Türkçe -->
+    <script>
+        $(document).ready(function () {
+            $('#discountTable').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json'
+                },
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50],
+                ordering: true,
+                responsive: true
+            });
+        });
+    </script>
+}

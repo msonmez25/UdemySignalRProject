@@ -17,15 +17,15 @@
                         <div class="card-sub">
                            Bize ulaşın menüsü üzerinden atılan maillerin listelendiği sayfadır.
                         </div>
-                        <table class="table mt-3">
-                            <thead>
+                        <table id="bizeUlasinTable" class="table table-hover table-bordered mt-3">
+                            <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">Ad Soyad</th>
-                                    <th scope="col">Konu</th>
-                                    <th scope="col">Tarih</th>
-                                    <th scope="col">Durum</th>
-                                    <th scope="col">Değiştir</th>
-                                    <th scope="col">Detay</th>
+                                    <th>Ad Soyad</th>
+                                    <th>Konu</th>
+                                    <th>Tarih</th>
+                                    <th>Durum</th>
+                                    <th>Değiştir</th>
+                                    <th>Detay</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -78,3 +78,30 @@
     </div>
 </div>
 
+
+@section Scripts {
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+
+    <!-- DataTables Türkçe -->
+    <script>
+        $(document).ready(function () {
+            $('#bizeUlasinTable').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json'
+                },
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50],
+                ordering: true,
+                responsive: true
+            });
+        });
+    </script>
+}

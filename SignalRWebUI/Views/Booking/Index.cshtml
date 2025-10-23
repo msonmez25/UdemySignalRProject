@@ -13,60 +13,98 @@
 <div class="content">
     <div class="container-fluid">
 
-        <script type="text/javascript">
+        @section Scripts {
+            <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+            <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+            <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
 
-            $(document).ready(() => {
+            <script>
+                $(document).ready(() => {
+                    var connection = new signalR.HubConnectionBuilder()
+                        .withUrl("https://localhost:7195/SignalRHub")
+                        .build();
 
-                var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:7195/SignalRHub").build();
-                $("#connstatus").text(connection.state);
+                    var bookingTable;
 
-                connection.start().then(() => {
-                    $("#connstatus").text(connection.state);
-                    setInterval(() => {
+                    connection.start().then(() => {
+                        console.log("SignalR bağlantısı kuruldu.");
                         connection.invoke("GetBookingList");
-                    }, 2000);
+                        setInterval(() => connection.invoke("GetBookingList"), 3000);
+                    }).catch(err => console.error(err));
 
-                }).catch((err) => { console.log(err) });
+                    connection.on("ReceiveBookingList", (value) => {
+                        if (!$.fn.DataTable.isDataTable("#bookingTable")) {
+                            let tableHtml = `
+                                        <table id="bookingTable" class="table table-hover table-bordered mt-3">
+                                         <thead class ="thead-light">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Ad Soyad</th>
+                                                    <th>Telefon</th>
+                                                    <th>Kişi Sayısı</th>
+                                                    <th>Tarih</th>
+                                                    <th>Durumu</th>
+                                                    <th>Sil</th>
+                                                    <th>Güncelle</th>
+                                                    <th>Onayla</th>
+                                                    <th>İptal Et</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>`;
+                            $("#bookinglist").html(tableHtml);
 
-                //---------------------------------------------------------------------------
-                //Rezervasyonların Anlık Olarak Getirilmesi
-                connection.on("ReceiveBookingList", (value) => {
-                    console.log(value);
-                    let tablehtml = `<table class="table mt-3"><thead>
-                    <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Ad Soyad</th>
-                    <th scope="col">Telefon</th>
-                    <th scope="col">Kişi Sayısı</th>
-                    <th scope="col">Tarih</th>
-                    <th scope="col">Durumu</th>
-                    <th scope="col">Sil</th>
-                    <th scope="col">Güncelle</th>
-                    <th scope="col">Onayla</th>
-                    <th scope="col">İptal Et</th>
-                    </tr></thead>
-                                <tbody>`
-                    $.each(value, (index, item) => {
-                        tablehtml += `<tr>
-                                    <th>${index+1}</th>
-                                    <td>${item.name}</td>
-                                    <td>${item.phone}</td>
-                                    <td>${item.personCount}</td>
-                                    <td>${new Date(item.date).toLocaleDateString('tr-TR')}</td>
-                                    <td>${item.description}</td>
-                                    <td><a href="/Booking/DeleteBooking/${item.bookingID}" class="btn btn-danger">Sil</a></td>
-                                    <td><a href="/Booking/UpdateBooking/${item.bookingID}" class="btn btn-success">Güncelle</a></td>
-                                    <td><a href="/Booking/BookingStatusApproved/${item.bookingID}" class="btn btn-info">Onayla</a></td>
-                                    <td><a href="/Booking/BookingStatusCanceled/${item.bookingID}" class="btn btn-dark">İptal Et</a></td>
-                                    </tr>`
+                            bookingTable = $("#bookingTable").DataTable({
+                                language: {
+                                    url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json"
+                                },
+                                pageLength: 10,
+                                lengthMenu: [5, 10, 25, 50],
+                                ordering: true,
+                                responsive: true,
+                                createdRow: function (row, data, dataIndex) {
+                                    // Durum sütunu 5. indexte (0'dan başlıyor)
+                                    const durum = data[5]?.toLowerCase();
+
+                                    if (durum.includes("onay")) {       // Onaylandı
+                                        $(row).addClass("table-success");
+                                    } else if (durum.includes("ptal")) { // İptal edildi
+                                        $(row).addClass("table-danger");
+                                    } else if (durum.includes("alındı")) { // Bekliyor
+                                        $(row).addClass("table-warning");
+                                    } else {                              // Diğer durumlar
+                                        $(row).addClass("table-light");
+                                    }
+                                }
+                            });
+                        }
+
+                        bookingTable.clear();
+                        $.each(value, (index, item) => {
+                            bookingTable.row.add([
+                                index + 1,
+                                item.name,
+                                item.phone,
+                                item.personCount,
+                                new Date(item.date).toLocaleDateString("tr-TR"),
+                                item.description, // Durum sütunu
+                                `<a href="/Booking/DeleteBooking/${item.bookingID}" class="btn btn-danger btn-sm" onclick="return confirm('Bu yazıyı silmek istediğinizden emin misiniz?');">
+                                    Sil</a>`,
+                                `<a href="/Booking/UpdateBooking/${item.bookingID}" class="btn btn-success btn-sm">Güncelle</a>`,
+                                `<a href="/Booking/BookingStatusApproved/${item.bookingID}" class="btn btn-info btn-sm">Onayla</a>`,
+                                `<a href="/Booking/BookingStatusCanceled/${item.bookingID}" class="btn btn-dark btn-sm">İptal Et</a>`
+                            ]);
+                        });
+                        bookingTable.draw(false);
                     });
-                    tablehtml += `</tbody></table>`
-                    $("#bookinglist").html(tablehtml);
-
                 });
+            </script>
+        }
 
-            });
-        </script>
+
+
 
         <div class="row">
             <div class="col-md-12">
@@ -80,7 +118,8 @@
                             Rezervasyon ile ilgili işlemleri aşağıdan gerçekleştirebilirsiniz.
                         </div>
                         <div id="bookinglist"></div>
-
+                        <br />
+                        <br />
                         <a href="/Booking/CreateBooking" class="btn btn-primary">Yeni Rezervasyon Ekle</a>
 
                     </div>

@@ -15,20 +15,21 @@
                         <div class="card-title">Öne Çıkan Slider Yazıları Listesi</div>
                     </div>
                     <div class="card-body">
-                        <div class="card-sub">
+                        <div class="card-sub mb-3">
                             Öne Çıkan Slider Yazıları alanı ile ilgili işlemleri aşağıdan gerçekleştirebilirsiniz. Tema bütünlüğü için sadece <strong>bir tane</strong> kayıt olmalıdır.
                         </div>
-                        <table class="table mt-3">
-                            <thead>
+                        <table id="sliderTable" class="table table-hover table-bordered mt-3">
+
+                            <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">1. Başlık</th>
-                                    <th scope="col">1. Açıklama</th>
-                                    <th scope="col">2. Başlık</th>
-                                    <th scope="col">2. Açıklama</th>
-                                    <th scope="col">3. Başlık</th>
-                                    <th scope="col">3. Açıklama</th>
-                                    <th scope="col">Sil</th>
-                                    <th scope="col">Güncelle</th>
+                                    <th>1. Başlık</th>
+                                    <th>1. Açıklama</th>
+                                    <th>2. Başlık</th>
+                                    <th>2. Açıklama</th>
+                                    <th>3. Başlık</th>
+                                    <th>3. Açıklama</th>
+                                    <th>Sil</th>
+                                    <th>Güncelle</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,13 +37,29 @@
                                 {
                                     <tr>
                                         <td>@item.Title1</td>
-                                        <td>@item.Description1</td>
+                                        <td title="@item.Description1">
+                                            @(item.Description1?.Length > 100
+                                                ? item.Description1.Substring(0, 100) + "..."
+                                                : item.Description1)
+                                        </td>
                                         <td>@item.Title2</td>
-                                        <td>@item.Description2</td>
+                                        <td title="@item.Description2">
+                                            @(item.Description2?.Length > 100
+                                                ? item.Description2.Substring(0, 100) + "..."
+                                                : item.Description2)
+                                        </td>
                                         <td>@item.Title3</td>
-                                        <td>@item.Description3</td>
+                                        <td title="@item.Description3">
+                                            @(item.Description3?.Length > 100
+                                                ? item.Description3.Substring(0, 100) + "..."
+                                                : item.Description3)
+                                        </td>
                                       
-                                        <td><a href="/Slider/DeleteSlider/@item.SliderID" class="btn btn-danger">Sil</a></td>
+                                        <td>
+                                            <a href="/Slider/DeleteSlider/@item.SliderID" class="btn btn-danger" 
+                                            onclick="return confirm('Bu yazıyı silmek istediğinizden emin misiniz?');">
+                                            Sil</a>
+                                        </td>
                                         <td><a href="/Slider/UpdateSlider/@item.SliderID" class="btn btn-success">Güncelle</a></td>
 
                                     </tr>
@@ -51,7 +68,7 @@
 
                             </tbody>
                         </table>
-
+                        <br />
                         <a href="/Slider/CreateSlider" class="btn btn-primary">Yeni Öne Çıkan Ekle</a>
 
                     </div>
@@ -63,4 +80,26 @@
 </div>
 
 
+
+@section Scripts {
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <!-- DataTables Türkçe -->
+    <script>
+        $(document).ready(function () {
+            $('#sliderTable').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json'
+                },
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50]
+            });
+        });
+    </script>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+}
 

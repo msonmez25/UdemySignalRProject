@@ -4,7 +4,6 @@
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
 
-
 <div class="content">
     <div class="container-fluid">
         <div class="row">
@@ -15,37 +14,45 @@
                         <div class="card-title">Hakkımızda Yazısı Listesi</div>
                     </div>
                     <div class="card-body">
-                        <div class="card-sub">
-                            Hakkımızda alanı  ile ilgili işlemleri aşağıdan gerçekleştirebilirsiniz. Tema bütünlüğü için sadece bir tane kayıt olmalıdır.
+                        <div class="card-sub mb-3">
+                            Hakkımızda alanı ile ilgili işlemleri aşağıdan gerçekleştirebilirsiniz. Tema bütünlüğü için sadece bir tane kayıt olmalıdır.
                         </div>
-                        <table class="table mt-3">
-                            <thead>
+                        <table id="aboutTable" class="table table-hover table-bordered mt-3">
+                            <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">Başlık</th>
-                                    <th scope="col">Açıklama</th>
-                                    <th scope="col">Durumu</th>
-                                    <th scope="col">Sil</th>
-                                    <th scope="col">Güncelle</th>
+                                    <th>Başlık</th>
+                                    <th>Açıklama</th>
+                                    <th>Durumu</th>
+                                    <th>Sil</th>
+                                    <th>Güncelle</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr> 
+                                    <tr>
                                         <td>@item.Title</td>
-                                        <td>@item.Description</td>
-                                        <td>@item.Status</td>
-                                        <td><a href="/About/DeleteAbout/@item.AboutID" class="btn btn-danger">Sil</a></td>
-                                        <td><a href="/About/UpdateAbout/@item.AboutID" class="btn btn-success">Güncelle</a></td>
-
+                                        <td title="@item.Description">
+                                            @(item.Description?.Length > 100
+                                                ? item.Description.Substring(0, 100) + "..."
+                                                : item.Description)
+                                        </td>
+                                        <td>@(item.Status ? "Aktif" : "Pasif")</td>
+                                        <td>
+                                            <a href="/About/DeleteAbout/@item.AboutID" class="btn btn-danger"
+                                               onclick="return confirm('Bu yazıyı silmek istediğinizden emin misiniz?');">
+                                                Sil
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="/About/UpdateAbout/@item.AboutID" class="btn btn-success">Güncelle</a>
+                                        </td>
                                     </tr>
                                 }
-
-
                             </tbody>
                         </table>
-
-                        <a href="/About/CreateAbout" class="btn btn-primary">Yeni Hakkımda Ekle</a>
+                        <br />
+                        <a href="/About/CreateAbout" class="btn btn-primary mt-3">Yeni Hakkımda Ekle</a>
 
                     </div>
                 </div>
@@ -55,3 +62,24 @@
     </div>
 </div>
 
+@section Scripts {
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <!-- DataTables Türkçe -->
+    <script>
+        $(document).ready(function () {
+            $('#aboutTable').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json'
+                },
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50]
+            });
+        });
+    </script>
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+}

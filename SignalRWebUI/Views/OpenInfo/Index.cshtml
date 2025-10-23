@@ -17,12 +17,12 @@
                         <div class="card-sub">
                             Çalışma saatleri ile ilgili işlemleri aşağıdan gerçekleştirebilirsiniz. Tema bütünlüğü için sadece bir tane kayıt olmalıdır.
                         </div>
-                        <table class="table mt-3">
-                            <thead>
+                        <table id="openInfoTable" class="table table-hover table-bordered mt-3">
+                            <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">Başlık</th>
-                                    <th scope="col">Açıklama</th>
-                                    <th scope="col">Güncelle</th>
+                                    <th>Başlık</th>
+                                    <th>Açıklama</th>
+                                    <th>Güncelle</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,3 +49,30 @@
     </div>
 </div>
 
+
+@section Scripts {
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+
+    <!-- DataTables Türkçe -->
+    <script>
+        $(document).ready(function () {
+            $('#openInfoTable').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json'
+                },
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50],
+                ordering: true,
+                responsive: true
+            });
+        });
+    </script>
+}

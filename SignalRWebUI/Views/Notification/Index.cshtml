@@ -18,16 +18,16 @@
                         <div class="card-sub">
                             Bildirimler ile ilgili işlemleri aşağıdan gerçekleştirebilirsiniz.
                         </div>
-                        <table class="table mt-3">
-                            <thead>
+                        <table id="notificationTable" class="table table-hover table-bordered mt-3">
+                            <thead class="thead-light">
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Bildirim Başlığı</th>
-                                    <th scope="col">Tarih</th>
-                                    <th scope="col">Durum</th>
-                                    <th scope="col">Değiştir</th>
-                                    <th scope="col">Sil</th>
-                                    <th scope="col">Güncelle</th>
+                                    <th>#</th>
+                                    <th>Bildirim Başlığı</th>
+                                    <th>Tarih</th>
+                                    <th>Durum</th>
+                                    <th>Değiştir</th>
+                                    <th>Sil</th>
+                                    <th>Güncelle</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,7 +74,7 @@
 
                             </tbody>
                         </table>
-
+                        <br />
                         <a href="/Notification/CreateNotification" class="btn btn-primary">Yeni Bildirim Ekle</a>
 
                     </div>
@@ -84,3 +84,31 @@
         </div>
     </div>
 </div>
+
+
+@section Scripts {
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+
+    <!-- DataTables Türkçe -->
+    <script>
+        $(document).ready(function () {
+            $('#notificationTable').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json'
+                },
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50],
+                ordering: true,
+                responsive: true
+            });
+        });
+    </script>
+}

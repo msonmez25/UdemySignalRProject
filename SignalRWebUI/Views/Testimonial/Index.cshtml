@@ -19,16 +19,16 @@
                         <div class="card-sub">
                             Müşteri Memnuniyet Yazıları alanı ile ilgili işlemleri aşağıdan gerçekleştirebilirsiniz. Tema bütünlüğü için en az <strong>2 Kayıt</strong> olmalıdır.
                         </div>
-                        <table class="table mt-3">
-                            <thead>
+                        <table id="testimonialTable" class="table table-hover table-bordered mt-3">
+                            <thead class ="thead-light">
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Ad Soyad</th>
-                                    <th scope="col">Ünvan</th>
-                                    <th scope="col">Durumu</th>
-                                    <th scope="col">Durumu Değiştir</th>
-                                    <th scope="col">Sil</th>
-                                    <th scope="col">Güncelle</th>
+                                    <th>#</th>
+                                    <th>Ad Soyad</th>
+                                    <th>Ünvan</th>
+                                    <th>Durumu</th>
+                                    <th>Durumu Değiştir</th>
+                                    <th>Sil</th>
+                                    <th>Güncelle</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,7 +55,12 @@
                                         {
                                             <td><a href="/Testimonial/TestimonialStatusChangeTrue/@item.TestimonialID" class="btn btn-warning">Aktif Yap</a></td>
                                         }
-                                        <td><a href="/Testimonial/DeleteTestimonial/@item.TestimonialID" class="btn btn-danger">Sil</a></td>
+                                        <td>
+                                            <a href="/Testimonial/DeleteTestimonial/@item.TestimonialID" class="btn btn-danger" 
+                                            onclick="return confirm('Bu yazıyı silmek istediğinizden emin misiniz?');">
+                                                Sil
+                                            </a>
+                                        </td>
                                         <td><a href="/Testimonial/UpdateTestimonial/@item.TestimonialID" class="btn btn-success">Güncelle</a></td>
 
                                     </tr>
@@ -64,7 +69,7 @@
 
                             </tbody>
                         </table>
-
+                        <br />
                         <a href="/Testimonial/CreateTestimonial" class="btn btn-primary">Yeni Müşteri Memnuniyet Ekle</a>
 
                     </div>
@@ -76,3 +81,30 @@
 </div>
 
 
+
+@section Scripts {
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+
+    <!-- DataTables Türkçe -->
+    <script>
+        $(document).ready(function () {
+            $('#testimonialTable').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json'
+                },
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50],
+                ordering: true,
+                responsive: true
+            });
+        });
+    </script>
+}
