@@ -18,14 +18,16 @@ namespace SignalRApi.Controllers
         private readonly IBasketService _basketService;
         private readonly SignalRContext _context;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IMoneyCaseService _moneyCaseService;
 
-        public OrdersController(IOrderService orderService, IMapper mapper, IBasketService basketService, SignalRContext context, IHttpClientFactory httpClientFactory)
+        public OrdersController(IOrderService orderService, IMapper mapper, IBasketService basketService, SignalRContext context, IHttpClientFactory httpClientFactory, IMoneyCaseService moneyCaseService)
         {
             _orderService = orderService;
             _mapper = mapper;
             _basketService = basketService;
             _context = context;
             _httpClientFactory = httpClientFactory;
+            _moneyCaseService = moneyCaseService;
         }
 
 
@@ -75,6 +77,13 @@ namespace SignalRApi.Controllers
             // Siparişi kaydet
             _orderService.TAdd(order);
 
+            // Kasa tablosuna toplam tutarı ekle
+            var moneyCase = new MoneyCase
+            {
+                TotalAmount = order.TotalPrice
+            };
+            _moneyCaseService.TAdd(moneyCase);
+
             // Sepeti temizle
             foreach (var item in basketItems)
             {
@@ -86,6 +95,9 @@ namespace SignalRApi.Controllers
             await client.GetAsync($"https://localhost:7195/api/RestaurantTables/ChangeRestaurantTableStatusToFalse?id={tableId}");
 
             return Ok("Sipariş başarıyla oluşturuldu (KDV dahil), sepet temizlendi ve masa boş duruma getirildi.");
+
+
+
         }
 
 

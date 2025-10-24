@@ -82,7 +82,7 @@
                         }
 
                         bookingTable.clear();
-                        $.each(value, (index, item) => {
+                        $.each(value.slice().reverse(), (index, item) => {
                             bookingTable.row.add([
                                 index + 1,
                                 item.name,

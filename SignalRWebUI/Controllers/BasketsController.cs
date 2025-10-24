@@ -78,9 +78,28 @@ namespace SignalRWebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> CompleteOrder()
         {
+            //    int? tableId = TempData["id"] != null
+            //? Convert.ToInt32(TempData["id"])
+            //: HttpContext.Session.GetInt32("TableId");
+
+            //    if (tableId == null)
+            //        return BadRequest("Masa seçilmemiş.");
+
+            //    var client = _httpClientFactory.CreateClient();
+            //    var response = await client.PostAsync(
+            //        $"https://localhost:7195/api/Orders/CreateOrderFromBasket?tableId={tableId}", null);
+
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        TempData.Keep("id");
+            //        return Json(new { success = true, message = "Sipariş başarıyla oluşturuldu!" });
+            //    }
+
+            //    return Json(new { success = false, message = "Sipariş oluşturulamadı." });
+
             int? tableId = TempData["id"] != null
-        ? Convert.ToInt32(TempData["id"])
-        : HttpContext.Session.GetInt32("TableId");
+       ? Convert.ToInt32(TempData["id"])
+       : HttpContext.Session.GetInt32("TableId");
 
             if (tableId == null)
                 return BadRequest("Masa seçilmemiş.");
@@ -89,13 +108,20 @@ namespace SignalRWebUI.Controllers
             var response = await client.PostAsync(
                 $"https://localhost:7195/api/Orders/CreateOrderFromBasket?tableId={tableId}", null);
 
+            var responseContent = await response.Content.ReadAsStringAsync();
+
             if (response.IsSuccessStatusCode)
             {
                 TempData.Keep("id");
                 return Json(new { success = true, message = "Sipariş başarıyla oluşturuldu!" });
             }
 
-            return Json(new { success = false, message = "Sipariş oluşturulamadı." });
+            // 🔎 Gerçek hatayı döndür
+            return Json(new
+            {
+                success = false,
+                message = $"Sipariş oluşturulamadı. API yanıtı: {responseContent}"
+            });
         }
 
     }
