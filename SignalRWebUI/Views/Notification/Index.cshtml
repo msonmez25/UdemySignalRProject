@@ -18,7 +18,7 @@
                         <div class="card-sub">
                             Bildirimler ile ilgili işlemleri aşağıdan gerçekleştirebilirsiniz.
                         </div>
-                        <table id="notificationTable" class="table table-hover table-bordered mt-3">
+                        <table id="notificationTable" class="table table-head-bg-success table-hover table-bordered mt-3">
                             <thead class="thead-light">
                                 <tr>
                                     <th>#</th>
@@ -90,6 +90,9 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
+    <!-- Bootstrap JS (DataTables için genelde gerekli) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- DataTables JS -->
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
@@ -97,7 +100,6 @@
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
 
-    <!-- DataTables Türkçe -->
     <script>
         $(document).ready(function () {
             $('#notificationTable').DataTable({
@@ -107,7 +109,7 @@
                 pageLength: 10,
                 lengthMenu: [5, 10, 25, 50],
                 ordering: true,
-                responsive: true
+                responsive: true,
                 order: [[2, 'asc']]
             });
         });

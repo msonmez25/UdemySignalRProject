@@ -37,7 +37,7 @@
                     connection.on("ReceiveBookingList", (value) => {
                         if (!$.fn.DataTable.isDataTable("#bookingTable")) {
                             let tableHtml = `
-                                        <table id="bookingTable" class="table table-hover table-bordered mt-3">
+                                         <table id="bookingTable" class="table table-head-bg-success table-hover table-bordered mt-3">
                                          <thead class ="thead-light">
                                                 <tr>
                                                     <th>#</th>
