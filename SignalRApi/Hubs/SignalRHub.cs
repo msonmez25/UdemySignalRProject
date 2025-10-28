@@ -108,6 +108,13 @@ namespace SignalRApi.Hubs
             await Clients.All.SendAsync("ReceiveCountTable", value16);
         }
 
+        public async Task GetOrdersList()
+        {
+            //Siparişler Listesi
+            var value = _orderService.TGetListAll();
+            await Clients.All.SendAsync("ReceiveGetOrdersList", value);
+        }
+
         public async Task SendProgress()
         {
             //Sol taraf

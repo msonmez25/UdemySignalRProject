@@ -1,4 +1,5 @@
-﻿using SignalR.DataAccessLayer.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
+using SignalR.DataAccessLayer.Abstract;
 using SignalR.DataAccessLayer.Concrete;
 using SignalR.DataAccessLayer.Repositories;
 using SignalR.EntityLayer.Entities;
@@ -14,6 +15,17 @@ namespace SignalR.DataAccessLayer.EntityFramework
     {
         public EfOrderDetailDal(SignalRContext context) : base(context)
         {
+        }
+
+        public List<OrderDetail> GetOrderDetailsByOrderId(int orderId)
+        {
+            var context = new SignalRContext();
+            var values = context.OrderDetails
+                .Include(x => x.Product)
+                .Include(x => x.Order)
+                .Where(x => x.OrderID == orderId)
+                .ToList();
+            return values;
         }
     }
 }

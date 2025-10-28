@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace SignalR.DataAccessLayer.EntityFramework
 {
     public class EfOrderDal : GenericRepository<Order>, IOrderDal
@@ -23,6 +24,7 @@ namespace SignalR.DataAccessLayer.EntityFramework
             var value = context.Orders.Where(x => x.Description == "Açık").Count();
             return value;
         }
+
 
         public decimal LastOrderPrice()
         {

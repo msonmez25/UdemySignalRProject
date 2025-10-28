@@ -1,8 +1,100 @@
-﻿
+﻿@model List<ResultOrderDto>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Siparişlerim";
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
 
-<h1>Index</h1>
+<div class="content">
+    <div class="container-fluid">
 
+        @section Scripts {
+            <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+            <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+            <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+            <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+
+            <script>
+                $(document).ready(() => {
+                    // SignalR bağlantısı
+                    var connection = new signalR.HubConnectionBuilder()
+                        .withUrl("https://localhost:7195/SignalRHub")
+                        .build();
+
+                    var orderTable;
+
+                    connection.start().then(() => {
+                        console.log("SignalR bağlantısı kuruldu.");
+                        connection.invoke("GetOrdersList");
+                        setInterval(() => connection.invoke("GetOrdersList"), 5000);
+                    }).catch(err => console.error(err));
+
+                    // SignalR'dan sipariş verileri geldiğinde
+                    connection.on("ReceiveGetOrdersList", (orders) => {
+                        if (!$.fn.DataTable.isDataTable("#orderTable")) {
+                            let tableHtml = `
+                                                <table id="orderTable" class="table table-head-bg-success table-hover table-bordered mt-3">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Sipariş No</th>
+                                                            <th>Masa</th>
+                                                            <th>Sipariş Tutarı</th>
+                                                            <th>Tarih</th>
+                                                            <th>Detay</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>`;
+                            $("#orderlist").html(tableHtml);
+
+                            orderTable = $("#orderTable").DataTable({
+                                language: {
+                                    url: "https://cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json"
+                                },
+                                pageLength: 10,
+                                lengthMenu: [5, 10, 25, 50],
+                                ordering: true,
+                                responsive: true
+                            });
+                        }
+
+                        orderTable.clear();
+
+                        $.each(orders.slice().reverse(), (index, item) => {
+                            orderTable.row.add([
+                                index + 1,
+                                item.orderID,
+                                item.tableNumber,
+                                item.totalPrice.toFixed(2) + " ₺",
+                                new Date(item.date).toLocaleString("tr-TR"),
+                                `<a href="/Orders/Details/${item.orderID}" class="btn btn-outline-info btn-sm">
+                                                    <i class="fa-solid fa-eye"></i> Gör
+                                                </a>`
+                            ]);
+                        });
+
+                        orderTable.draw(false);
+                    });
+                });
+            </script>
+        }
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Siparişlerim</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-sub mb-2">
+                            Sipariş geçmişinizi aşağıdan görüntüleyebilirsiniz.
+                        </div>
+                        <div id="orderlist"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -21,6 +21,9 @@ namespace SignalRApi.Controllers
 
 
 
+
+
+
         [HttpGet("TotalMoneyCaseAmount")]
         public IActionResult TotalMoneyCaseAmount()
         {

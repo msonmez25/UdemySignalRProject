@@ -13,6 +13,8 @@ namespace SignalRApi.Mapping
             CreateMap<Order, GetOrderDto>().ReverseMap();
             CreateMap<Order, ResultOrderDto>().ReverseMap();
             CreateMap<Order, UpdateOrderDto>().ReverseMap();
+            
+
         }
     }
 }

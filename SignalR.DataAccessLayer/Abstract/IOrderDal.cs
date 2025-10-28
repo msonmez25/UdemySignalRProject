@@ -1,9 +1,11 @@
-﻿using SignalR.EntityLayer.Entities;
+﻿using SignalR.DataAccessLayer.Concrete;
+using SignalR.EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace SignalR.DataAccessLayer.Abstract
 {
@@ -13,5 +15,8 @@ namespace SignalR.DataAccessLayer.Abstract
         public int ActiveOrderCount();
         public decimal LastOrderPrice();
         public decimal TodayTotalPrice();
+
+     
+
     }
 }

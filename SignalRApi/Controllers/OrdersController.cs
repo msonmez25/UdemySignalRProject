@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using SignalR.BusinessLayer.Abstract;
 using SignalR.DataAccessLayer.Concrete;
 using SignalR.EntityLayer.Entities;
+using SignalR.DtoLayer.OrderDto;
+
 
 namespace SignalRApi.Controllers
 {
@@ -28,6 +30,21 @@ namespace SignalRApi.Controllers
             _context = context;
             _httpClientFactory = httpClientFactory;
             _moneyCaseService = moneyCaseService;
+        }
+
+
+        [HttpGet]
+        public IActionResult OrderList()
+        {
+            var values = _mapper.Map<List<ResultOrderDto>>(_orderService.TGetListAll());
+            return Ok(values);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetOrder(int id)
+        {
+            var value = _orderService.TGetByID(id);
+            return Ok(_mapper.Map<GetOrderDto>(value));
         }
 
 
@@ -95,8 +112,6 @@ namespace SignalRApi.Controllers
             await client.GetAsync($"https://localhost:7195/api/RestaurantTables/ChangeRestaurantTableStatusToFalse?id={tableId}");
 
             return Ok("Sipariş başarıyla oluşturuldu (KDV dahil), sepet temizlendi ve masa boş duruma getirildi.");
-
-
 
         }
 
