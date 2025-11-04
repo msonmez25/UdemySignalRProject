@@ -1,4 +1,5 @@
 ﻿using SignalR.DataAccessLayer.Concrete;
+using SignalR.DtoLayer.OrderDto;
 using SignalR.EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace SignalR.DataAccessLayer.Abstract
         public decimal LastOrderPrice();
         public decimal TodayTotalPrice();
 
-     
+        List<ResultOrdersWithTableNameDto> GetOrdersWithTableName();
 
     }
 }

@@ -1,0 +1,99 @@
+﻿@model List<SignalR.DtoLayer.OrderDetailDto.ResultOrderDetailGetByOrderIdDto>
+@{
+    ViewData["Title"] = "Sipariş Detayı";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<div class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            Masa: @Model.FirstOrDefault()?.TableNumber
+                            | Sipariş No: @Model.FirstOrDefault()?.OrderID
+                        </div>
+                        <small class="text-muted">
+                            Tarih: @Model.FirstOrDefault()?.OrderDate.ToString("dd.MM.yyyy HH:mm")
+                        </small>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card-sub">
+                            Sipariş detaylarını aşağıdan görüntüleyebilirsiniz.
+                        </div>
+
+                        <table id="orderDetailTable" class="table table-head-bg-success table-hover table-bordered mt-3">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Ürün</th>
+                                    <th>Adet</th>
+                                    <th>Birim Fiyat</th>
+                                    <th>Toplam Tutar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    count++;
+                                    <tr>
+                                        <td>@count</td>
+                                        <td>@item.ProductName</td>
+                                        <td>@item.Count</td>
+                                        <td>@item.UnitPrice.ToString("0.00") ₺</td>
+                                        <td>@item.TotalPrice.ToString("0.00") ₺</td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr class="bg-secondary text-white fw-bold">
+                                    <td colspan="4" class="text-end">Genel Toplam:</td>
+                                    <td>
+                                        @Model.Sum(x => x.TotalPrice).ToString("0.00") ₺
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        <br />
+
+                        <a href="/Orders/Index" class="btn btn-primary">Siparişlere Dön</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+
+    <!-- DataTables Türkçe -->
+    <script>
+        $(document).ready(function () {
+            $('#orderDetailTable').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json'
+                },
+                pageLength: 10,
+                ordering: true,
+                responsive: true
+            });
+        });
+    </script>
+}

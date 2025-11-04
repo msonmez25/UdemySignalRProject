@@ -13,5 +13,6 @@ namespace SignalR.DtoLayer.OrderDto
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public decimal TotalPrice { get; set; }
+        public int RestaurantTableID { get; set; }
     }
 }

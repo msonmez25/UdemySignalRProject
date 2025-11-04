@@ -68,7 +68,9 @@ namespace SignalRApi.Controllers
                 TableNumber = tableId.ToString(),
                 Description = "Yeni sipariş oluşturuldu.(KDV dahil)",
                 Date = DateTime.Now,
-                orderDetails = new List<OrderDetail>()
+                orderDetails = new List<OrderDetail>(),
+                RestaurantTableID = tableId,
+                
             };
 
             decimal toplamTutar = 0;
@@ -116,6 +118,22 @@ namespace SignalRApi.Controllers
         }
 
 
+        [HttpGet("OrdersWithTableName")]
+        public IActionResult OrdersWithTableName()
+        {
+            var context = new SignalRContext();
+            var values = context.Orders.Include(x => x.RestaurantTable).Select(y => new ResultOrdersWithTableNameDto
+            {
+                OrderID = y.OrderID,
+                TableNumber = y.TableNumber,
+                Description = y.Description,
+                Date = y.Date,
+                TotalPrice= y.TotalPrice,
+                RestaurantTableName=y.RestaurantTable.Name
+                
+            });
+            return Ok(values);
+        }
 
 
 

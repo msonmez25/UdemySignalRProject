@@ -1,4 +1,5 @@
-﻿using SignalR.EntityLayer.Entities;
+﻿using SignalR.DtoLayer.OrderDto;
+using SignalR.EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace SignalR.BusinessLayer.Abstract
         public int TActiveOrderCount();
         public decimal TLastOrderPrice();
         public decimal TTodayTotalPrice();
+        List<ResultOrdersWithTableNameDto> TGetOrdersWithTableName();
     }
 }

@@ -13,7 +13,9 @@ namespace SignalRApi.Mapping
             CreateMap<Order, GetOrderDto>().ReverseMap();
             CreateMap<Order, ResultOrderDto>().ReverseMap();
             CreateMap<Order, UpdateOrderDto>().ReverseMap();
-            
+            CreateMap<Order, ResultOrdersWithTableNameDto>()
+    .ForMember(dest => dest.RestaurantTableName,
+               opt => opt.MapFrom(src => src.RestaurantTable.Name));
 
         }
     }

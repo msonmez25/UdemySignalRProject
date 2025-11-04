@@ -1,6 +1,7 @@
 ﻿using SignalR.BusinessLayer.Abstract;
 using SignalR.DataAccessLayer.Abstract;
 using SignalR.DataAccessLayer.EntityFramework;
+using SignalR.DtoLayer.OrderDto;
 using SignalR.EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,11 @@ namespace SignalR.BusinessLayer.Concrete
         public List<Order> TGetListAll()
         {
             return _orderDal.GetListAll();
+        }
+
+        public List<ResultOrdersWithTableNameDto> TGetOrdersWithTableName()
+        {
+            return _orderDal.GetOrdersWithTableName();
         }
 
         public decimal TLastOrderPrice()

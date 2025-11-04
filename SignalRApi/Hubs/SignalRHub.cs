@@ -110,9 +110,17 @@ namespace SignalRApi.Hubs
 
         public async Task GetOrdersList()
         {
-            //Siparişler Listesi
-            var value = _orderService.TGetListAll();
-            await Clients.All.SendAsync("ReceiveGetOrdersList", value);
+            var orders = _orderService.TGetOrdersWithTableName();
+            var result = orders.Select(o => new
+            {
+                orderID = o.OrderID,
+                tableNumber = o.TableNumber,
+                restaurantTableName = o.RestaurantTableName,
+                totalPrice = o.TotalPrice,
+                date = o.Date
+            }).ToList();
+
+            await Clients.All.SendAsync("ReceiveGetOrdersList", result);
         }
 
         public async Task SendProgress()

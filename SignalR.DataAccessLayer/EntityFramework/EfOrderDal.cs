@@ -2,6 +2,7 @@
 using SignalR.DataAccessLayer.Abstract;
 using SignalR.DataAccessLayer.Concrete;
 using SignalR.DataAccessLayer.Repositories;
+using SignalR.DtoLayer.OrderDto;
 using SignalR.EntityLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,25 @@ namespace SignalR.DataAccessLayer.EntityFramework
             return value;
         }
 
+        public List<ResultOrdersWithTableNameDto> GetOrdersWithTableName()
+        {
+            var context = new SignalRContext();
+
+            var values = context.Orders
+                .Include(x => x.RestaurantTable)
+                .Select(x => new ResultOrdersWithTableNameDto
+                {
+                    OrderID = x.OrderID,
+                    TotalPrice = x.TotalPrice,
+                    Description = x.Description,
+                    Date = x.Date,
+                    RestaurantTableName = x.RestaurantTable.Name,
+                    TableNumber = x.RestaurantTable.RestaurantTableID.ToString(),
+                })
+                .ToList();
+
+            return values;
+        }
 
         public decimal LastOrderPrice()
         {
