@@ -77,7 +77,7 @@ namespace SignalRWebUI.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> UpdateSocialMedia(UpdateSliderDto updateSliderDto)
+        public async Task<IActionResult> UpdateSlider(UpdateSliderDto updateSliderDto)
         {
             var client = _httpClientFactory.CreateClient();
             var jsonData = JsonConvert.SerializeObject(updateSliderDto);

@@ -2,75 +2,135 @@
     Layout = null;
 }
 
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@removeTagHelper *, Microsoft.AspNetCore.Mvc.Razor.TagHelpers
+
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="tr">
 <head>
-    <!-- Google Tag Manager -->
-    <script>
-        (function (w, d, s, l, i) {
-            w[l] = w[l] || []; w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            }); var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-TAGCODE');</script>
-    <!-- End Google Tag Manager -->
-    <title>Sonmez Restaurant 404</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
-    <!-- External CSS libraries -->
-    <link type="text/css" rel="stylesheet" href="~/errorpages/HTML/main/assets/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="~/errorpages/HTML/main/assets/fonts/font-awesome/css/font-awesome.min.css">
-    <link type="text/css" rel="stylesheet" href="~/errorpages/HTML/main/assets/fonts/flaticon/font/flaticon.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | Sonmez Restaurant</title>
 
-    <!-- Favicon icon -->
-    <link rel="shortcut icon" href="~/miri-ui/docs/assets/images/icohamburger.ico" type="image/x-icon">
+    <link rel="stylesheet" href="~/errorpages/HTML/main/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/errorpages/HTML/main/assets/fonts/font-awesome/css/font-awesome.min.css">
 
-    <!-- Google fonts -->
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800%7CPoppins:400,500,700,800,900%7CRoboto:100,300,400,400i,500,700">
+    <style>
+        body {
+            background: linear-gradient(135deg, #a1aab6 0%, #a1aab6 100%);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+        }
 
-    <!-- Custom Stylesheet -->
-    <link type="text/css" rel="stylesheet" href="~/errorpages/HTML/main/assets/css/style.css">
+        .error-box {
+            text-align: center;
+            padding: 30px;
+        }
 
+        .error-logo img {
+            height: 150px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 5px rgba(0, 0, 0, .4));
+        }
+
+        .error-title {
+            font-size: 140px;
+            font-weight: 900;
+            margin: 0;
+            background: linear-gradient(90deg,rgba(24, 40, 74, 1) 0%, rgba(24, 93, 158, 1) 50%, rgba(91, 109, 143, 1) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .error-sub {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 35px;
+        }
+
+        .btn-404 {
+            padding: 14px 32px;
+            border-radius: 40px;
+            margin: 10px;
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .btn-home {
+            color: #ffffff;
+            background-color: #eb8821;
+            border-color: #eb8821
+        }
+
+            .btn-home:hover{
+                color: #ffffff;
+                background-color: #e69c00;
+                border-color: #e69c00
+            }
+
+        .btn-back {
+            color: #ffffff;
+            background-color: #00c9a6;
+            border-color: #00c9a6;
+        }
+
+        .btn-back:hover{
+                color: #ffffff;
+                background-color: #00a386;
+                border-color: #00967c;
+        }
+
+        .btn-404:hover {
+            opacity: 0.9;
+            transform: translateY(-3px);
+            color: #fff;          
+        }
+
+        a {
+            text-decoration: none !important;
+        }
+
+            a:hover {
+                text-decoration: none !important;
+            }
+    </style>
 </head>
-<body id="top">
-    <!-- Google Tag Manager (noscript) -->
-    <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TAGCODE"
-                height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    </noscript>
-    <!-- End Google Tag Manager (noscript) -->
-    <!-- page five 404 start -->
-    <div class="page-five-404">
-        <div id="overview"></div>
-        <div class="informesion">
-            <div class="logos" style="left: 170px">
-                <img src="~/errorpages/documentation/assets/images/rest.png" alt="logo" style="height: 250px;">
-            </div>
-            <div class="info" style="text-align: center">
-                <h1>404</h1>
-                <h2>ÜZGÜNÜZ :( </h2>
-                <p>Aradığınız sayfayı bulamadık !</p>
 
-                <div>
-                    <a href="/Default/Index/" class="btn">Ana Sayfa</a>
-                    <a href="#" class="btn" onclick="history.back()" style="background:#28a745">Geri Dön</a>
-                </div>
+<body>
+    <div class="error-box">
+        <div class="error-logo">
+            <img src="@Url.Content("~/errorpages/documentation/assets/images/rest.png")" alt="Logo">
+        </div>
 
-            </div>
+        <h1 class="error-title">404</h1>
+        <h2 class="error-sub">Üzgünüz :(</h2>
+        <p>Aradığınız sayfaya ulaşamadık! Belki bağlantı yanlış ya da sayfa taşınmış olabilir.</p>
 
+        <div>
+            <a href="/Default/Index/" class="btn-404 btn-home">
+                 Ana Sayfa
+            </a>
+
+            <button class="btn-404 btn-back" onclick="history.back()">
+                 Geri Dön
+            </button>
         </div>
     </div>
-    <!-- page five 404 end -->
-    <!-- External JS libraries -->
-    <script src="~/errorpages/HTML/main/assets/js/jquery-2.2.0.min.js"></script>
-    <script src="~/errorpages/HTML/main/assets/js/popper.min.js"></script>
-    <script src="~/errorpages/HTML/main/assets/js/bootstrap.min.js"></script>
-    <script src="~/errorpages/HTML/main/assets/js/particles.min.js"></script>
-    <script src="~/errorpages/HTML/main/assets/js/typed.min.js"></script>
-    <script src="~/errorpages/HTML/main/assets/js/jquery.mb.YTPlayer.js"></script>
-    <!-- Custom JS Script -->
-    <script src="~/errorpages/HTML/main/assets/js/app.js"></script>
 </body>
 </html>

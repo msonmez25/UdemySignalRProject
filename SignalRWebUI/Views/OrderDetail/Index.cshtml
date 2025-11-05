@@ -52,17 +52,18 @@
                             </tbody>
                             <tfoot>
                                 <tr class="bg-secondary text-white fw-bold">
-                                    <td colspan="4" class="text-end">Genel Toplam:</td>
+                                    <td colspan="4" style="text-align:right !important">Genel Toplam:</td>
                                     <td>
                                         @Model.Sum(x => x.TotalPrice).ToString("0.00") ₺
                                     </td>
                                 </tr>
                             </tfoot>
+                          
                         </table>
 
                         <br />
 
-                        <a href="/Orders/Index" class="btn btn-primary">Siparişlere Dön</a>
+                        <a href="/Order/Index" class="btn btn-primary">Siparişlere Dön</a>
                     </div>
                 </div>
 

@@ -19,7 +19,7 @@ namespace SignalR.DataAccessLayer.EntityFramework
         public decimal TotalMoneyCaseAmount()
         {
             var context = new SignalRContext();
-            var value = context.MoneyCases.Select(x=>x.TotalAmount).FirstOrDefault();
+            var value = context.MoneyCases.Sum(x => x.TotalAmount);
             return value;
         }
     }
