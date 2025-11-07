@@ -20,7 +20,7 @@ namespace SignalRWebUI.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7195/api/Product/ProductsListWithCategoryName");
+            var responseMessage = await client.GetAsync("https://localhost:7195/api/Product/TrueAndFalseProductsWithCategoryName");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -122,6 +122,22 @@ namespace SignalRWebUI.Controllers
         }
 
 
-      
+
+        public async Task<IActionResult> ProductStatusChangeTrue(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync($"https://localhost:7195/api/Product/ProductStatusChangeTrue/{id}");
+            return RedirectToAction("Index", "Product");
+        }
+
+
+        public async Task<IActionResult> ProductStatusChangeFalse(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            var responseMessage = await client.GetAsync($"https://localhost:7195/api/Product/ProductStatusChangeFalse/{id}");
+            return RedirectToAction("Index", "Product");
+        }
+
+
     }
 }

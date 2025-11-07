@@ -17,11 +17,13 @@ namespace SignalRApi.Controllers
 
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
+        private readonly SignalRContext _context;
 
-        public ProductController(IProductService productService, IMapper mapper)
+        public ProductController(IProductService productService, IMapper mapper, SignalRContext context)
         {
             _productService = productService;
             _mapper = mapper;
+            _context = context;
         }
 
         [HttpGet]
@@ -91,8 +93,42 @@ namespace SignalRApi.Controllers
         [HttpGet("ProductsListWithCategoryName")]
         public IActionResult ProductsListWithCategoryName()
         {
+            //var context = new SignalRContext();
+            //var values = context.Products.Include(x => x.Category).Select(y => new ResultProductWithCategoryNameDto
+            //{
+            //    Description = y.Description,
+            //    ImageUrl = y.ImageUrl,
+            //    Price = y.Price,
+            //    ProductID = y.ProductID,
+            //    ProductName = y.ProductName,
+            //    ProductStatus = y.ProductStatus,
+            //    CategoryName = y.Category.CategoryName
+            //});
+            //return Ok(values);
+            var values = _context.Products
+        .AsNoTracking()
+        .Where(p => p.ProductStatus == true) // ✅ false olanlar gelmez
+        .Include(x => x.Category)
+        .Select(y => new ResultProductWithCategoryNameDto
+        {
+            Description = y.Description,
+            ImageUrl = y.ImageUrl,
+            Price = y.Price,
+            ProductID = y.ProductID,
+            ProductName = y.ProductName,
+            ProductStatus = y.ProductStatus,
+            CategoryName = y.Category.CategoryName
+        })
+        .ToList();
+
+            return Ok(values);
+        }
+
+        [HttpGet("TrueAndFalseProductsWithCategoryName")]
+        public IActionResult TrueAndFalseProductsWithCategoryName()
+        {
             var context = new SignalRContext();
-            var values = context.Products.Include(x => x.Category).Select(y => new ResultProductWithCategoryNameDto
+            var values = context.Products.Include(x => x.Category).Select(y => new ResultTrueAndFalseProductWithCategoryNameDto
             {
                 Description = y.Description,
                 ImageUrl = y.ImageUrl,
@@ -144,5 +180,21 @@ namespace SignalRApi.Controllers
             return Ok("Ürün bilgisi güncellendi.");
         }
 
+
+
+        [HttpGet("ProductStatusChangeTrue/{id}")]
+        public IActionResult ProductStatusChangeTrue(int id)
+        {
+            _productService.TProductStatusChangeTrue(id);
+            return Ok("Ürün Aktif Olarak Düzenlendi");
+        }
+
+
+        [HttpGet("ProductStatusChangeFalse/{id}")]
+        public IActionResult ProductStatusChangeFalse(int id)
+        {
+            _productService.TProductStatusChangeFalse(id);
+            return Ok("Ürün Pasif Olarak Düzenlendi");
+        }
     }
 }

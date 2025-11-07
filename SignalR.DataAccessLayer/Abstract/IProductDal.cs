@@ -10,7 +10,10 @@ namespace SignalR.DataAccessLayer.Abstract
     public interface IProductDal : IGenericDal<Product>
     {
         List<Product> GetProductsWithCategoryName();
+        List<Product> GetTrueAndFalseProductsWithCategoryName();
         List<Product> GetLast12ProductsCategoryGroup();
+        void ProductStatusChangeTrue(int id);
+        void ProductStatusChangeFalse(int id);
         public int ProductCount();
         public int ProductCountByCategoryNameHamburger();
         public int ProductCountByCategoryNameDrink();
