@@ -70,5 +70,12 @@ namespace SignalRApi.Controllers
             }
         }
 
+
+
+        [HttpGet("MostOrderedProductName")]
+        public IActionResult MostOrderedProductName()
+        {
+            return Ok(_orderDetailService.TMostOrderedProductName());
+        }
     }
 }

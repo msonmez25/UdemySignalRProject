@@ -17,6 +17,13 @@ namespace SignalR.DataAccessLayer.EntityFramework
         {
         }
 
+        public int ActiveBookingCount()
+        {
+            var context = new SignalRContext();
+            var value = context.Baskets.Select(x => x.RestaurantTableID).Distinct().Count();
+            return value;
+        }
+
         public List<Basket> GetBasketByRestaurantTableNumber(int id)
         {
             var context = new SignalRContext();

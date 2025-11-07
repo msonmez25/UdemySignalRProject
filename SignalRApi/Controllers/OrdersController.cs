@@ -163,6 +163,11 @@ namespace SignalRApi.Controllers
             return Ok(_orderService.TTodayTotalPrice());
         }
 
-        
+        [HttpGet("MostOrderedTableName")]
+        public IActionResult MostOrderedTableName()
+        {
+            return Ok(_orderService.TMostOrderedTableName());
+        }
+
     }
 }

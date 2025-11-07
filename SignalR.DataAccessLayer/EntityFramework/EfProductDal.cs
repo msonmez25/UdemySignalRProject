@@ -122,6 +122,37 @@ namespace SignalR.DataAccessLayer.EntityFramework
             context.SaveChanges();
         }
 
-       
+        public decimal ProductAvgPriceByPizza()
+        {
+            var context = new SignalRContext();
+            var value = context.Products
+    .Include(x => x.Category)
+    .Where(x => x.Category.CategoryName == "Pizza")
+    .Select(x => (decimal?)x.Price)
+    .Average() ?? 0;
+            return value;
+        }
+
+        public decimal ProductAvgPriceByPasta()
+        {
+            var context = new SignalRContext();
+            var value = context.Products
+    .Include(x => x.Category)
+    .Where(x => x.Category.CategoryName == "Makarna")
+    .Select(x => (decimal?)x.Price)
+    .Average() ?? 0;
+            return value;
+        }
+
+        public decimal ProductAvgPriceByDessert()
+        {
+            var context = new SignalRContext();
+            var value = context.Products
+    .Include(x => x.Category)
+    .Where(x => x.Category.CategoryName == "Tatlı")
+    .Select(x => (decimal?)x.Price)
+    .Average() ?? 0;
+            return value;
+        }
     }
 }

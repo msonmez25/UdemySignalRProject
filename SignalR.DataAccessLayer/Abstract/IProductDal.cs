@@ -23,6 +23,9 @@ namespace SignalR.DataAccessLayer.Abstract
         public decimal ProductPriceMin();
         public string ProductNameByPriceMin();
         public decimal ProductAvgPriceByHamburger();
+        public decimal ProductAvgPriceByPizza();
+        public decimal ProductAvgPriceByPasta();
+        public decimal ProductAvgPriceByDessert();
 
     }
 }

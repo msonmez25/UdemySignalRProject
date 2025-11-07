@@ -16,7 +16,7 @@ namespace SignalR.DataAccessLayer.Abstract
         public int ActiveOrderCount();
         public decimal LastOrderPrice();
         public decimal TodayTotalPrice();
-
+        public string MostOrderedTableName();
         List<ResultOrdersWithTableNameDto> GetOrdersWithTableName();
 
     }

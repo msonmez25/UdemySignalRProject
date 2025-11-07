@@ -44,6 +44,11 @@ namespace SignalR.BusinessLayer.Concrete
             return _orderDetailDal.GetOrderDetailsByOrderId(orderId);
         }
 
+        public string TMostOrderedProductName()
+        {
+            return _orderDetailDal.MostOrderedProductName();
+        }
+
         public void TUpdate(OrderDetail entity)
         {
             _orderDetailDal.Update(entity);

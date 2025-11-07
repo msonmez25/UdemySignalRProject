@@ -9,6 +9,7 @@ namespace SignalR.DataAccessLayer.Abstract
 {
     public interface IOrderDetailDal : IGenericDal<OrderDetail>
     {
+        public string MostOrderedProductName();
         List<OrderDetail> GetOrderDetailsByOrderId(int orderId);
     }
 }

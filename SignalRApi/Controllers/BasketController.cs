@@ -71,5 +71,11 @@ namespace SignalRApi.Controllers
             return Ok("Sepette seçilen ürün silindi.");
         }
 
+
+        [HttpGet("ActiveBookingCount")]
+        public IActionResult ActiveBookingCount()
+        {
+            return Ok(_basketService.TActiveBookingCount());
+        }
     }
 }

@@ -27,5 +27,17 @@ namespace SignalR.DataAccessLayer.EntityFramework
                 .ToList();
             return values;
         }
+
+        public string MostOrderedProductName()
+        {
+            var context = new SignalRContext();
+            var value = context.OrderDetails
+    .Include(x => x.Product)
+    .GroupBy(x => x.ProductID)
+    .OrderByDescending(g => g.Sum(x => x.Count))
+    .Select(g => g.First().Product.ProductName)
+    .FirstOrDefault();
+            return value;
+        }
     }
 }

@@ -18,6 +18,11 @@ namespace SignalR.BusinessLayer.Concrete
             _basketDal = basketDal;
         }
 
+        public int TActiveBookingCount()
+        {
+            return _basketDal.ActiveBookingCount();
+        }
+
         public void TAdd(Basket entity)
         {
            _basketDal.Add(entity);

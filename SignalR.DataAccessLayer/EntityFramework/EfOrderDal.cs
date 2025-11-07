@@ -53,6 +53,19 @@ namespace SignalR.DataAccessLayer.EntityFramework
             return value;
         }
 
+        public string MostOrderedTableName()
+        {
+            var context = new SignalRContext();
+            var value = context.OrderDetails
+    .Include(x => x.Order)
+        .ThenInclude(o => o.RestaurantTable)
+    .GroupBy(x => x.Order.RestaurantTableID)
+    .OrderByDescending(g => g.Sum(x => x.Count))
+    .Select(g => g.First().Order.RestaurantTable.Name)
+    .FirstOrDefault();
+            return value;
+        }
+
         public decimal TodayTotalPrice()
         {
             var context = new SignalRContext();

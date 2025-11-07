@@ -9,6 +9,7 @@ namespace SignalR.BusinessLayer.Abstract
 {
     public interface IOrderDetailService : IGenericService<OrderDetail>
     {
+        public string TMostOrderedProductName();
         List<OrderDetail> TGetOrderDetailsByOrderId(int orderId);
     }
 }

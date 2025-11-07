@@ -9,6 +9,7 @@ namespace SignalR.DataAccessLayer.Abstract
 {
     public interface IBasketDal : IGenericDal<Basket>
     {
+        public int ActiveBookingCount();
         List<Basket> GetBasketByRestaurantTableNumber(int id);
     }
 }
