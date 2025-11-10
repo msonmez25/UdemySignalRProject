@@ -48,9 +48,18 @@
                                         <h5>
                                             @item.ProductName
                                         </h5>
-                                        <p>
-                                            @item.Description
-                                        </p>
+                                        @if (string.IsNullOrEmpty(item.Description))
+                                        {
+                                            <br />
+
+                                            <br />
+
+                                            <br />
+                                        }
+                                        else
+                                        {
+                                            <p class="table-card-description">@item.Description</p>
+                                        }
                                         <div class="options">
                                             <h6>
                                                 @item.Price ₺ + kdv
