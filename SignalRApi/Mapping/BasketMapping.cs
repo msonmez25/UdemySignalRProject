@@ -10,6 +10,7 @@ namespace SignalRApi.Mapping
         {
             CreateMap<Basket, GetBasketDto>().ReverseMap();
             CreateMap<Basket, ResultBasketDto>().ReverseMap();
+            CreateMap<Basket, ResultBasketListWithProductName>().ReverseMap();
         }
     }
 }

@@ -13,8 +13,10 @@ namespace SignalRApi.Hubs
         private readonly IRestaurantTableService _restaurantTableService;
         private readonly IBookingService _bookingService;
         private readonly INotificationService _notificationService;
+        private readonly IBasketService _basketService;
+        private readonly IOrderDetailService  _orderDetailService;
 
-        public SignalRHub(ICategoryService categoryService, IProductService productService, IOrderService orderService, IMoneyCaseService moneyCaseService, IRestaurantTableService restaurantTableService, IBookingService bookingService, INotificationService notificationService)
+        public SignalRHub(ICategoryService categoryService, IProductService productService, IOrderService orderService, IMoneyCaseService moneyCaseService, IRestaurantTableService restaurantTableService, IBookingService bookingService, INotificationService notificationService, IBasketService basketService = null, IOrderDetailService orderDetailService = null)
         {
             _categoryService = categoryService;
             _productService = productService;
@@ -23,6 +25,8 @@ namespace SignalRApi.Hubs
             _restaurantTableService = restaurantTableService;
             _bookingService = bookingService;
             _notificationService = notificationService;
+            _basketService = basketService;
+            _orderDetailService = orderDetailService;
         }
 
         public static int clientCount { get; set; } = 0;
@@ -31,81 +35,82 @@ namespace SignalRApi.Hubs
         {
             //---------------------------------------------------------------------------
             //İlk Satır
-            //Kategori Sayısı
-            var value = _categoryService.TCategoryCount();
-            await Clients.All.SendAsync("ReceiveCategoryCount",value);
+            //Bugünki Kazanç
+            var value1 = _orderService.TTodayTotalPrice();
+            await Clients.All.SendAsync("ReceiveTodayTotalPrice", value1.ToString("0.00") + " ₺");
 
-            //Aktif Kategori Sayısı
-            var value2 = _categoryService.TActiveCategoryCount();
-            await Clients.All.SendAsync("ReceiveActiveCategoryCount", value2);
+            //Son Sipariş Tutarı
+            var value2 = _orderService.TLastOrderPrice();
+            await Clients.All.SendAsync("ReceiveLastOrderPrice", value2.ToString("0.00") + " ₺");
 
-            //Pasif Kategori Sayısı
-            var value3 = _categoryService.TPassiveCategoryCount();
-            await Clients.All.SendAsync("ReceivePassiveCategoryCount", value3);
+            //Kasadaki Tutar
+            var value3 = _moneyCaseService.TTotalMoneyCaseAmount();
+            await Clients.All.SendAsync("ReceiveTotalMoneyCaseAmount", value3.ToString("0.00") + " ₺");
 
-            //Ürün Sayısı
-            var value4 = _productService.TProductCount();
-            await Clients.All.SendAsync("ReceiveProductCount", value4);
+            //Aktif Sipariş Sayısı
+            var value4 = _basketService.TActiveBookingCount();
+            await Clients.All.SendAsync("ReceiveActiveBookingCount", value4);
 
             //---------------------------------------------------------------------------
             //İkinci Satır
-            //Hamburger Kategorisi Ürün Sayısı
-            var value5 = _productService.TProductCountByCategoryNameHamburger();
-            await Clients.All.SendAsync("ReceiveHamburgerProductCount", value5);
 
+            //En Çok Sipariş Edilen Ürün
+            var value5 = _orderDetailService.TMostOrderedProductName();
+            await Clients.All.SendAsync("ReceiveMostOrderedProductName", value5);
 
-            //İçecek Kategorisi Ürün Sayısı
-            var value6 = _productService.TProductCountByCategoryNameDrink();
-            await Clients.All.SendAsync("ReceiveDrinkProductCount", value6);
+            //En Çok Sipariş Veren Masa
+            var value6 = _orderService.TMostOrderedTableName();
+            await Clients.All.SendAsync("ReceiveMostOrderedTableName", value6);
 
+            //Rezervasyon Sayısı
+            var value7 = _bookingService.TTotalBookingCount();
+            await Clients.All.SendAsync("ReceiveTotalBookingCount", value7);
 
-            //Ortalama Ürün Fiyat
-            var value7 = _productService.TProductPriceAvg();
-            await Clients.All.SendAsync("ReceiveAvgPriceProduct", value7.ToString("0.00") + " ₺");
-
-
-            //Ortalama Hamburger Fiyat
-            var value8 = _productService.TProductAvgPriceByHamburger();
-            await Clients.All.SendAsync("ReceiveHamburgerAvgPriceProduct", value8.ToString("0.00") + " ₺");
+            //Toplam Sipariş Sayısı
+            var value8 = _orderService.TTotalOrderCount();
+            await Clients.All.SendAsync("ReceiveTotalOrderCount", value8);
 
 
             //---------------------------------------------------------------------------
             //Üçüncü Satır
-            //En Ucuz Ürün
-            var value9 = _productService.TProductNameByPriceMin();
-            await Clients.All.SendAsync("ReceiveNameByPriceMin", value9);
 
-            //En Pahalı Ürün
-            var value10 = _productService.TProductNameByPriceMax();
-            await Clients.All.SendAsync("ReceiveNameByPriceMax", value10);
+            //Ortalama Hamburger Fiyat
+            var value9 = _productService.TProductAvgPriceByHamburger();
+            await Clients.All.SendAsync("ReceiveHamburgerAvgPriceProduct", value9.ToString("0.00") + " ₺");
 
-            //Toplam Sipariş Sayısı
-            var value11 = _orderService.TTotalOrderCount();
-            await Clients.All.SendAsync("ReceiveTotalOrderCount", value11);
+            //Ortalama Pizza
+            var value10 = _productService.TProductAvgPriceByPizza();
+            await Clients.All.SendAsync("ReceiveProductAvgPriceByPizza", value10.ToString("0.00") + " ₺");
 
-            //Aktif Sipariş Sayısı
-            var value12 = _orderService.TActiveOrderCount();
-            await Clients.All.SendAsync("ReceiveActiveOrderCount", value12);
+            //Ortalama Makarna
+            var value11 = _productService.TProductAvgPriceByPasta();
+            await Clients.All.SendAsync("ReceiveProductAvgPriceByPasta", value11.ToString("0.00") + " ₺");
+
+            //Ortalama Tatlı
+            var value12 = _productService.TProductAvgPriceByDessert();
+            await Clients.All.SendAsync("ReceiveProductAvgPriceByDessert", value12.ToString("0.00") + " ₺");
 
 
             //---------------------------------------------------------------------------
             //Dördüncü Satır
-            //Son Sipariş Tutarı
-            var value13 = _orderService.TLastOrderPrice();
-            await Clients.All.SendAsync("ReceiveLastOrderPrice", value13.ToString("0.00") + " ₺");
 
-            //Kasadaki Tutar
-            var value14 = _moneyCaseService.TTotalMoneyCaseAmount();
-            await Clients.All.SendAsync("ReceiveTotalMoneyCaseAmount", value14.ToString("0.00") + " ₺");
+            //Kategori Sayısı
+            var value13 = _categoryService.TCategoryCount();
+            await Clients.All.SendAsync("ReceiveCategoryCount",value13);
 
+            //Ürün Sayısı
+            var value14 = _productService.TProductCount();
+            await Clients.All.SendAsync("ReceiveProductCount", value14);   
+            
+            //En Ucuz Ürün
+            var value15 = _productService.TProductNameByPriceMin();
+            await Clients.All.SendAsync("ReceiveNameByPriceMin", value15);
 
-            //Bugünki Kazanç
-            var value15 = _orderService.TTodayTotalPrice();
-            await Clients.All.SendAsync("ReceiveTodayTotalPrice", value15.ToString("0.00") + " ₺");
+            //En Pahalı Ürün
+            var value16 = _productService.TProductNameByPriceMax();
+            await Clients.All.SendAsync("ReceiveNameByPriceMax", value16);
 
-            //Masa Sayısı
-            var value16 = _restaurantTableService.TCountTable();
-            await Clients.All.SendAsync("ReceiveCountTable", value16);
+            
         }
 
         public async Task GetOrdersList()
