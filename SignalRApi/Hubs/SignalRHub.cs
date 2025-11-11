@@ -166,9 +166,9 @@ namespace SignalRApi.Hubs
             //Toplam Sipariş Sayısı
             var value7 = _orderService.TTotalOrderCount();
             await Clients.All.SendAsync("ReceiveTotalOrderCount", value7);
-            
+                        
             //Aktif Sipariş Sayısı
-            var value8 = _orderService.TActiveOrderCount();
+            var value8 = _basketService.TActiveBookingCount();
             await Clients.All.SendAsync("ReceiveActiveOrderCount", value8);
 
             //En Pahalı Ürün Fiyatı

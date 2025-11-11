@@ -3,37 +3,47 @@
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
 
-<!--
-  NOT: Font Awesome CDN linkini Layout (~/Views/AdminLayout/Index.cshtml) head bölümüne ekle:
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
--->
-
 <style>
-    /* Page title */
     .page-title {
         font-size: 22px;
         font-weight: 700;
         margin-bottom: 18px;
-        display:flex;
-        align-items:center;
-        gap:10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
         color: #111827;
     }
 
-    /* Root flex container - prevents overflow and wraps nicely */
-    .dashboard-row {
-        display:flex;
-        flex-wrap:wrap;
-        gap:18px;
-        align-items:flex-start;
+    .dashboard-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        align-items: flex-start;
     }
 
-    /* Columns - flexible so total width never overflows */
-    .left-col { flex: 1 1 300px; min-width: 260px; max-width: 360px; }
-    .center-col { flex: 2 1 520px; min-width: 320px; }
-    .right-col { flex: 1 1 260px; min-width: 240px; max-width: 320px; }
+    /* Sol taraf - İki kolon yan yana */
+    .left-side {
+        flex: 1 1 600px;
+        display: flex;
+        gap: 18px;
+        min-width: 300px;
+    }
 
-    /* Card base */
+    /* Sol iç kolonlar */
+    .left-col {
+        flex: 1 1 300px;
+        min-width: 260px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    /* Sağ kolon - Progress bars */
+    .right-col {
+        flex: 1 1 520px;
+        min-width: 320px;
+    }
+
     .card-panel {
         background: #ffffff;
         border-radius: 12px;
@@ -42,43 +52,79 @@
         color: #111827;
     }
 
-    /* Left stat card */
     .stat-card .big-ico {
         font-size: 36px;
         color: #374151;
     }
-    .stat-item { display:flex; gap:12px; align-items:center; margin-bottom:14px; }
-    .stat-text .label { font-size: 13px; color: #6b7280; font-weight:600; }
-    .stat-text .value { font-size: 20px; color: #0f172a; font-weight:800; }
+    .stat-item { display: flex; gap: 12px; align-items: center; margin-bottom: 14px; }
+    .stat-text .label { font-size: 13px; color: #6b7280; font-weight: 600; }
+    .stat-text .value { font-size: 20px; color: #0f172a; font-weight: 800; }
 
-    .btn-full { width:100%; }
+    .btn-full { width: 100%; }
 
-    /* Center progress panel */
-    .progress-panel { display:flex; flex-direction:column; gap:12px; }
-    .progress-block { padding:8px 4px; border-radius:8px; }
-    .progress-labels { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:6px; color:#4b5563; font-size:13px; }
-    .progress { height:8px; border-radius:6px; background:#eef2f6; overflow:hidden; }
-    .progress .progress-bar { height:100%; transition: width .35s ease; }
+    .progress-panel { display: flex; flex-direction: column; gap: 12px; }
+    .progress-block { padding: 8px 4px; border-radius: 8px; }
+    .progress-labels { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 6px; color: #4b5563; font-size: 13px; }
+    .progress { height: 8px; border-radius: 6px; background: #eef2f6; overflow: hidden; }
+    .progress .progress-bar { height: 100%; transition: width .35s ease; }
 
-    /* Right mini stats */
-    .mini-stat { display:flex; gap:12px; align-items:center; margin-bottom:12px; }
-    .mini-stat .icon { width:44px; height:44px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:18px; }
-    .mini-stat .meta .label { font-weight:600; color:#374151; font-size:13px; }
-    .mini-stat .meta .value { font-weight:800; color:#111827; font-size:16px; }
+    .mini-stat { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
+    .mini-stat .icon { width: 44px; height: 44px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 18px; }
+    .mini-stat .meta .label { font-weight: 600; color: #374151; font-size: 13px; }
+    .mini-stat .meta .value { font-weight: 800; color: #111827; font-size: 16px; }
 
-    /* icon colors */
-    .icon-green { background:#10b981; }
-    .icon-blue { background:#3b82f6; }
-    .icon-orange { background:#f59e0b; }
-    .icon-red { background:#ef4444; }
-    .icon-gray { background:#9ca3af; }
+    .icon-green { background: #10b981; }
+    .icon-blue { background: #3b82f6; }
+    .icon-orange { background: #f59e0b; }
+    .icon-red { background: #ef4444; }
+    .icon-gray { background: #9ca3af; }
 
-    /* Small devices adjustments */
-    @@media (max-width: 992px) {
-        .left-col, .center-col, .right-col { max-width:100% !important; flex-basis:100%; }
+    /* Masaüstü görünümü */
+    @@media (min-width: 1200px) {
+        .dashboard-container {
+            flex-wrap: nowrap;
+        }
+        .left-side {
+            flex: 0 0 auto;
+            flex-direction: column;
+            max-width: 320px;
+        }
+        .left-col {
+            max-width: 100%;
+        }
+        .right-col {
+            flex: 1;
+        }
     }
 
-    /* Prevent horizontal scroll - ensure body overflow-x hidden if needed */
+    /* Tablet görünümü */
+    @@media (min-width: 768px) and (max-width: 1199px) {
+        .dashboard-container {
+            flex-direction: column;
+        }
+        .left-side {
+            flex-direction: row;
+            width: 100%;
+        }
+        .left-col, .right-col {
+            flex: 1;
+        }
+    }
+
+    /* Mobil görünümü */
+    @@media (max-width: 767px) {
+        .dashboard-container {
+            flex-direction: column;
+        }
+        .left-side {
+            flex-direction: column;
+            width: 100%;
+        }
+        .left-col, .right-col {
+            width: 100%;
+        }
+    }
+
     body { overflow-x: hidden; }
 </style>
 
@@ -92,48 +138,98 @@
             <i class="fa-solid fa-chart-simple"></i> Admin İstatistikler & Durumlar
         </h4>
 
-        <div class="dashboard-row">
+        <div class="dashboard-container">
 
-            <!-- LEFT: Quick stats -->
-            <div class="left-col">
-                <div class="card-panel stat-card">
-                    <div class="stat-item">
-                        <div class="big-ico"><i class="fa-solid fa-receipt"></i></div>
-                        <div class="stat-text">
-                            <div class="label">Son Sipariş Tutarı</div>
-                            <div id="receiveLastOrderPrice" class="value">0 ₺</div>
+            <!-- Sol Taraf - İki kolon üst üste -->
+            <div class="left-side">
+                
+                <!-- 1. Kolon - Sol Stats -->
+                <div class="left-col">
+                    <div class="card-panel stat-card">
+                        <div class="stat-item">
+                            <div class="big-ico"><i class="fa-solid fa-receipt"></i></div>
+                            <div class="stat-text">
+                                <div class="label">Son Sipariş Tutarı</div>
+                                <div id="receiveLastOrderPrice" class="value">0</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-item">
+                            <div class="big-ico"><i class="fa-solid fa-calendar-day"></i></div>
+                            <div class="stat-text">
+                                <div class="label">Bugünkü Kazanç</div>
+                                <div id="receiveTodayTotalPrice" class="value">0</div>
+                            </div>
+                        </div>
+
+                        <div class="stat-item">
+                            <div class="big-ico"><i class="fa-solid fa-boxes-stacked"></i></div>
+                            <div class="stat-text">
+                                <div class="label">Kasadaki Toplam Tutar</div>
+                                <div id="totalmoneycaseamount" class="value">0</div>
+                            </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="stat-item">
-                        <div class="big-ico"><i class="fa-solid fa-calendar-day"></i></div>
-                        <div class="stat-text">
-                            <div class="label">Bugünkü Kazanç</div>
-                            <div id="receiveTodayTotalPrice" class="value">0 ₺</div>
+                <!-- 3. Kolon - Small Stats -->
+                <div class="left-col">
+                    <div class="card-panel">
+                        <div style="margin-bottom:8px;"><strong>Genel İstatistikler</strong></div>
+
+                        <div class="mini-stat">
+                            <div class="icon icon-green"><i class="fa-solid fa-layer-group"></i></div>
+                            <div class="meta">
+                                <div class="label">Kategori Sayısı</div>
+                                <div id="receiveCategoryCount" class="value">0</div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="stat-item">
-                        <div class="big-ico"><i class="fa-solid fa-boxes-stacked"></i></div>
-                        <div class="stat-text">
-                            <div class="label">Kasadaki Toplam Tutar</div>
-                            <div id="totalmoneycaseamount" class="value">0 ₺</div>
+                        <div class="mini-stat">
+                            <div class="icon icon-gray"><i class="fa-solid fa-box"></i></div>
+                            <div class="meta">
+                                <div class="label">Ürün Sayısı</div>
+                                <div id="receiveProductCount" class="value">0</div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div style="margin-top:12px;">
-                        <a href="/Order/CreateOrder/" class="btn btn-primary btn-full"><i class="fa-solid fa-plus me-2"></i> Yeni Sipariş</a>
-                    </div>
+                        <div class="mini-stat">
+                            <div class="icon icon-orange"><i class="fa-solid fa-calendar-days"></i></div>
+                            <div class="meta">
+                                <div class="label">Tüm Rezervasyonlar</div>
+                                <div id="receiveTotalBookingCount" class="value">0</div>
+                            </div>
+                        </div>
 
-                    <div style="margin-top:12px; display:flex; gap:8px;">
-                        <a class="btn btn-outline-secondary w-50" href="/Order/Index"><i class="fa-solid fa-list"></i> Siparişler</a>
-                        <a class="btn btn-outline-secondary w-50" href="/ProgressBars/Index/"><i class="fa-solid fa-rotate-right"></i> Yenile</a>
+                        <div class="mini-stat">
+                            <div class="icon icon-blue"><i class="fa-solid fa-calendar-check"></i></div>
+                            <div class="meta">
+                                <div class="label">Onaylanmış Rezervasyon</div>
+                                <div id="receiveOnaylanmisBookingCount" class="value">0</div>
+                            </div>
+                        </div>
+
+                        <div class="mini-stat">
+                            <div class="icon icon-red"><i class="fa-solid fa-calendar-xmark"></i></div>
+                            <div class="meta">
+                                <div class="label">İptal Edilmiş Rezervasyon</div>
+                                <div id="receiveIptalEdilmisBookingCountt" class="value">0</div>
+                            </div>
+                        </div>
+
+                        <div class="mini-stat">
+                            <div class="icon icon-gray"><i class="fa-solid fa-calendar-minus"></i></div>
+                            <div class="meta">
+                                <div class="label">Onaylanmamış Rezervasyon</div>
+                                <div id="receiveOnaylanmamisBookingCount" class="value">0</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- CENTER: Progress bars -->
-            <div class="center-col">
+            <!-- Sağ Taraf - Progress Bars -->
+            <div class="right-col">
                 <div class="card-panel progress-panel">
 
                     <!-- En Pahalı Ürün Fiyatı -->
@@ -218,17 +314,6 @@
                         </div>
                     </div>
 
-                    <!-- Aktif Sipariş -->
-                    <div class="progress-block" id="receiveActiveOrderCountProgress">
-                        <div class="progress-labels">
-                            <span>Aktif Sipariş Sayısı</span>
-                            <span class="fw-bold">0</span>
-                        </div>
-                        <div class="progress">
-                            <div class="progress-bar bg-info" role="progressbar" style="width:0%"></div>
-                        </div>
-                    </div>
-
                     <!-- Toplam Masa -->
                     <div class="progress-block" id="totalMenuTableCountProgress">
                         <div class="progress-labels">
@@ -243,81 +328,13 @@
                 </div>
             </div>
 
-            <!-- RIGHT: Small stats -->
-            <div class="right-col">
-                <div class="card-panel">
-
-                    <div style="margin-bottom:8px;"><strong>Genel İstatistikler</strong></div>
-
-                    <div class="mini-stat">
-                        <div class="icon icon-green"><i class="fa-solid fa-layer-group"></i></div>
-                        <div class="meta">
-                            <div class="label">Kategori Sayısı</div>
-                            <div id="receiveCategoryCount" class="value">0</div>
-                        </div>
-                    </div>
-
-                    <div class="mini-stat">
-                        <div class="icon icon-gray"><i class="fa-solid fa-box"></i></div>
-                        <div class="meta">
-                            <div class="label">Ürün Sayısı</div>
-                            <div id="receiveProductCount" class="value">0</div>
-                        </div>
-                    </div>
-
-                    <div class="mini-stat">
-                        <div class="icon icon-orange"><i class="fa-solid fa-calendar-days"></i></div>
-                        <div class="meta">
-                            <div class="label">Tüm Rezervasyonlar</div>
-                            <div id="receiveTotalBookingCount" class="value">0</div>
-                        </div>
-                    </div>
-
-                    <div class="mini-stat">
-                        <div class="icon icon-blue"><i class="fa-solid fa-calendar-check"></i></div>
-                        <div class="meta">
-                            <div class="label">Onaylanmış Rezervasyon</div>
-                            <div id="receiveOnaylanmisBookingCount" class="value">0</div>
-                        </div>
-                    </div>
-
-                    <div class="mini-stat">
-                        <div class="icon icon-red"><i class="fa-solid fa-calendar-xmark"></i></div>
-                        <div class="meta">
-                            <div class="label">İptal Edilmiş Rezervasyon</div>
-                            <div id="receiveIptalEdilmisBookingCountt" class="value">0</div>
-                        </div>
-                    </div>
-
-                    <div class="mini-stat">
-                        <div class="icon icon-gray"><i class="fa-solid fa-calendar-minus"></i></div>
-                        <div class="meta">
-                            <div class="label">Onaylanmamış Rezervasyon</div>
-                            <div id="receiveOnaylanmamisBookingCount" class="value">0</div>
-                        </div>
-                    </div>
-
-                    <hr />
-
-                    <div style="display:flex; justify-content:space-between; gap:8px;">
-                        <div style="flex:1; text-align:center;">
-                            <div class="label">Aktif Sipariş</div>
-                            <div id="activeordercount" class="value">0</div>
-                        </div>
-                        <div style="flex:1; text-align:center;">
-                            <div class="label">Toplam Masa</div>
-                            <div id="counttable" class="value">0</div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
+    var activeOrderLastValue = 0;
+
     $(function () {
         var connection = new signalR.HubConnectionBuilder()
             .withUrl("https://localhost:7195/SignalRHub")
@@ -332,7 +349,7 @@
             console.error(err.toString());
         });
 
-        // LEFT
+        // Sol Stats
         connection.on("ReceiveLastOrderPrice", function (value) {
             $("#receiveLastOrderPrice").text((value ?? 0) + " ₺");
         });
@@ -345,13 +362,12 @@
             $("#totalmoneycaseamount").text((value ?? 0) + " ₺");
         });
 
-        // CENTER helpers
+        // Progress Bars - Sağ
         function clampPercent(p) { return Math.max(0, Math.min(100, Math.round(p))); }
 
         connection.on("ReceiveProductPriceMax", function (value) {
             var max = 500;
             var percent = clampPercent((value / max) * 100);
-            $("#receiveProductPriceMax .progress-labels span:first").text("En Pahalı Ürün Fiyatı");
             $("#receiveProductPriceMax .progress-labels span:last").text((value ?? 0) + " ₺");
             $("#receiveProductPriceMax .progress-bar").css("width", percent + "%");
         });
@@ -397,23 +413,13 @@
             $("#receiveTotalOrderCountProgress .progress-bar").css("width", percent + "%");
         });
 
-        connection.on("ReceiveActiveOrderCount", function (value) {
-            var percent = clampPercent(value);
-            $("#receiveActiveOrderCountProgress .progress-labels span:last").text(value ?? 0);
-            $("#receiveActiveOrderCountProgress .progress-bar").css("width", percent + "%");
-
-            $("#activeordercount").text(value ?? 0);
-        });
-
         connection.on("ReceiveCountTable", function (value) {
             var percent = clampPercent(value);
             $("#totalMenuTableCountProgress .progress-labels span:last").text(value ?? 0);
             $("#totalMenuTableCountProgress .progress-bar").css("width", percent + "%");
-
-            $("#counttable").text(value ?? 0);
         });
 
-        // RIGHT small stats
+        // Small Stats
         connection.on("ReceiveCategoryCount", function (value) {
             $("#receiveCategoryCount").text(value ?? 0);
         });
@@ -437,6 +443,5 @@
         connection.on("ReceiveOnaylanmamisBookingCount", function (value) {
             $("#receiveOnaylanmamisBookingCount").text(value ?? 0);
         });
-
     });
 </script>
