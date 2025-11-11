@@ -1,421 +1,442 @@
 ﻿@{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Progress Bars";
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
 
-<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<!--
+  NOT: Font Awesome CDN linkini Layout (~/Views/AdminLayout/Index.cshtml) head bölümüne ekle:
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+-->
+
+<style>
+    /* Page title */
+    .page-title {
+        font-size: 22px;
+        font-weight: 700;
+        margin-bottom: 18px;
+        display:flex;
+        align-items:center;
+        gap:10px;
+        color: #111827;
+    }
+
+    /* Root flex container - prevents overflow and wraps nicely */
+    .dashboard-row {
+        display:flex;
+        flex-wrap:wrap;
+        gap:18px;
+        align-items:flex-start;
+    }
+
+    /* Columns - flexible so total width never overflows */
+    .left-col { flex: 1 1 300px; min-width: 260px; max-width: 360px; }
+    .center-col { flex: 2 1 520px; min-width: 320px; }
+    .right-col { flex: 1 1 260px; min-width: 240px; max-width: 320px; }
+
+    /* Card base */
+    .card-panel {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: 0 6px 18px rgba(15,23,42,0.06);
+        color: #111827;
+    }
+
+    /* Left stat card */
+    .stat-card .big-ico {
+        font-size: 36px;
+        color: #374151;
+    }
+    .stat-item { display:flex; gap:12px; align-items:center; margin-bottom:14px; }
+    .stat-text .label { font-size: 13px; color: #6b7280; font-weight:600; }
+    .stat-text .value { font-size: 20px; color: #0f172a; font-weight:800; }
+
+    .btn-full { width:100%; }
+
+    /* Center progress panel */
+    .progress-panel { display:flex; flex-direction:column; gap:12px; }
+    .progress-block { padding:8px 4px; border-radius:8px; }
+    .progress-labels { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:6px; color:#4b5563; font-size:13px; }
+    .progress { height:8px; border-radius:6px; background:#eef2f6; overflow:hidden; }
+    .progress .progress-bar { height:100%; transition: width .35s ease; }
+
+    /* Right mini stats */
+    .mini-stat { display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+    .mini-stat .icon { width:44px; height:44px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:18px; }
+    .mini-stat .meta .label { font-weight:600; color:#374151; font-size:13px; }
+    .mini-stat .meta .value { font-weight:800; color:#111827; font-size:16px; }
+
+    /* icon colors */
+    .icon-green { background:#10b981; }
+    .icon-blue { background:#3b82f6; }
+    .icon-orange { background:#f59e0b; }
+    .icon-red { background:#ef4444; }
+    .icon-gray { background:#9ca3af; }
+
+    /* Small devices adjustments */
+    @@media (max-width: 992px) {
+        .left-col, .center-col, .right-col { max-width:100% !important; flex-basis:100%; }
+    }
+
+    /* Prevent horizontal scroll - ensure body overflow-x hidden if needed */
+    body { overflow-x: hidden; }
+</style>
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
 
 <div class="content">
     <div class="container-fluid">
 
-        <script type="text/javascript">
+        <h4 class="page-title">
+            <i class="fa-solid fa-chart-simple"></i> Admin İstatistikler & Durumlar
+        </h4>
 
-            $(document).ready(() => {
+        <div class="dashboard-row">
 
-                var connection = new signalR.HubConnectionBuilder().withUrl("https://localhost:7195/SignalRHub").build();
-                $("#connstatus").text(connection.state);
-
-                connection.start().then(() => {
-                    $("#connstatus").text(connection.state);
-                    setInterval(() => {
-                        connection.invoke("SendProgress");
-                    }, 1000);
-
-                }).catch((err) => { console.log(err) });
-
-                //---------------------------------------------------------------------------
-                //Sol Taraf
-                //Son Sipariş Tutarı
-                connection.on("ReceiveLastOrderPrice", (value) => {
-                    $("#receiveLastOrderPrice").text(value);
-                });
-
-                //Bugünki Kazanç Tutarı
-                connection.on("ReceiveTodayTotalPrice", (value) => {
-                    $("#receiveTodayTotalPrice").text(value);
-                });
-
-                //Kasadaki Toplam Tutar
-                connection.on("ReceiveTotalMoneyCaseAmount", (value) => {
-                    $("#totalmoneycaseamount").text(value);
-                });
-
-
-
-
-                //---------------------------------------------------------------------------
-                //Orta Taraf
-                //En Pahalı Ürün Fiyatı ProgressBar
-                connection.on("ReceiveProductPriceMax", (value) => {
-                    let max = 500;
-                    let percent = (value / max) * 100;
-                    $('#receiveProductPriceMax').empty();
-                    $('#receiveProductPriceMax').append(`
-                                                                        <div class="d-flex justify-content-between mb-1">
-                                                                        <span class="text-muted">En Pahalı Ürün Fiyatı</span>
-                                                                                    <span class="text-muted fw-bold"> ${value} ₺</span>
-                                                                        </div>
-                                        <div class="progress mb-2" style="height: 7px;">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: ${percent}%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="${percent}%"></div>
-                                                                        </div>
-                                                                    `)
-                });
-
-                //En Pahalı Ürün
-                connection.on("ReceiveProductNameByPriceMax", (value) => {
-                    $('#receiveProductNameByPriceMax').empty();
-                    $('#receiveProductNameByPriceMax').append(`
-                                                                                    <div class="d-flex justify-content-between mb-1">
-                                                                                    <span class="text-muted">En Pahalı Ürün</span>
-                                                                                                <span class="text-muted fw-bold"> ${value}</span>
-                                                                                    </div>
-                                                                                                 <div class="progress mb-2" style="height: 7px;">
-
-                                                            </div>
-                                                                                `)
-                });
-
-                //Ortalama Ürün Fiyatı ProgressBar
-                connection.on("ReceiveProductPriceAvg", (value) => {
-                    let max = 500;
-                    let percent = (value / max) * 100;
-                    $('#receiveProductPriceAvgProgress').empty();
-                    $('#receiveProductPriceAvgProgress').append(`
-                                                <div class="d-flex justify-content-between mb-1">
-                                                <span class="text-muted">Ortalama Ürün Fiyatı</span>
-                                                            <span class="text-muted fw-bold"> ${value}</span>
-                                                </div>
-                                                <div class="progress mb-2" style="height: 7px;">
-                                                <div class="progress-bar bg-info" role="progressbar" style="width: ${percent}%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="500" data-toggle="tooltip" data-placement="top" title="${percent}%"></div>
-                                                </div>
-                                            `)
-                });
-
-                //En Ucuz Ürün Fiyatı ProgressBar
-                connection.on("ReceiveProductPriceMin", (value) => {
-                    let max = 500;
-                    let percent = (value / max) * 100;
-                    $('#receiveProductPriceMin').empty();
-                    $('#receiveProductPriceMin').append(`
-                                                                                    <div class="d-flex justify-content-between mb-1">
-                                                                                    <span class="text-muted">En Ucuz Ürün Fiyatı</span>
-                                                                                                <span class="text-muted fw-bold"> ${value} ₺</span>
-                                                                                    </div>
-                                                                                    <div class="progress mb-2" style="height: 7px;">
-                                                                                                            <div class="progress-bar bg-warning" role="progressbar" style="width: ${percent}%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="500" data-toggle="tooltip" data-placement="top" title="${percent}%"></div>
-                                                                                    </div>
-                                                                                `)
-                });
-
-                //En Ucuz Ürün
-                connection.on("ReceiveProductNameByPriceMin", (value) => {
-                    $('#receiveProductNameByPriceMin').empty();
-                    $('#receiveProductNameByPriceMin').append(`
-                                                                                                <div class="d-flex justify-content-between mb-1">
-                                                                                                <span class="text-muted">En Ucuz Ürün</span>
-                                                                                                            <span class="text-muted fw-bold"> ${value}</span>
-                                                                                                </div>
-                                                                                                             <div class="progress mb-2" style="height: 7px;">
-
-                                                                        </div>
-                                                                                            `)
-                });
-
-                //Ortalama Hamburger Fiyatı ProgressBar
-                connection.on("ReceiveProductAvgPriceByHamburger", (value) => {
-                    let max = 500;
-                    let percent = (value / max) * 100;
-                    $('#receiveProductAvgPriceByHamburgerProgress').empty();
-                    $('#receiveProductAvgPriceByHamburgerProgress').append(`
-                                 <div class="d-flex justify-content-between mb-1">
-                                 <span class="text-muted">Ortalama Hamburger Fiyatı</span>
-                                 <span class="text-muted fw-bold"> ${value} ₺</span>
-                                 </div>
-                                 <div class="progress mb-2" style="height: 7px;">
-                                                         <div class="progress-bar bg-primary" role="progressbar" style="width: ${percent}%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="${percent}%"></div>
-                                                            </div>
-                                                        `)
-                });
-
-                //İçecek Sayısı ProgressBar
-                connection.on("ReceiveProductCountByCategoryNameDrink", (value) => {
-                    $('#receiveProductCountByCategoryNameDrinkProgress').empty();
-                    $('#receiveProductCountByCategoryNameDrinkProgress').append(`
-                                 <div class="d-flex justify-content-between mb-1">
-                                 <span class="text-muted">Toplam İçecek Sayısı</span>
-                                 <span class="text-muted fw-bold"> ${value}</span>
-                                 </div>
-                                 <div class="progress mb-2" style="height: 7px;">
-                                 <div class="progress-bar bg-warning" role="progressbar" style="width: ${value}%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="${value}%"></div>
-                                                                        </div>
-                                                                    `)
-                });
-
-                //Toplam Sipariş Sayısı ProgressBar
-                connection.on("ReceiveTotalOrderCount", (value) => {
-                    $('#receiveTotalOrderCountProgress').empty();
-                    $('#receiveTotalOrderCountProgress').append(`
-                                             <div class="d-flex justify-content-between mb-1">
-                                             <span class="text-muted">Toplam Sipariş Sayısı</span>
-                                             <span class="text-muted fw-bold"> ${value}</span>
-                                             </div>
-                                             <div class="progress mb-2" style="height: 7px;">
-                                             <div class="progress-bar bg-success" role="progressbar" style="width: ${value}%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="${value}%"></div>
-                                                                                    </div>
-                                                                                `)
-                });
-
-                //Aktif Sipariş Sayısı ProgressBar
-                connection.on("ReceiveActiveOrderCount", (value) => {
-                    $('#receiveActiveOrderCountProgress').empty();
-                    $('#receiveActiveOrderCountProgress').append(`
-                                                         <div class="d-flex justify-content-between mb-1">
-                                                         <span class="text-muted">Aktif Sipariş Sayısı</span>
-                                                         <span class="text-muted fw-bold"> ${value}</span>
-                                                         </div>
-                                                         <div class="progress mb-2" style="height: 7px;">
-                                                         <div class="progress-bar bg-info" role="progressbar" style="width: ${value}%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="${value}%"></div>
-                                                                                                </div>
-                                                                                            `)
-                });
-
-                //Toplam Masa Sayısı ProgressBar
-                connection.on("ReceiveCountTable", (value) => {
-                    $('#totalMenuTableCountProgress').empty();
-                    $('#totalMenuTableCountProgress').append(`
-                                                <div class="d-flex justify-content-between mb-1">
-                                                <span class="text-muted">Toplam Masa Sayısı</span>
-                                                            <span class="text-muted fw-bold"> ${value}</span>
-                                                </div>
-                                                <div class="progress mb-2" style="height: 7px;">
-                                                <div class="progress-bar bg-success" role="progressbar" style="width: ${value}%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="${value}%"></div>
-                                                </div>
-                                            `)
-                });
-
-
-                //---------------------------------------------------------------------------
-                //Sağ Taraf
-                //Aktif Sipariş Sayısı
-                connection.on("ReceiveActiveOrderCount", (value) => {
-                    $("#activeordercount").text(value);
-                });
-
-                //Toplam Masa Sayısı
-                connection.on("ReceiveCountTable", (value) => {
-                    $("#counttable").text(value);
-                });
-
-                //Kategori Sayısı
-                connection.on("ReceiveCategoryCount", (value) => {
-                    $("#receiveCategoryCount").text(value);
-                });
-
-                //Ürün Sayısı
-                connection.on("ReceiveProductCount", (value) => {
-                    $("#receiveProductCount").text(value);
-                });
-
-                //Rezervasyon Sayısı
-                connection.on("ReceiveTotalBookingCount", (value) => {
-                    $("#receiveTotalBookingCount").text(value);
-                });
-
-                //Onaylanmış Rezervasyon Sayısı
-                connection.on("ReceiveOnaylanmisBookingCount", (value) => {
-                    $("#receiveOnaylanmisBookingCount").text(value);
-                });
-
-                //İptal Edilmiş Rezervasyon Sayısı
-                connection.on("ReceiveIptalEdilmisBookingCountt", (value) => {
-                    $("#receiveIptalEdilmisBookingCountt").text(value);
-                });
-
-                //Onaylanmamış Rezervasyon Sayısı
-                connection.on("ReceiveOnaylanmamisBookingCount", (value) => {
-                    $("#receiveOnaylanmamisBookingCount").text(value);
-                });
-
-            });
-        </script>
-
-
-
-        <h4 class="page-title">Admin İstatistikler & Durumlar</h4>
-        <div class="row row-card-no-pd">
-
-            <!--SOL Taraf - Anlık Durumlar-->
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <p class="fw-bold mt-1">Son Sipariş Tutarı</p>
-                        <h4 id="receiveLastOrderPrice"><b></b></h4>
+            <!-- LEFT: Quick stats -->
+            <div class="left-col">
+                <div class="card-panel stat-card">
+                    <div class="stat-item">
+                        <div class="big-ico"><i class="fa-solid fa-receipt"></i></div>
+                        <div class="stat-text">
+                            <div class="label">Son Sipariş Tutarı</div>
+                            <div id="receiveLastOrderPrice" class="value">0 ₺</div>
+                        </div>
                     </div>
+
+                    <div class="stat-item">
+                        <div class="big-ico"><i class="fa-solid fa-calendar-day"></i></div>
+                        <div class="stat-text">
+                            <div class="label">Bugünkü Kazanç</div>
+                            <div id="receiveTodayTotalPrice" class="value">0 ₺</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="big-ico"><i class="fa-solid fa-boxes-stacked"></i></div>
+                        <div class="stat-text">
+                            <div class="label">Kasadaki Toplam Tutar</div>
+                            <div id="totalmoneycaseamount" class="value">0 ₺</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:12px;">
+                        <a href="/Order/CreateOrder/" class="btn btn-primary btn-full"><i class="fa-solid fa-plus me-2"></i> Yeni Sipariş</a>
+                    </div>
+
+                    <div style="margin-top:12px; display:flex; gap:8px;">
+                        <a class="btn btn-outline-secondary w-50" href="/Order/Index"><i class="fa-solid fa-list"></i> Siparişler</a>
+                        <a class="btn btn-outline-secondary w-50" href="/ProgressBars/Index/"><i class="fa-solid fa-rotate-right"></i> Yenile</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CENTER: Progress bars -->
+            <div class="center-col">
+                <div class="card-panel progress-panel">
+
+                    <!-- En Pahalı Ürün Fiyatı -->
+                    <div class="progress-block" id="receiveProductPriceMax">
+                        <div class="progress-labels">
+                            <span>En Pahalı Ürün Fiyatı</span>
+                            <span class="fw-bold">0 ₺</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width:0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- En Pahalı Ürün -->
+                    <div class="progress-block" id="receiveProductNameByPriceMax">
+                        <div class="progress-labels">
+                            <span>En Pahalı Ürün</span>
+                            <span class="fw-bold">—</span>
+                        </div>
+                    </div>
+
+                    <!-- Ortalama Ürün Fiyatı -->
+                    <div class="progress-block" id="receiveProductPriceAvgProgress">
+                        <div class="progress-labels">
+                            <span>Ortalama Ürün Fiyatı</span>
+                            <span class="fw-bold">0 ₺</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-info" role="progressbar" style="width:0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- En Ucuz Ürün Fiyatı -->
+                    <div class="progress-block" id="receiveProductPriceMin">
+                        <div class="progress-labels">
+                            <span>En Ucuz Ürün Fiyatı</span>
+                            <span class="fw-bold">0 ₺</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width:0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- En Ucuz Ürün -->
+                    <div class="progress-block" id="receiveProductNameByPriceMin">
+                        <div class="progress-labels">
+                            <span>En Ucuz Ürün</span>
+                            <span class="fw-bold">—</span>
+                        </div>
+                    </div>
+
+                    <!-- Ortalama Hamburger -->
+                    <div class="progress-block" id="receiveProductAvgPriceByHamburgerProgress">
+                        <div class="progress-labels">
+                            <span>Ortalama Hamburger Fiyatı</span>
+                            <span class="fw-bold">0 ₺</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width:0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- İçecek Sayısı -->
+                    <div class="progress-block" id="receiveProductCountByCategoryNameDrinkProgress">
+                        <div class="progress-labels">
+                            <span>Toplam İçecek Sayısı</span>
+                            <span class="fw-bold">0</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width:0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Toplam Sipariş -->
+                    <div class="progress-block" id="receiveTotalOrderCountProgress">
+                        <div class="progress-labels">
+                            <span>Toplam Sipariş Sayısı</span>
+                            <span class="fw-bold">0</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width:0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Aktif Sipariş -->
+                    <div class="progress-block" id="receiveActiveOrderCountProgress">
+                        <div class="progress-labels">
+                            <span>Aktif Sipariş Sayısı</span>
+                            <span class="fw-bold">0</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-info" role="progressbar" style="width:0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Toplam Masa -->
+                    <div class="progress-block" id="totalMenuTableCountProgress">
+                        <div class="progress-labels">
+                            <span>Toplam Masa Sayısı</span>
+                            <span class="fw-bold">0</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width:0%"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- RIGHT: Small stats -->
+            <div class="right-col">
+                <div class="card-panel">
+
+                    <div style="margin-bottom:8px;"><strong>Genel İstatistikler</strong></div>
+
+                    <div class="mini-stat">
+                        <div class="icon icon-green"><i class="fa-solid fa-layer-group"></i></div>
+                        <div class="meta">
+                            <div class="label">Kategori Sayısı</div>
+                            <div id="receiveCategoryCount" class="value">0</div>
+                        </div>
+                    </div>
+
+                    <div class="mini-stat">
+                        <div class="icon icon-gray"><i class="fa-solid fa-box"></i></div>
+                        <div class="meta">
+                            <div class="label">Ürün Sayısı</div>
+                            <div id="receiveProductCount" class="value">0</div>
+                        </div>
+                    </div>
+
+                    <div class="mini-stat">
+                        <div class="icon icon-orange"><i class="fa-solid fa-calendar-days"></i></div>
+                        <div class="meta">
+                            <div class="label">Tüm Rezervasyonlar</div>
+                            <div id="receiveTotalBookingCount" class="value">0</div>
+                        </div>
+                    </div>
+
+                    <div class="mini-stat">
+                        <div class="icon icon-blue"><i class="fa-solid fa-calendar-check"></i></div>
+                        <div class="meta">
+                            <div class="label">Onaylanmış Rezervasyon</div>
+                            <div id="receiveOnaylanmisBookingCount" class="value">0</div>
+                        </div>
+                    </div>
+
+                    <div class="mini-stat">
+                        <div class="icon icon-red"><i class="fa-solid fa-calendar-xmark"></i></div>
+                        <div class="meta">
+                            <div class="label">İptal Edilmiş Rezervasyon</div>
+                            <div id="receiveIptalEdilmisBookingCountt" class="value">0</div>
+                        </div>
+                    </div>
+
+                    <div class="mini-stat">
+                        <div class="icon icon-gray"><i class="fa-solid fa-calendar-minus"></i></div>
+                        <div class="meta">
+                            <div class="label">Onaylanmamış Rezervasyon</div>
+                            <div id="receiveOnaylanmamisBookingCount" class="value">0</div>
+                        </div>
+                    </div>
+
                     <hr />
-                    <div class="card-body">
-                        <p class="fw-bold mt-1">Bugünki Kazanç</p>
-                        <h4 id="receiveTodayTotalPrice"><b></b></h4>
+
+                    <div style="display:flex; justify-content:space-between; gap:8px;">
+                        <div style="flex:1; text-align:center;">
+                            <div class="label">Aktif Sipariş</div>
+                            <div id="activeordercount" class="value">0</div>
+                        </div>
+                        <div style="flex:1; text-align:center;">
+                            <div class="label">Toplam Masa</div>
+                            <div id="counttable" class="value">0</div>
+                        </div>
                     </div>
-                    <hr />
-                    <div class="card-body">
-                        <p class="fw-bold mt-1">Kasadaki Toplam Tutar</p>
-                        <h4 id="totalmoneycaseamount"><b></b></h4>
-                        <a href="/Order/CreateOrder/" class="btn btn-primary btn-full text-left mt-3 mb-3"><i class="la la-plus"></i> Yeni Sipariş</a>
-                    </div>
-                    <div class="card-footer">
-                        <ul class="nav">
-                            <li class="nav-item"><a class="btn btn-default btn-link" href="/Order/Index"><i class="la la-history"></i> Siparişler</a></li>
-                            <li class="nav-item ml-auto"><a class="btn btn-default btn-link" href="/ProgressBars/Index/"><i class="la la-refresh"></i> Sayfayı Yenile</a></li>
-                        </ul>
-                    </div>
+
                 </div>
             </div>
 
-            <!--ORTA Taraf - Anlık Durumlar-->
-            <div class="col-md-5">
-                <div class="card">
-                    <div class="card-body">
-
-                        <!--En Pahalı Ürün Fiyatı ProgressBar-->
-                        <div class="progress-card" id="receiveProductPriceMax"></div>
-
-                        <!--En Pahalı Ürün-->
-                        <div class="progress-card" id="receiveProductNameByPriceMax"></div>
-
-                        <!--Ortalama Ürün Fiyatı ProgressBar-->
-                        <div class="progress-card" id="receiveProductPriceAvgProgress"></div>
-
-                        <!--En Ucuz Ürün Fiyatı ProgressBar-->
-                        <div class="progress-card" id="receiveProductPriceMin"></div>
-
-                        <!--En Pahalı Ürün-->
-                        <div class="progress-card" id="receiveProductNameByPriceMin"></div>
-
-                        <!--Ortalama Hamburger Fiyatı ProgressBar-->
-                        <div class="progress-card" id="receiveProductAvgPriceByHamburgerProgress"></div>
-
-                        <!--Toplam İçecek ProgressBar-->
-                        <div class="progress-card" id="receiveProductCountByCategoryNameDrinkProgress"></div>
-
-                        <!--Toplam Sipariş ProgressBar-->
-                        <div class="progress-card" id="receiveTotalOrderCountProgress"></div>
-
-                        <!--Aktif Sipariş ProgressBar-->
-                        <div class="progress-card" id="receiveActiveOrderCountProgress"></div>
-
-                        <!--Toplam Masa Sayısı ProgressBar-->
-                        <div class="progress-card" id="totalMenuTableCountProgress"></div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!--SAĞ Taraf - Anlık Durumlar-->
-            <div class="col-md-3">
-                <div class="card card-stats">
-                    <div class="card-body">
-                        <p class="fw-bold mt-1">İstatistikler</p>
-
-                        <hr />
-                        <!--Toplam Kategori Sayısı-->
-                        <div class="row">
-                            <div class="col-5">
-                                <div class="icon-big text-center">
-                                    <i class="la la-connectdevelop text-success"></i>
-                                </div>
-                            </div>
-                            <div class="col-7 d-flex align-items-center">
-                                <div class="numbers">
-                                    <p class="card-category">Kategori Sayısı</p>
-                                    <h4 class="card-title" id="receiveCategoryCount"></h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr />
-                        <!--Toplam Ürün Sayısı-->
-                        <div class="row">
-                            <div class="col-5">
-                                <div class="icon-big text-center">
-                                    <i class="la la-cubes text-dark"></i>
-                                </div>
-                            </div>
-                            <div class="col-7 d-flex align-items-center">
-                                <div class="numbers">
-                                    <p class="card-category">Ürün Sayısı</p>
-                                    <h4 class="card-title" id="receiveProductCount"></h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr />
-                        <!--Toplam Rezervasyon Sayısı-->
-                        <div class="row">
-                            <div class="col-5">
-                                <div class="icon-big text-center">
-                                    <i class="la la-calendar text-danger"></i>
-                                </div>
-                            </div>
-                            <div class="col-7 d-flex align-items-center">
-                                <div class="numbers">
-                                    <p class="card-category">Tüm Rezervasyonlar</p>
-                                    <h4 class="card-title" id="receiveTotalBookingCount"></h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!--Onaylanmış Rezervasyon Sayısı-->
-                        <div class="row">
-                            <div class="col-5">
-                                <div class="icon-big text-center">
-                                    <i class="la la-calendar-check-o text-danger"></i>
-                                </div>
-                            </div>
-                            <div class="col-7 d-flex align-items-center">
-                                <div class="numbers">
-                                    <p class="card-category">Onaylanmış Rezervasyon</p>
-                                    <h4 class="card-title" id="receiveOnaylanmisBookingCount"></h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!--İptal Edilmiş Rezervasyon Sayısı-->
-                        <div class="row">
-                            <div class="col-5">
-                                <div class="icon-big text-center">
-                                    <i class="la la-calendar-times-o text-danger"></i>
-                                </div>
-                            </div>
-                            <div class="col-7 d-flex align-items-center">
-                                <div class="numbers">
-                                    <p class="card-category">İptal Edilmiş Rezervasyon</p>
-                                    <h4 class="card-title" id="receiveIptalEdilmisBookingCountt"></h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!--Onaylanmamış Rezervasyon Sayısı-->
-                        <div class="row">
-                            <div class="col-5">
-                                <div class="icon-big text-center">
-                                    <i class="la la-calendar-minus-o text-danger"></i>
-                                </div>
-                            </div>
-                            <div class="col-7 d-flex align-items-center">
-                                <div class="numbers">
-                                    <p class="card-category">Onaylanmamış Rezervasyon</p>
-                                    <h4 class="card-title" id="receiveOnaylanmamisBookingCount"></h4>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
 
+<script type="text/javascript">
+    $(function () {
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("https://localhost:7195/SignalRHub")
+            .build();
+
+        connection.start().then(function () {
+            console.log("SignalR connected");
+            setInterval(function () {
+                connection.invoke("SendProgress");
+            }, 1000);
+        }).catch(function (err) {
+            console.error(err.toString());
+        });
+
+        // LEFT
+        connection.on("ReceiveLastOrderPrice", function (value) {
+            $("#receiveLastOrderPrice").text((value ?? 0) + " ₺");
+        });
+
+        connection.on("ReceiveTodayTotalPrice", function (value) {
+            $("#receiveTodayTotalPrice").text((value ?? 0) + " ₺");
+        });
+
+        connection.on("ReceiveTotalMoneyCaseAmount", function (value) {
+            $("#totalmoneycaseamount").text((value ?? 0) + " ₺");
+        });
+
+        // CENTER helpers
+        function clampPercent(p) { return Math.max(0, Math.min(100, Math.round(p))); }
+
+        connection.on("ReceiveProductPriceMax", function (value) {
+            var max = 500;
+            var percent = clampPercent((value / max) * 100);
+            $("#receiveProductPriceMax .progress-labels span:first").text("En Pahalı Ürün Fiyatı");
+            $("#receiveProductPriceMax .progress-labels span:last").text((value ?? 0) + " ₺");
+            $("#receiveProductPriceMax .progress-bar").css("width", percent + "%");
+        });
+
+        connection.on("ReceiveProductNameByPriceMax", function (value) {
+            $("#receiveProductNameByPriceMax .progress-labels span:last").text(value ?? "—");
+        });
+
+        connection.on("ReceiveProductPriceAvg", function (value) {
+            var max = 500;
+            var percent = clampPercent((value / max) * 100);
+            $("#receiveProductPriceAvgProgress .progress-labels span:last").text((value ?? 0) + " ₺");
+            $("#receiveProductPriceAvgProgress .progress-bar").css("width", percent + "%");
+        });
+
+        connection.on("ReceiveProductPriceMin", function (value) {
+            var max = 500;
+            var percent = clampPercent((value / max) * 100);
+            $("#receiveProductPriceMin .progress-labels span:last").text((value ?? 0) + " ₺");
+            $("#receiveProductPriceMin .progress-bar").css("width", percent + "%");
+        });
+
+        connection.on("ReceiveProductNameByPriceMin", function (value) {
+            $("#receiveProductNameByPriceMin .progress-labels span:last").text(value ?? "—");
+        });
+
+        connection.on("ReceiveProductAvgPriceByHamburger", function (value) {
+            var max = 500;
+            var percent = clampPercent((value / max) * 100);
+            $("#receiveProductAvgPriceByHamburgerProgress .progress-labels span:last").text((value ?? 0) + " ₺");
+            $("#receiveProductAvgPriceByHamburgerProgress .progress-bar").css("width", percent + "%");
+        });
+
+        connection.on("ReceiveProductCountByCategoryNameDrink", function (value) {
+            var percent = clampPercent(value);
+            $("#receiveProductCountByCategoryNameDrinkProgress .progress-labels span:last").text(value ?? 0);
+            $("#receiveProductCountByCategoryNameDrinkProgress .progress-bar").css("width", percent + "%");
+        });
+
+        connection.on("ReceiveTotalOrderCount", function (value) {
+            var percent = clampPercent(value);
+            $("#receiveTotalOrderCountProgress .progress-labels span:last").text(value ?? 0);
+            $("#receiveTotalOrderCountProgress .progress-bar").css("width", percent + "%");
+        });
+
+        connection.on("ReceiveActiveOrderCount", function (value) {
+            var percent = clampPercent(value);
+            $("#receiveActiveOrderCountProgress .progress-labels span:last").text(value ?? 0);
+            $("#receiveActiveOrderCountProgress .progress-bar").css("width", percent + "%");
+
+            $("#activeordercount").text(value ?? 0);
+        });
+
+        connection.on("ReceiveCountTable", function (value) {
+            var percent = clampPercent(value);
+            $("#totalMenuTableCountProgress .progress-labels span:last").text(value ?? 0);
+            $("#totalMenuTableCountProgress .progress-bar").css("width", percent + "%");
+
+            $("#counttable").text(value ?? 0);
+        });
+
+        // RIGHT small stats
+        connection.on("ReceiveCategoryCount", function (value) {
+            $("#receiveCategoryCount").text(value ?? 0);
+        });
+
+        connection.on("ReceiveProductCount", function (value) {
+            $("#receiveProductCount").text(value ?? 0);
+        });
+
+        connection.on("ReceiveTotalBookingCount", function (value) {
+            $("#receiveTotalBookingCount").text(value ?? 0);
+        });
+
+        connection.on("ReceiveOnaylanmisBookingCount", function (value) {
+            $("#receiveOnaylanmisBookingCount").text(value ?? 0);
+        });
+
+        connection.on("ReceiveIptalEdilmisBookingCountt", function (value) {
+            $("#receiveIptalEdilmisBookingCountt").text(value ?? 0);
+        });
+
+        connection.on("ReceiveOnaylanmamisBookingCount", function (value) {
+            $("#receiveOnaylanmamisBookingCount").text(value ?? 0);
+        });
+
+    });
+</script>
