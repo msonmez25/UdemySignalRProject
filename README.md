@@ -7,7 +7,6 @@
 <img width="1914" height="1033" alt="restoran7" src="https://github.com/user-attachments/assets/5d0ba3b6-72f7-46ff-93e3-a2cab06d0e78" />
 <img width="1910" height="1028" alt="restoran8" src="https://github.com/user-attachments/assets/ca90fd2b-a820-4280-9e77-8177e7ca8dcd" />
 <img width="1908" height="1032" alt="restoran9" src="https://github.com/user-attachments/assets/0550240d-5308-4950-adeb-52873bbb50e7" />
-<img width="1914" height="1029" alt="restoran10" src="https://github.com/user-attachments/assets/3595c819-0f5e-43b6-9dbd-8d7aa9bc57f6" />
 <img width="1898" height="971" alt="restoran11" src="https://github.com/user-attachments/assets/68f5f16e-2565-4621-941d-a2b861696bfa" />
 <img width="1897" height="1028" alt="restoran12" src="https://github.com/user-attachments/assets/5a357210-821f-4ea6-8003-721bdd7430c2" />
 <img width="1857" height="1022" alt="restoran13" src="https://github.com/user-attachments/assets/acc51485-ed82-4032-8d2e-6e3aacdbd607" />
