@@ -1,3 +1,28 @@
+Bu proje sayesinde, SignalR kullanarak sayfayı yenilemeden anlık veri takibi yapmayı öğrendim. Ayrıca, projenin çok katmanlı (N-Tier) mimariye sahip olması, kodun daha düzenli, yönetilebilir ve sürdürülebilir olmasını sağladı.
+
+💻 Projede Kullanılan Teknolojiler:
+
+Backend:
+🟦 ASP.Net Core 6.0 C#
+⚡ SignalR Kütüphanesi
+🗄️ MySQL Veri Tabanı (Code First Yaklaşımı)
+📑 Swagger ile API Dokümantasyonu
+🌐 Ajax
+
+Frontend:
+🖌️ HTML / CSS
+📜 JavaScript
+🎨 Bootstrap
+✉️ MailKit
+
+🏗️ Proje Yapısı ve Yöntemler:
+
+• N-Tier Architecture
+• MVC (Model-View-Controller)
+• Repositories: Veritabanı işlemleri
+• Services: İş mantığı ve veri manipülasyonu
+• Controllers: API isteklerini yönetme
+
 <img width="1902" height="1020" alt="restoran1" src="https://github.com/user-attachments/assets/4932ff4e-b92f-4acd-b813-cf1cc6a55626" />
 <img width="1888" height="1026" alt="restoran2" src="https://github.com/user-attachments/assets/306eef7e-d00c-4416-8bda-e951555077ff" />
 <img width="1894" height="1021" alt="restoran15" src="https://github.com/user-attachments/assets/956937bc-a70f-4e99-a5ca-e0e82043662a" />
