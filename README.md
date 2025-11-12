@@ -4,16 +4,25 @@ Bu proje sayesinde, SignalR kullanarak sayfayı yenilemeden anlık veri takibi y
 
 Backend:
 🟦 ASP.Net Core 6.0 C#
+
 ⚡ SignalR Kütüphanesi
+
 🗄️ MySQL Veri Tabanı (Code First Yaklaşımı)
+
 📑 Swagger ile API Dokümantasyonu
+
 🌐 Ajax
+
 
 Frontend:
 🖌️ HTML / CSS
+
 📜 JavaScript
+
 🎨 Bootstrap
+
 ✉️ MailKit
+
 
 🏗️ Proje Yapısı ve Yöntemler:
 
