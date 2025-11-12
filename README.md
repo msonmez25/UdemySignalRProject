@@ -1,5 +1,3 @@
-Bu proje sayesinde, SignalR kullanarak sayfayı yenilemeden anlık veri takibi yapmayı öğrendim. Ayrıca, projenin çok katmanlı (N-Tier) mimariye sahip olması, kodun daha düzenli, yönetilebilir ve sürdürülebilir olmasını sağladı.
-
 💻 Projede Kullanılan Teknolojiler:
 
 Backend:
@@ -24,6 +22,7 @@ Frontend:
 🎨 Bootstrap
 
 ✉️ MailKit
+
 
 
 
