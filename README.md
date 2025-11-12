@@ -3,6 +3,7 @@ Bu proje sayesinde, SignalR kullanarak sayfayı yenilemeden anlık veri takibi y
 💻 Projede Kullanılan Teknolojiler:
 
 Backend:
+
 🟦 ASP.Net Core 6.0 C#
 
 ⚡ SignalR Kütüphanesi
@@ -15,6 +16,7 @@ Backend:
 
 
 Frontend:
+
 🖌️ HTML / CSS
 
 📜 JavaScript
@@ -24,13 +26,19 @@ Frontend:
 ✉️ MailKit
 
 
+
 🏗️ Proje Yapısı ve Yöntemler:
 
 • N-Tier Architecture
+
 • MVC (Model-View-Controller)
+
 • Repositories: Veritabanı işlemleri
+
 • Services: İş mantığı ve veri manipülasyonu
+
 • Controllers: API isteklerini yönetme
+
 
 <img width="1902" height="1020" alt="restoran1" src="https://github.com/user-attachments/assets/4932ff4e-b92f-4acd-b813-cf1cc6a55626" />
 <img width="1888" height="1026" alt="restoran2" src="https://github.com/user-attachments/assets/306eef7e-d00c-4416-8bda-e951555077ff" />
