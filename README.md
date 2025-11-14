@@ -14,8 +14,8 @@ Eğitim sürecinde kurumsal mimari yapıları, CQRS, Mediator pattern gibi moder
 🧩 Mediator Design Pattern
 
 📦 Repository Design Pattern
-
-🛠️ Kullanılan Teknolojiler
+---
+## 🛠️ Kullanılan Teknolojiler
 Backend
 
 💻 ASP.NET Core 8.0 (Web API & MVC)
@@ -28,7 +28,9 @@ Backend
 
 📬 Postman – API test aracı
 
-📐 Proje Mimarisi Katmanları
+---
+
+## 📐 Proje Mimarisi Katmanları
 
 Domain Layer
 
