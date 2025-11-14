@@ -1,50 +1,56 @@
-📌 1. GitHub README Versiyonu (Teknik – Düzenli – Profesyonel)
-🚀 AspNet Core 6.0 API & SignalR ile QR Kodlu Sipariş Yönetimi Projesi
+🚗 Asp.Net Core 8.0 Onion Architecture ile BookCar Projesi
 
-Bu proje, Murat Yücedağ Hocamızın Udemy’deki
-“AspNet Core 6.0 API ile Restoranlar İçin Dinamik Bir QR Kodlu Sipariş Yönetimi” eğitimini uygulayarak geliştirilmiştir.
+Bu proje, Udemy üzerinde Murat Yücedağ tarafından hazırlanan
+🎓 “Asp.Net Core 8.0 Onion Architecture ile BookCar Projesi” eğitimini uygulayarak geliştirilmiştir.
 
-SignalR ile sayfa yenilemeye gerek kalmadan gerçek zamanlı bildirim ve veri akışı sağlanmakta, çok katmanlı yapı sayesinde proje düzenli ve sürdürülebilir bir mimariye sahiptir.
+Eğitim sürecinde kurumsal mimari yapıları, CQRS, Mediator pattern gibi modern yazılım tekniklerini uygulama fırsatı bularak hem mimari hem de pratik anlamda önemli deneyimler kazandım.
 
-💻 Kullanılan Teknolojiler
+🧠 Mimari Yapı & Kullanılan Tasarım Desenleri
+
+🧅 Onion Architecture
+
+⚙️ CQRS (Command Query Responsibility Segregation)
+
+🧩 Mediator Design Pattern
+
+📦 Repository Design Pattern
+
+🛠️ Kullanılan Teknolojiler
 Backend
 
-🟦 ASP.Net Core 6.0 C#
+💻 ASP.NET Core 8.0 (Web API & MVC)
 
-⚡ SignalR
+📡 SignalR – Gerçek zamanlı veri iletişimi
 
-🗄️ MySQL (Code First)
+🔐 Json Web Token (JWT) – Kimlik doğrulama
 
-📑 Swagger
+✅ FluentValidation – Veri doğrulama
 
-🌐 Ajax
+📬 Postman – API test aracı
 
-Frontend
+📐 Proje Mimarisi Katmanları
 
-🖌️ HTML / CSS
+Domain Layer
 
-📜 JavaScript
+Application Layer (CQRS – Handler – Mediator)
 
-🎨 Bootstrap
+Infrastructure Layer
 
-✉️ MailKit
+Persistence Layer
 
-🏗️ Proje Mimarisi
+API Layer
 
-N-Tier Architecture
+MVC UI Layer
 
-MVC (Model-View-Controller)
+🔗 Proje Bağlantısı
 
-Repositories – Veritabanı işlemleri
+Projeyi detaylı incelemek için GitHub repo bağlantısını ziyaret edebilirsiniz:
 
-Services – İş mantığı katmanı
-
-Controllers – API istek yönetimi
-
-🔗 Projeye Göz Atın
-
-Kaynak kodları ve detayları görmek için GitHub reposunu ziyaret edebilirsiniz:
 👉 [GitHub Repo Linki]
+
+📚 Eğitim
+
+🔸 Murat Yücedağ – Asp.Net Core 8.0 Onion Architecture ile BookCar Projesi
 
 
 <img width="1902" height="1020" alt="restoran1" src="https://github.com/user-attachments/assets/4932ff4e-b92f-4acd-b813-cf1cc6a55626" />
