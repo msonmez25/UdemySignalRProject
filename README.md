@@ -5,7 +5,7 @@ Bu proje, Murat Yücedağ Hocamızın Udemy’de yayımladığı
 
 SignalR sayesinde sayfa yenilemeye gerek kalmadan gerçek zamanlı veri takibi yapılmakta olup çok katmanlı mimari yapısı ile proje daha düzenli, esnek ve yönetilebilir bir yapıya sahiptir.
 ---
-##🛠️ Kullanılan Teknolojiler
+## 🛠️ Kullanılan Teknolojiler
 Backend
 
 - 💠 ASP.NET Core 6.0 (C#)
@@ -20,13 +20,13 @@ Frontend
 - 🎛️ Bootstrap
 - ✉️ MailKit
 ---
-##🏗️ Proje Mimarisi
+## 🏗️ Proje Mimarisi
 - 📚 N-Tier Architecture
 - 🧩 MVC (Model-View-Controller)
 - 🏛️ Repositories – Veritabanı işlemleri
 - ⚙️ Services – İş mantığı katmanı
 - 🧭 Controllers – API istek yönetimi---
-##🔗 Projeye Göz At
+## 🔗 Projeye Göz At
 Kaynak kodlar ve detaylar için GitHub reposunu ziyaret edebilirsiniz:
 👉 GitHub Repo Linki
 
