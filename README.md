@@ -1,19 +1,25 @@
-💻 Projede Kullanılan Teknolojiler:
+📌 1. GitHub README Versiyonu (Teknik – Düzenli – Profesyonel)
+🚀 AspNet Core 6.0 API & SignalR ile QR Kodlu Sipariş Yönetimi Projesi
 
-Backend:
+Bu proje, Murat Yücedağ Hocamızın Udemy’deki
+“AspNet Core 6.0 API ile Restoranlar İçin Dinamik Bir QR Kodlu Sipariş Yönetimi” eğitimini uygulayarak geliştirilmiştir.
+
+SignalR ile sayfa yenilemeye gerek kalmadan gerçek zamanlı bildirim ve veri akışı sağlanmakta, çok katmanlı yapı sayesinde proje düzenli ve sürdürülebilir bir mimariye sahiptir.
+
+💻 Kullanılan Teknolojiler
+Backend
 
 🟦 ASP.Net Core 6.0 C#
 
-⚡ SignalR Kütüphanesi
+⚡ SignalR
 
-🗄️ MySQL Veri Tabanı (Code First Yaklaşımı)
+🗄️ MySQL (Code First)
 
-📑 Swagger ile API Dokümantasyonu
+📑 Swagger
 
 🌐 Ajax
 
-
-Frontend:
+Frontend
 
 🖌️ HTML / CSS
 
@@ -23,20 +29,22 @@ Frontend:
 
 ✉️ MailKit
 
+🏗️ Proje Mimarisi
 
+N-Tier Architecture
 
+MVC (Model-View-Controller)
 
-🏗️ Proje Yapısı ve Yöntemler:
+Repositories – Veritabanı işlemleri
 
-• N-Tier Architecture
+Services – İş mantığı katmanı
 
-• MVC (Model-View-Controller)
+Controllers – API istek yönetimi
 
-• Repositories: Veritabanı işlemleri
+🔗 Projeye Göz Atın
 
-• Services: İş mantığı ve veri manipülasyonu
-
-• Controllers: API isteklerini yönetme
+Kaynak kodları ve detayları görmek için GitHub reposunu ziyaret edebilirsiniz:
+👉 [GitHub Repo Linki]
 
 
 <img width="1902" height="1020" alt="restoran1" src="https://github.com/user-attachments/assets/4932ff4e-b92f-4acd-b813-cf1cc6a55626" />
