@@ -28,7 +28,11 @@ Frontend
 - 🧭 Controllers – API istek yönetimi---
 ## 🔗 Projeye Göz At
 Kaynak kodlar ve detaylar için GitHub reposunu ziyaret edebilirsiniz:
-👉 GitHub Repo Linki
+👉 🔗 [GitHub Repository’sini İncele](#)
+---
+> 📚 **Eğitim:** [Murat Yücedağ - Asp.Net Core Api SignalR ile QR Kodlu Sipariş Yönetimi]([https://www.udemy.com/](https://www.udemy.com/course/aspnet-core-api-signalr-ile-qr-kodlu-siparis-yonetimi/))
+>  
+> 💬 Bu proje, profesyonel mimariler üzerine pratik bir bakış kazandırmayı amaçlamaktadır.
 
 <img width="1902" height="1020" alt="restoran1" src="https://github.com/user-attachments/assets/4932ff4e-b92f-4acd-b813-cf1cc6a55626" />
 <img width="1888" height="1026" alt="restoran2" src="https://github.com/user-attachments/assets/306eef7e-d00c-4416-8bda-e951555077ff" />
