@@ -3,53 +3,33 @@
 Bu proje, Murat Yücedağ Hocamızın Udemy’de yayımladığı
 “AspNet Core 6.0 Api ile Restoranlar İçin Dinamik Bir QR Kodlu Sipariş Yönetimi” eğitimini uygulayarak geliştirilmiştir.
 
-SignalR sayesinde sayfa yenilemeye gerek kalmadan gerçek zamanlı veri takibi yapılmakta olup, çok katmanlı mimari yapısı ile proje daha düzenli, esnek ve yönetilebilir bir yapıya kavuşturulmuştur.
-
-🛠️ Kullanılan Teknolojiler
+SignalR sayesinde sayfa yenilemeye gerek kalmadan gerçek zamanlı veri takibi yapılmakta olup çok katmanlı mimari yapısı ile proje daha düzenli, esnek ve yönetilebilir bir yapıya sahiptir.
+---
+##🛠️ Kullanılan Teknolojiler
 Backend
 
-ASP.NET Core 6.0 (C#)
-
-SignalR (Gerçek zamanlı haberleşme)
-
-MySQL (Code First yaklaşımı)
-
-Swagger (API dokümantasyonu)
-
-Ajax
-
+- 💠 ASP.NET Core 6.0 (C#)
+- 🔄 SignalR (Gerçek zamanlı haberleşme)
+- 🗄️ MySQL (Code First)
+- 📘 Swagger
+- 🌐 Ajax
 Frontend
-
-HTML
-
-CSS
-
-JavaScript
-
-Bootstrap
-
-MailKit
-
-🏗️ Proje Mimarisi ve Yapısı
-Mimari Yapı
-
-N-Tier Architecture
-
-MVC (Model - View - Controller)
-
-Kullanılan Yapılar
-
-Repositories – Veritabanı işlemleri
-
-Services – İş mantığı ve veri işleme katmanı
-
-Controllers – API isteklerinin yönetimi
-
-🔗 Projeye Göz Atın
-
-Projeyi detaylı incelemek ve kaynak kodlarına ulaşmak için GitHub reposunu ziyaret edebilirsiniz:
-
+- 📝 HTML
+- 🎨 CSS
+- 📜 JavaScript
+- 🎛️ Bootstrap
+- ✉️ MailKit
+---
+##🏗️ Proje Mimarisi
+- 📚 N-Tier Architecture
+- 🧩 MVC (Model-View-Controller)
+- 🏛️ Repositories – Veritabanı işlemleri
+- ⚙️ Services – İş mantığı katmanı
+- 🧭 Controllers – API istek yönetimi---
+##🔗 Projeye Göz At
+Kaynak kodlar ve detaylar için GitHub reposunu ziyaret edebilirsiniz:
 👉 GitHub Repo Linki
+
 <img width="1902" height="1020" alt="restoran1" src="https://github.com/user-attachments/assets/4932ff4e-b92f-4acd-b813-cf1cc6a55626" />
 <img width="1888" height="1026" alt="restoran2" src="https://github.com/user-attachments/assets/306eef7e-d00c-4416-8bda-e951555077ff" />
 <img width="1894" height="1021" alt="restoran15" src="https://github.com/user-attachments/assets/956937bc-a70f-4e99-a5ca-e0e82043662a" />
