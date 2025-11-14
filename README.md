@@ -25,9 +25,9 @@ Frontend
 - 🧩 MVC (Model-View-Controller)
 - 🏛️ Repositories – Veritabanı işlemleri
 - ⚙️ Services – İş mantığı katmanı
-- 🧭 Controllers – API istek yönetimi---
+- 🧭 Controllers – API istek yönetimi
+---
 ## 🔗 Projeye Göz At
-Kaynak kodlar ve detaylar için GitHub reposunu ziyaret edebilirsiniz:
 👉 🔗 [GitHub Repository’sini İncele](#)
 ---
 > 📚 **Eğitim:** [Murat Yücedağ - Asp.Net Core Api SignalR ile QR Kodlu Sipariş Yönetimi]([https://www.udemy.com/](https://www.udemy.com/course/aspnet-core-api-signalr-ile-qr-kodlu-siparis-yonetimi/))
