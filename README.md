@@ -1,60 +1,55 @@
-🚗 Asp.Net Core 8.0 Onion Architecture ile BookCar Projesi
+🚀 Asp.Net Core 6.0 API & SignalR ile QR Kodlu Sipariş Yönetimi Projesi
 
-Bu proje, Udemy üzerinde Murat Yücedağ tarafından hazırlanan
-🎓 “Asp.Net Core 8.0 Onion Architecture ile BookCar Projesi” eğitimini uygulayarak geliştirilmiştir.
+Bu proje, Murat Yücedağ Hocamızın Udemy’de yayımladığı
+“AspNet Core 6.0 Api ile Restoranlar İçin Dinamik Bir QR Kodlu Sipariş Yönetimi” eğitimini uygulayarak geliştirilmiştir.
 
-Eğitim sürecinde kurumsal mimari yapıları, CQRS, Mediator pattern gibi modern yazılım tekniklerini uygulama fırsatı bularak hem mimari hem de pratik anlamda önemli deneyimler kazandım.
+SignalR sayesinde sayfa yenilemeye gerek kalmadan gerçek zamanlı veri takibi yapılmakta olup, çok katmanlı mimari yapısı ile proje daha düzenli, esnek ve yönetilebilir bir yapıya kavuşturulmuştur.
 
-🧠 Mimari Yapı & Kullanılan Tasarım Desenleri
-
-🧅 Onion Architecture
-
-⚙️ CQRS (Command Query Responsibility Segregation)
-
-🧩 Mediator Design Pattern
-
-📦 Repository Design Pattern
----
-## 🛠️ Kullanılan Teknolojiler
+🛠️ Kullanılan Teknolojiler
 Backend
 
-💻 ASP.NET Core 8.0 (Web API & MVC)
+ASP.NET Core 6.0 (C#)
 
-📡 SignalR – Gerçek zamanlı veri iletişimi
+SignalR (Gerçek zamanlı haberleşme)
 
-🔐 Json Web Token (JWT) – Kimlik doğrulama
+MySQL (Code First yaklaşımı)
 
-✅ FluentValidation – Veri doğrulama
+Swagger (API dokümantasyonu)
 
-📬 Postman – API test aracı
+Ajax
 
----
+Frontend
 
-## 📐 Proje Mimarisi Katmanları
+HTML
 
-Domain Layer
+CSS
 
-Application Layer (CQRS – Handler – Mediator)
+JavaScript
 
-Infrastructure Layer
+Bootstrap
 
-Persistence Layer
+MailKit
 
-API Layer
+🏗️ Proje Mimarisi ve Yapısı
+Mimari Yapı
 
-MVC UI Layer
+N-Tier Architecture
 
-🔗 Proje Bağlantısı
+MVC (Model - View - Controller)
 
-Projeyi detaylı incelemek için GitHub repo bağlantısını ziyaret edebilirsiniz:
+Kullanılan Yapılar
 
-👉 [GitHub Repo Linki]
+Repositories – Veritabanı işlemleri
 
-📚 Eğitim
+Services – İş mantığı ve veri işleme katmanı
 
-🔸 Murat Yücedağ – Asp.Net Core 8.0 Onion Architecture ile BookCar Projesi
+Controllers – API isteklerinin yönetimi
 
+🔗 Projeye Göz Atın
 
+Projeyi detaylı incelemek ve kaynak kodlarına ulaşmak için GitHub reposunu ziyaret edebilirsiniz:
+
+👉 GitHub Repo Linki
 <img width="1902" height="1020" alt="restoran1" src="https://github.com/user-attachments/assets/4932ff4e-b92f-4acd-b813-cf1cc6a55626" />
 <img width="1888" height="1026" alt="restoran2" src="https://github.com/user-attachments/assets/306eef7e-d00c-4416-8bda-e951555077ff" />
 <img width="1894" height="1021" alt="restoran15" src="https://github.com/user-attachments/assets/956937bc-a70f-4e99-a5ca-e0e82043662a" />
