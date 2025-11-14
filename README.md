@@ -32,8 +32,9 @@ Frontend
 ---
 > 📚 **Eğitim:** [Murat Yücedağ - Asp.Net Core Api SignalR ile QR Kodlu Sipariş Yönetimi]([https://www.udemy.com/](https://www.udemy.com/course/aspnet-core-api-signalr-ile-qr-kodlu-siparis-yonetimi/))
 >  
-> 💬 Bu proje, profesyonel mimariler üzerine pratik bir bakış kazandırmayı amaçlamaktadır.
-
+> 💬 Bu proje, SignalR kullanarak sayfa yenilemeden canlı veri takibi yapmayı öğrenerek modern uygulamalarda kullanılan real-time iletişim mantığınılavramak,
+> N-Tier Architecture yapısını kurup her katmanın görevini doğru şekilde kullanarak temiz, sürdürülebilir ve genişletilebilir bir mimari oluşturma pratiği kazanmak...
+> 
 <img width="1902" height="1020" alt="restoran1" src="https://github.com/user-attachments/assets/4932ff4e-b92f-4acd-b813-cf1cc6a55626" />
 <img width="1888" height="1026" alt="restoran2" src="https://github.com/user-attachments/assets/306eef7e-d00c-4416-8bda-e951555077ff" />
 <img width="1894" height="1021" alt="restoran15" src="https://github.com/user-attachments/assets/956937bc-a70f-4e99-a5ca-e0e82043662a" />
